@@ -2,4 +2,5 @@ reports/*
 bdd/behavior-contracts.ndjson
 node_modules/
 pnpm-lock.yaml
-
+.gitnexus/
+.claude/skills/
