@@ -147,9 +147,15 @@ function jsonText(value) {
   return `${JSON.stringify(sortValue(value), null, 2)}\n`;
 }
 
+function readExistingManifest() {
+  if (!existsSync(join(root, outputPath))) return {};
+  return readJson(outputPath);
+}
+
 function buildManifest() {
   const packageJson = readJson("package.json");
   const matrix = readJson("contracts/consumer-compatibility-matrix.v1.json");
+  const existingManifest = readExistingManifest();
   const artifacts = artifactDefinitions.map(([path, kind, description]) => {
     if (!existsSync(join(root, path))) {
       throw new Error(`Required release artifact is missing: ${path}`);
@@ -176,7 +182,8 @@ function buildManifest() {
     ontology_version: packageJson.version,
     release_date: "2026-06-22",
     owner: "ETO platform engineering",
-    ontology_baseline_commit: git("rev-parse main"),
+    ontology_baseline_commit:
+      existingManifest.ontology_baseline_commit || git("rev-parse main"),
     contracts: {
       semantic_event: "ecocheck.semantic_event.v2",
       profile_gap_confirmed: "ecocheck.profile_gap_confirmed.v1",
