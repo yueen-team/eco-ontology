@@ -181,6 +181,19 @@ function validateSemanticEventSchema(findings, check, schema) {
       );
     }
   }
+  const eventTypes = schema.properties?.event_type?.enum || [];
+  const duplicates = eventTypes.filter(
+    (item, index) => eventTypes.indexOf(item) !== index,
+  );
+  if (duplicates.length > 0) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      "$.properties.event_type.enum",
+      `Duplicate enum values are invalid for Ajv v6 consumers: ${[...new Set(duplicates)].join(", ")}.`,
+    );
+  }
 }
 
 const findings = [];

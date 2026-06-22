@@ -36,5 +36,43 @@
     "red": 0,
     "yellow": 0,
     "info": 0
-  }
+  },
+  "consumer_snapshots": [
+    {
+      "repo": "EcoCheck",
+      "branch": "codex/semantic-event-report-validator",
+      "commit": "89c21c0db158c0764345f24e5503a5b52b9e5a4d",
+      "validation_summary": {
+        "mode": "report-only",
+        "red": 0,
+        "yellow": 0,
+        "info": 0
+      },
+      "notes": "Local checked HEAD still has uncommitted EcoCheck P7/P9 work; semantic_event.v2 duplicate enum was fixed in ontology to unblock Ajv v6 schema compile."
+    },
+    {
+      "repo": "eco-execution-graph",
+      "branch": "codex/ontology-contract-governance",
+      "commit": "d4cb66f15654acd3816f170daa05cfe51adbcedb",
+      "validation_summary": {
+        "mode": "report-only",
+        "red": 0,
+        "yellow": 0,
+        "info": 0
+      },
+      "notes": "Graph P8 supports semantic_event.v2 and profile_gap_confirmed.v1 intake; graph schema instance drift is clean in report-only mode."
+    },
+    {
+      "repo": "eco-semantic-knowledge-base",
+      "branch": "codex/kb-report-only-contract-validation",
+      "commit": "ca2312c13295f68583e9d1d3fa7f6035d99cc4d8",
+      "validation_summary": {
+        "mode": "report-only",
+        "red": 0,
+        "yellow": 0,
+        "info": 2
+      },
+      "notes": "KB graph package manifest is formalized. KB schema remains a proposal and is not yet promoted into eco-ontology schemas."
+    }
+  ]
 }

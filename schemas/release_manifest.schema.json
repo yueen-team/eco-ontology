@@ -43,6 +43,31 @@
         "info": { "type": "integer", "minimum": 0 }
       },
       "additionalProperties": false
+    },
+    "consumer_snapshots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["repo", "branch", "commit", "validation_summary"],
+        "properties": {
+          "repo": { "type": "string" },
+          "branch": { "type": "string" },
+          "commit": { "type": "string" },
+          "validation_summary": {
+            "type": "object",
+            "required": ["mode", "red", "yellow", "info"],
+            "properties": {
+              "mode": { "enum": ["report-only", "blocking"] },
+              "red": { "type": "integer", "minimum": 0 },
+              "yellow": { "type": "integer", "minimum": 0 },
+              "info": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false

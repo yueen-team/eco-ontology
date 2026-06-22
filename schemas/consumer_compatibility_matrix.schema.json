@@ -18,11 +18,23 @@
           "repo": { "type": "string" },
           "owner": { "type": "string" },
           "expected_path": { "type": "string" },
+          "branch": { "type": "string" },
           "commit": { "type": "string" },
           "validation_mode": { "enum": ["report-only", "blocking", "mixed"] },
           "contracts": {
             "type": "array",
             "items": { "type": "string" }
+          },
+          "report_summary": {
+            "type": "object",
+            "required": ["mode", "red", "yellow", "info"],
+            "properties": {
+              "mode": { "enum": ["report-only", "blocking"] },
+              "red": { "type": "integer", "minimum": 0 },
+              "yellow": { "type": "integer", "minimum": 0 },
+              "info": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
           },
           "known_drift": {
             "type": "array",

@@ -5,11 +5,19 @@
     {
       "repo": "EcoCheck",
       "owner": "EcoCheck application engineering",
+      "branch": "codex/semantic-event-report-validator",
+      "commit": "89c21c0db158c0764345f24e5503a5b52b9e5a4d",
       "validation_mode": "report-only",
       "contracts": [
         "ecocheck.semantic_event.v2",
         "ecocheck.profile_gap_confirmed.v1"
       ],
+      "report_summary": {
+        "mode": "report-only",
+        "red": 0,
+        "yellow": 0,
+        "info": 0
+      },
       "known_drift": [
         {
           "check_id": "ECOCHECK-001",
@@ -29,6 +37,8 @@
       "repo": "eco-execution-graph",
       "owner": "ETO graph platform engineering",
       "expected_path": "E:/eco-execution-graph",
+      "branch": "codex/ontology-contract-governance",
+      "commit": "d4cb66f15654acd3816f170daa05cfe51adbcedb",
       "validation_mode": "report-only",
       "contracts": [
         "ecocheck.semantic_event.v2",
@@ -38,18 +48,24 @@
         "graph_source",
         "kb_product_manifest"
       ],
+      "report_summary": {
+        "mode": "report-only",
+        "red": 0,
+        "yellow": 0,
+        "info": 0
+      },
       "known_drift": [
         {
           "check_id": "GRAPH-001",
-          "severity": "yellow",
+          "severity": "info",
           "owner": "eco-execution-graph",
-          "summary": "Graph instance validation exists as a report-only check before blocking adoption."
+          "summary": "Graph node/edge/source instance validation is clean in report-only mode after P8 schema drift reconciliation."
         },
         {
-          "check_id": "GRAPH-004",
-          "severity": "yellow",
+          "check_id": "GRAPH-007",
+          "severity": "info",
           "owner": "eco-execution-graph",
-          "summary": "KB package manifest is being promoted from local path convention to explicit input."
+          "summary": "profile_gap_confirmed.v1 is accepted as a separate non-aggregate intake record."
         }
       ]
     },
@@ -57,14 +73,22 @@
       "repo": "eco-semantic-knowledge-base",
       "owner": "Knowledge base engineering",
       "expected_path": "E:/eco-semantic-knowledge-base",
+      "branch": "codex/kb-report-only-contract-validation",
+      "commit": "ca2312c13295f68583e9d1d3fa7f6035d99cc4d8",
       "validation_mode": "report-only",
       "contracts": ["kb_product_manifest", "baseline_dataset_contract"],
+      "report_summary": {
+        "mode": "report-only",
+        "red": 0,
+        "yellow": 0,
+        "info": 2
+      },
       "known_drift": [
         {
           "check_id": "KB-001",
-          "severity": "yellow",
+          "severity": "info",
           "owner": "eco-semantic-knowledge-base",
-          "summary": "Approved baseline manifests exist, but a shared manifest schema has not yet been enforced."
+          "summary": "graph_kb_package_manifest_v1_0 is formalized in KB, but the KB schema remains a proposal and has not yet entered eco-ontology schemas."
         }
       ]
     }
