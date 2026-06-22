@@ -50,6 +50,24 @@
               "additionalProperties": false
             }
           },
+          "contract_artifacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["contract_id", "schema_status"],
+              "properties": {
+                "contract_id": { "type": "string" },
+                "schema_status": {
+                  "enum": ["proposal", "formal", "deprecated"]
+                },
+                "schema_path": { "type": "string" },
+                "manifest_path": { "type": "string" },
+                "manifest_sha256": { "type": "string" },
+                "report_path": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
           "projection_hash": { "type": "string" }
         },
         "additionalProperties": false

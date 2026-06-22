@@ -1,11 +1,16 @@
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { isAbsolute, join } from "node:path";
 import process from "node:process";
+import Ajv from "ajv";
 
 const root = process.cwd();
 const reportJson = join(root, "reports", "report-only-validation.json");
 const reportMd = join(root, "reports", "report-only-validation.md");
+const kbRoot = process.env.ECO_KB_ROOT || "E:/eco-semantic-knowledge-base";
+const graphRoot = process.env.ECO_GRAPH_ROOT || "E:/eco-execution-graph";
+const ecoCheckRoot = process.env.ECOCHECK_ROOT || "E:/EcoCheck";
+const ajv = new Ajv({ allErrors: true, schemaId: "auto", jsonPointers: true });
 
 const checks = [
   {
@@ -26,16 +31,31 @@ const checks = [
     artifact: "schemas/semantic_event.v2.schema.json",
     schema: "schemas/semantic_event.v2.schema.json",
   },
+  {
+    id: "KB-001",
+    owner: "eco-semantic-knowledge-base",
+    artifact: "manifests/graph_kb_package_manifest_v1_0.json",
+    artifactRoot: kbRoot,
+    schema: "schemas/kb_product_manifest.v1.schema.json",
+  },
 ];
 
-function readJson(relativePath) {
-  return JSON.parse(readFileSync(join(root, relativePath), "utf8"));
+function resolvePath(path, base = root) {
+  return isAbsolute(path) ? path : join(base, path);
 }
 
-function sha256(relativePath) {
+function readJson(path, base = root) {
+  return JSON.parse(readFileSync(resolvePath(path, base), "utf8"));
+}
+
+function sha256(path, base = root) {
   return createHash("sha256")
-    .update(readFileSync(join(root, relativePath)))
+    .update(readFileSync(resolvePath(path, base)))
     .digest("hex");
+}
+
+function sha256Uri(path, base = root) {
+  return `sha256:${sha256(path, base)}`;
 }
 
 function addFinding(findings, severity, check, path, message) {
@@ -46,6 +66,14 @@ function addFinding(findings, severity, check, path, message) {
     message,
     owner: check.owner,
   });
+}
+
+function hasBlockingFinding(findings, checkId) {
+  return findings.some(
+    (finding) =>
+      finding.check_id === checkId &&
+      (finding.severity === "red" || finding.severity === "yellow"),
+  );
 }
 
 function validateRequiredObject(findings, check, artifact, schema) {
@@ -76,7 +104,7 @@ function validateArtifactHashes(findings, check, manifest) {
       );
       continue;
     }
-    if (!existsSync(join(root, artifact.path))) {
+    if (!existsSync(resolvePath(artifact.path))) {
       addFinding(
         findings,
         "red",
@@ -146,6 +174,130 @@ function validateCompatibility(findings, check, matrix) {
   }
 }
 
+function validateJsonSchema(findings, check, artifact, schema) {
+  let validate;
+  try {
+    validate = ajv.compile(schema);
+  } catch (error) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      "$schema",
+      `Schema failed to compile with Ajv v6: ${error.message}`,
+    );
+    return false;
+  }
+  if (validate(artifact)) return true;
+  for (const error of validate.errors || []) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      error.dataPath ? `$${error.dataPath}` : "$",
+      `JSON Schema violation: ${error.message}`,
+    );
+  }
+  return false;
+}
+
+function validateKbProductManifest(findings, check, manifest, schema) {
+  validateJsonSchema(findings, check, manifest, schema);
+  const outputs = manifest.outputs || {};
+  for (const [outputName, output] of Object.entries(outputs)) {
+    if (!output?.path || !output?.sha256) continue;
+    if (!existsSync(resolvePath(output.path, check.artifactRoot))) {
+      addFinding(
+        findings,
+        "red",
+        check,
+        `$.outputs.${outputName}.path`,
+        "Output artifact path does not exist.",
+      );
+      continue;
+    }
+    if (output.sha256 !== sha256Uri(output.path, check.artifactRoot)) {
+      addFinding(
+        findings,
+        "red",
+        check,
+        `$.outputs.${outputName}.sha256`,
+        "Output artifact hash does not match current file.",
+      );
+    }
+  }
+
+  for (const [flag, value] of Object.entries(manifest.privacy_boundary || {})) {
+    if (value !== false) {
+      addFinding(
+        findings,
+        "red",
+        check,
+        `$.privacy_boundary.${flag}`,
+        "KB graph package manifest must not include private, raw, full-law, GPS, or secret-bearing content.",
+      );
+    }
+  }
+}
+
+function readExternalReport(path) {
+  const resolvedPath = resolvePath(path);
+  if (!existsSync(resolvedPath)) return null;
+  return JSON.parse(readFileSync(resolvedPath, "utf8"));
+}
+
+function validateGraphReport(findings) {
+  const check = { id: "GRAPH-REPORT-ONLY", owner: "eco-execution-graph" };
+  const report = readExternalReport(
+    join(graphRoot, "reports", "ontology-contract-report-only-validation.json"),
+  );
+  if (!report) return;
+  if (
+    report.summary?.red !== 0 ||
+    report.summary?.yellow !== 0 ||
+    report.summary?.info !== 0
+  ) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      "$.summary",
+      "Graph report-only summary is not clean.",
+    );
+  }
+}
+
+function validateEcoCheckValidFixtures(findings) {
+  const check = { id: "ECOCHECK-VALID-FIXTURES", owner: "EcoCheck" };
+  const report = readExternalReport(
+    join(
+      ecoCheckRoot,
+      "docs",
+      "validation",
+      "semantic-event-report-only.latest.json",
+    ),
+  );
+  if (!report) return;
+  for (const testCase of report.cases || []) {
+    if (testCase.expected_valid !== true) continue;
+    for (const statusField of [
+      "schema_status",
+      "payload_local_status",
+      "graph_request_status",
+    ]) {
+      if (testCase[statusField] !== "pass") {
+        addFinding(
+          findings,
+          "red",
+          check,
+          `$.cases.${testCase.case_id}.${statusField}`,
+          "Expected-valid EcoCheck fixture did not pass every report-only validation layer.",
+        );
+      }
+    }
+  }
+}
+
 function validateSemanticEventSchema(findings, check, schema) {
   const required = new Set(schema.required || []);
   for (const field of [
@@ -196,11 +348,54 @@ function validateSemanticEventSchema(findings, check, schema) {
   }
 }
 
+function createBlockingReadyChecks(findings) {
+  return [
+    {
+      check_id: "ECO-ONTO-SCHEMA-ENUM-UNIQUENESS",
+      status: hasBlockingFinding(findings, "ECOCHECK-001")
+        ? "not_ready"
+        : "ready",
+      evidence:
+        "semantic_event.v2 event_type enum has no duplicate values and remains Ajv v6 compatible.",
+    },
+    {
+      check_id: "ECO-ONTO-RELEASE-MANIFEST-SHAPE",
+      status: hasBlockingFinding(findings, "ECO-ONTO-001")
+        ? "not_ready"
+        : "ready",
+      evidence:
+        "release manifest required fields and artifact path/hash coverage validate locally.",
+    },
+    {
+      check_id: "GRAPH-REPORT-ONLY-CLEAN",
+      status: hasBlockingFinding(findings, "GRAPH-REPORT-ONLY")
+        ? "not_ready"
+        : "ready",
+      evidence:
+        "eco-execution-graph report-only validation summary is red=0 yellow=0 info=0.",
+    },
+    {
+      check_id: "KB-MANIFEST-PATH-SHA",
+      status: hasBlockingFinding(findings, "KB-001") ? "not_ready" : "ready",
+      evidence:
+        "KB graph package manifest validates against kb_product_manifest.v1 and each output path has matching sha256.",
+    },
+    {
+      check_id: "ECOCHECK-VALID-FIXTURES",
+      status: hasBlockingFinding(findings, "ECOCHECK-VALID-FIXTURES")
+        ? "not_ready"
+        : "ready",
+      evidence:
+        "EcoCheck expected-valid semantic_event.v2 and profile_gap_confirmed.v1 fixtures pass schema, local payload, and graph-request report layers.",
+    },
+  ];
+}
+
 const findings = [];
 for (const check of checks) {
-  const artifact = readJson(check.artifact);
+  const artifact = readJson(check.artifact, check.artifactRoot);
   const schema = readJson(check.schema);
-  if (check.id !== "ECOCHECK-001") {
+  if (check.id !== "ECOCHECK-001" && check.id !== "KB-001") {
     validateRequiredObject(findings, check, artifact, schema);
   }
   if (check.id === "ECO-ONTO-001")
@@ -209,10 +404,15 @@ for (const check of checks) {
     validateCompatibility(findings, check, artifact);
   if (check.id === "ECOCHECK-001")
     validateSemanticEventSchema(findings, check, artifact);
+  if (check.id === "KB-001")
+    validateKbProductManifest(findings, check, artifact, schema);
 }
+validateGraphReport(findings);
+validateEcoCheckValidFixtures(findings);
 
 const summary = { red: 0, yellow: 0, info: 0 };
 for (const finding of findings) summary[finding.severity] += 1;
+const blockingReadyChecks = createBlockingReadyChecks(findings);
 
 const report = {
   validator_id: "ECO-ONTOLOGY-REPORT-ONLY",
@@ -220,6 +420,30 @@ const report = {
   ontology_version: "0.0.0-report-only.2026-06-22",
   checked_at: new Date().toISOString(),
   summary,
+  inputs: {
+    kb_product_manifest_schema: "schemas/kb_product_manifest.v1.schema.json",
+    kb_product_manifest:
+      "E:/eco-semantic-knowledge-base/manifests/graph_kb_package_manifest_v1_0.json",
+    graph_report:
+      "E:/eco-execution-graph/reports/ontology-contract-report-only-validation.json",
+    ecocheck_report:
+      "E:/EcoCheck/docs/validation/semantic-event-report-only.latest.json",
+  },
+  blocking_ready_checks: blockingReadyChecks,
+  external_gates: [
+    {
+      gate_id: "TENCENT-RAG-REAL-SMOKE",
+      status: "external_required",
+      reason:
+        "Requires real Tencent RAG smoke evidence outside this ontology report-only validator.",
+    },
+    {
+      gate_id: "CLOUDBASE-SCAN-REAL-SMOKE",
+      status: "external_required",
+      reason:
+        "Requires real CloudBase scan and online enterprise-data smoke evidence outside this repository.",
+    },
+  ],
   findings,
 };
 
@@ -235,9 +459,22 @@ const lines = [
   `- yellow: ${summary.yellow}`,
   `- info: ${summary.info}`,
   "",
-  "## Findings",
+  "## Blocking-ready Checks",
   "",
 ];
+for (const check of blockingReadyChecks) {
+  lines.push(`- ${check.status} ${check.check_id}: ${check.evidence}`);
+}
+lines.push(
+  "",
+  "## External Gates",
+  "",
+  "- external_required TENCENT-RAG-REAL-SMOKE: requires real Tencent RAG smoke evidence outside this validator.",
+  "- external_required CLOUDBASE-SCAN-REAL-SMOKE: requires real CloudBase scan and online enterprise-data smoke evidence outside this repository.",
+  "",
+  "## Findings",
+  "",
+);
 if (findings.length === 0) {
   lines.push("- none");
 } else {

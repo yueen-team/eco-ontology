@@ -60,6 +60,10 @@ Outputs:
 - `reports/report-only-validation.json`
 - `reports/report-only-validation.md`
 
+The ontology report also lists `blocking_ready_checks` for checks that have a
+clean local report-only baseline, plus `external_gates` that must stay outside
+the repository validator.
+
 `eco-execution-graph`:
 
 ```powershell
@@ -88,6 +92,8 @@ Outputs:
   `ecocheck.profile_gap_confirmed.v1`.
 - eco-semantic-knowledge-base has approved manifests, but build versioning and
   safety constants are spread across versioned scripts.
+- `kb_product_manifest.v1` is now formalized in `eco-ontology`; the KB graph
+  package manifest is validated by path and sha256 in report-only mode.
 
 ## Suggested report format
 

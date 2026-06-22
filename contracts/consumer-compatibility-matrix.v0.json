@@ -6,7 +6,7 @@
       "repo": "EcoCheck",
       "owner": "EcoCheck application engineering",
       "branch": "codex/semantic-event-report-validator",
-      "commit": "89c21c0db158c0764345f24e5503a5b52b9e5a4d",
+      "commit": "97bd693e4e9903456276c1355944e93199dca589",
       "validation_mode": "report-only",
       "contracts": [
         "ecocheck.semantic_event.v2",
@@ -14,9 +14,9 @@
       ],
       "report_summary": {
         "mode": "report-only",
-        "red": 0,
+        "red": 28,
         "yellow": 0,
-        "info": 0
+        "info": 1
       },
       "known_drift": [
         {
@@ -29,7 +29,7 @@
           "check_id": "ECOCHECK-004",
           "severity": "yellow",
           "owner": "EcoCheck",
-          "summary": "business_key is canonical for graph idempotency and should be present in the outgoing payload or explicit transport envelope before blocking mode."
+          "summary": "business_key is canonical for graph idempotency and should be proven in real graph push smoke before blocking mode."
         }
       ]
     },
@@ -38,7 +38,7 @@
       "owner": "ETO graph platform engineering",
       "expected_path": "E:/eco-execution-graph",
       "branch": "codex/ontology-contract-governance",
-      "commit": "d4cb66f15654acd3816f170daa05cfe51adbcedb",
+      "commit": "79de902846f42fde83629c47f514fd328d6e1324",
       "validation_mode": "report-only",
       "contracts": [
         "ecocheck.semantic_event.v2",
@@ -88,7 +88,17 @@
           "check_id": "KB-001",
           "severity": "info",
           "owner": "eco-semantic-knowledge-base",
-          "summary": "graph_kb_package_manifest_v1_0 is formalized in KB, but the KB schema remains a proposal and has not yet entered eco-ontology schemas."
+          "summary": "graph_kb_package_manifest_v1_0 is covered by formal eco-ontology schema kb_product_manifest.v1; KB report retains legacy info findings from the proposal-era inventory."
+        }
+      ],
+      "contract_artifacts": [
+        {
+          "contract_id": "kb.product_manifest.v1",
+          "schema_status": "formal",
+          "schema_path": "schemas/kb_product_manifest.v1.schema.json",
+          "manifest_path": "E:/eco-semantic-knowledge-base/manifests/graph_kb_package_manifest_v1_0.json",
+          "manifest_sha256": "sha256:a89625ed33263e3f57adeb802ce98c69a25b155444334b74e80e37671359a1b3",
+          "report_path": "E:/eco-semantic-knowledge-base/reports/kb_report_only_contract_validation.json"
         }
       ]
     }
