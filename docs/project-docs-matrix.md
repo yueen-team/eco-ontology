@@ -7,7 +7,7 @@
 | Navigation       | Codemap            | `CODEMAP.md`                       | present | Lists commands and directories.                                                                                          |
 | Agent protocol   | Agent guide        | `AGENTS.md`                        | present | Includes validation posture and safety rules.                                                                            |
 | Domain context   | Context doc        | `CONTEXT.md`                       | present | Captures ontology terms and governance principles.                                                                       |
-| ADR              | Decision records   | `docs/adr/`                        | present | ADR-0001 through ADR-0003 record repository boundary, cutover, and v0.1.0 package decisions.                             |
+| ADR              | Decision records   | `docs/adr/`                        | present | ADR-0001 through ADR-0004 record repository boundary, cutover, v0.1.0 package, and evidence-based promotion decisions.   |
 | API contracts    | API docs           | `docs/api/README.md`               | present | Placeholder until schemas are published.                                                                                 |
 | BDD specs        | Behavior specs     | `specs/README.md`                  | present | No feature files yet.                                                                                                    |
 | Verification     | Unified verify     | `verify/verify.mjs`                | present | Exposed through `pnpm verify:all`.                                                                                       |
@@ -24,3 +24,5 @@
   needs executable acceptance language.
 - Keep real Tencent RAG, CloudBase/WeCom, government lineage import, and
   EcoCheck aggregate/ETO review as external or report-only evidence.
+- Refresh `docs/validation/adr-0003-evidence-snapshot-*.{md,json}` before any
+  follow-up ADR promotes a real-environment gate to blocking.

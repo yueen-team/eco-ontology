@@ -1,0 +1,129 @@
+{
+  "snapshot_id": "adr-0003-evidence-2026-06-22",
+  "date": "2026-06-22",
+  "ontology_version": "0.1.0",
+  "scope": "report-only and real-environment evidence collection for ADR-0003 cutover decisions",
+  "results": [
+    {
+      "gate_family": "closed_world_ontology_package",
+      "owner_repo": "eco-ontology",
+      "commands": ["pnpm validate:report-only", "pnpm validate:blocking"],
+      "summary": {
+        "report_only": { "red": 0, "yellow": 0, "info": 0 },
+        "blocking": { "red": 0, "yellow": 0, "info": 0 }
+      },
+      "decision": "keep_blocking"
+    },
+    {
+      "gate_family": "ecocheck_semantic_event_contract",
+      "owner_repo": "EcoCheck",
+      "commands": [
+        "pnpm semantic:event:validate:report-only",
+        "pnpm semantic:event:validate:blocking"
+      ],
+      "summary": {
+        "report_only": { "red": 32, "yellow": 0, "info": 1 },
+        "blocking": { "red": 32, "yellow": 0, "info": 1 },
+        "blocking_command": "pass",
+        "projection_sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457"
+      },
+      "decision": "keep_mixed_mode",
+      "notes": "Red findings are intentionally invalid guard fixtures."
+    },
+    {
+      "gate_family": "ecocheck_graph_synthetic_smoke",
+      "owner_repo": "EcoCheck",
+      "commands": [
+        "pnpm semantic:graph:smoke:dry-run",
+        "pnpm semantic:graph:smoke"
+      ],
+      "summary": {
+        "dry_run": "pass",
+        "live": "fail",
+        "live_blocker": "ECO_GRAPH_FIELD_EVENT_ENDPOINT is not configured"
+      },
+      "decision": "stay_external_report_only"
+    },
+    {
+      "gate_family": "graph_local_contracts",
+      "owner_repo": "eco-execution-graph",
+      "commands": [
+        "pnpm ontology:validate:report-only",
+        "pnpm ontology:validate:blocking",
+        "pnpm graph:schema:blocking",
+        "pnpm api:smoke:intake"
+      ],
+      "summary": {
+        "ontology_report_only": { "red": 0, "yellow": 0, "info": 0 },
+        "ontology_blocking": { "red": 0, "yellow": 0, "info": 0 },
+        "graph_schema_blocking": { "red": 0, "yellow": 0, "info": 0 },
+        "api_synthetic_intake": "pass"
+      },
+      "decision": "keep_blocking_for_closed_world_checks"
+    },
+    {
+      "gate_family": "graph_rag_real_smoke",
+      "owner_repo": "eco-execution-graph",
+      "commands": ["pnpm rag:real:gate"],
+      "summary": {
+        "rag_real_smoke": "pass",
+        "embedding_probe": "pass",
+        "tokenhub_probe": "pass",
+        "rag_retrieve_probe": "pass",
+        "report": "reports/rag-citation-resolution-report.json"
+      },
+      "decision": "candidate_for_environment_scoped_blocking",
+      "promotion_requirements": [
+        "repeat from clean main or CI external verifier",
+        "documented secret and raw-response redaction boundary",
+        "rollback note to return to external/report-only"
+      ]
+    },
+    {
+      "gate_family": "ecocheck_aggregate_eto_blind_review",
+      "owner_repo": "eco-execution-graph",
+      "commands": ["pnpm ecocheck:aggregate"],
+      "summary": {
+        "status": "blocked",
+        "rows": 0
+      },
+      "decision": "stay_external_report_only"
+    },
+    {
+      "gate_family": "government_lineage_real_import",
+      "owner_repo": "eco-execution-graph",
+      "commands": ["pnpm lineage:check"],
+      "summary": {
+        "status": "partial",
+        "contract_status": "pass",
+        "government_lineage_real_import": "blocked",
+        "dataset_status": "contract_fixture",
+        "record_count": 6
+      },
+      "decision": "stay_external_report_only"
+    },
+    {
+      "gate_family": "kb_report_only_contracts",
+      "owner_repo": "eco-semantic-knowledge-base",
+      "commands": [
+        "python validate_kb_report_only_contracts.py",
+        "python kb_build.py manifest --version graph_package_v1_0",
+        "python kb_build.py validate --version graph_package_v1_0"
+      ],
+      "summary": {
+        "report_only": { "red": 0, "yellow": 0, "info": 2 }
+      },
+      "decision": "keep_report_only_for_info_findings"
+    }
+  ],
+  "global_cutover_decision": {
+    "promote_to_global_blocking_now": [],
+    "candidate_next": ["GRAPH-RAG-REAL-SMOKE"],
+    "remain_external_or_report_only": [
+      "ECOCHECK-GRAPH-PUSH-REAL-SMOKE",
+      "CLOUDBASE-WECOM-REAL-SMOKE",
+      "GOVERNMENT-LINEAGE-REAL-IMPORT",
+      "ECOCHECK-AGGREGATE-ETO-BLIND-REVIEW"
+    ]
+  }
+}
