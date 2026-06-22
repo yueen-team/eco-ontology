@@ -1,0 +1,10 @@
+# Local validation outputs are generated evidence, not source contracts.
+reports/*
+!reports/.gitkeep
+
+# Common local noise.
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
