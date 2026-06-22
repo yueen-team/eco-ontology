@@ -138,18 +138,50 @@
       "type": "object",
       "minProperties": 1,
       "additionalProperties": {
+        "$ref": "#/definitions/output_artifact"
+      }
+    },
+    "build_lines": {
+      "type": "object",
+      "description": "Optional P3 build-line metadata. It records reproducible build entrypoints without changing approved semantic outputs.",
+      "additionalProperties": {
         "type": "object",
-        "required": ["path", "sha256"],
+        "required": ["line_id"],
         "properties": {
-          "path": {
+          "line_id": {
             "type": "string"
-          },
-          "sha256": {
-            "type": "string",
-            "pattern": "^sha256:[a-f0-9]{64}$"
           },
           "description": {
             "type": "string"
+          },
+          "build_entries": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": ["build_entry_id", "outputs"],
+              "properties": {
+                "build_entry_id": {
+                  "type": "string"
+                },
+                "entrypoint_path": {
+                  "type": "string"
+                },
+                "command": {
+                  "type": "string"
+                },
+                "outputs": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "additionalProperties": {
+                    "$ref": "#/definitions/output_artifact"
+                  }
+                },
+                "semantic_output_policy": {
+                  "enum": ["hash_equivalent", "manifest_equivalent"]
+                }
+              },
+              "additionalProperties": false
+            }
           }
         },
         "additionalProperties": false
@@ -172,6 +204,25 @@
         },
         "contains_secrets": {
           "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "output_artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "description": {
+          "type": "string"
         }
       },
       "additionalProperties": false

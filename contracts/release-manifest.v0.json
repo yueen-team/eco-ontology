@@ -23,8 +23,13 @@
     },
     {
       "path": "schemas/kb_product_manifest.v1.schema.json",
-      "sha256": "e55ae8239bffbd399fbb51dd7400b5911f8c4fc2b4e2ef4c8bed25702725b288",
+      "sha256": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3",
       "description": "Formal KB product manifest contract for graph package imports"
+    },
+    {
+      "path": "contracts/p3-baseline.v0.json",
+      "sha256": "a9ba339dfbb68662a657bb046ff4b07e5b679b9633537851a06c4026aa4d2a3c",
+      "description": "P3 baseline freeze for ontology, KB, graph, and external gates"
     },
     {
       "path": "schemas/release_manifest.schema.json",

@@ -52,6 +52,25 @@ Remain external gates before production blocking cutover:
 - Tencent RAG real smoke.
 - Real CloudBase scan and online enterprise-data smoke.
 
+## P3 reproducible KB build cutover
+
+P3-1 public KB library extraction and P3-2 build entry formalization do not
+change semantic products. They change the reproducible producer entrypoint and
+the way outputs are described for consumers.
+
+`kb_product_manifest.v1` may record optional `build_lines` metadata for P3.
+When present, each build entry must identify its outputs by `path` and `sha256`.
+This metadata is additive and remains Draft-07/Ajv v6 compatible.
+
+P3-1/P3-2 may become blocking only when all conditions are true:
+
+- KB old and new entrypoints produce hash-equivalent approved runtime outputs.
+- KB package manifests are equivalent for approved runtime outputs.
+- Graph KB lock remains green against the current KB graph package manifest.
+- Ontology report-only validation remains green.
+- External real-smoke gates are either completed or explicitly scoped out by a
+  follow-up ADR.
+
 ## Rollback
 
 If blocking promotion causes false failures, revert the follow-up ADR/compat

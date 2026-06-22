@@ -1,0 +1,159 @@
+{
+  "schema_version": "eco-ontology.p3_baseline.v0",
+  "freeze_id": "p3-baseline-freeze-2026-06-22",
+  "freeze_date": "2026-06-22",
+  "mode": "governance-baseline",
+  "privacy_policy": {
+    "value_policy": "Record paths, commits, report summaries, hashes, and non-private ids only.",
+    "forbidden_content": [
+      "production secrets",
+      "enterprise-identifiable data",
+      "GPS",
+      "raw attachments",
+      "full law or standard text",
+      "private review content"
+    ]
+  },
+  "ontology": {
+    "repo": "eco-ontology",
+    "path": "E:/eco-ontology",
+    "branch": "codex/p3-baseline-freeze",
+    "snapshot_commit": "57322035773dadfa755e9f296b848bea5bb2f916",
+    "release_manifest": {
+      "path": "contracts/release-manifest.v0.json",
+      "ontology_version": "0.0.0-report-only.2026-06-22",
+      "summary": {
+        "mode": "report-only",
+        "red": 0,
+        "yellow": 0,
+        "info": 0
+      }
+    },
+    "report_only": {
+      "path": "reports/report-only-validation.json",
+      "summary": {
+        "red": 0,
+        "yellow": 0,
+        "info": 0
+      },
+      "blocking_ready_checks": [
+        "ECO-ONTO-SCHEMA-ENUM-UNIQUENESS",
+        "ECO-ONTO-RELEASE-MANIFEST-SHAPE",
+        "GRAPH-REPORT-ONLY-CLEAN",
+        "KB-MANIFEST-PATH-SHA",
+        "ECOCHECK-VALID-FIXTURES"
+      ]
+    },
+    "kb_product_manifest_schema": {
+      "path": "schemas/kb_product_manifest.v1.schema.json",
+      "draft": "draft-07",
+      "ajv": "v6-compatible",
+      "sha256": "sha256:d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3"
+    }
+  },
+  "kb": {
+    "repo": "eco-semantic-knowledge-base",
+    "path": "E:/eco-semantic-knowledge-base",
+    "current_worktree": {
+      "branch": "main",
+      "commit": "92cae4604eb659fc0fc70ef36c89538a0049471f"
+    },
+    "graph_package_manifest": {
+      "path": "manifests/graph_kb_package_manifest_v1_0.json",
+      "absolute_path": "E:/eco-semantic-knowledge-base/manifests/graph_kb_package_manifest_v1_0.json",
+      "schema_status": "formal",
+      "package_version": "1.0.0-report-only.2026-06-22",
+      "outputs_count": 4,
+      "sha256": "sha256:0795f3b777ccc485af66f06e110f6941cafdc038c13be68005a242ba805b9910"
+    },
+    "report_only": {
+      "path": "reports/kb_report_only_contract_validation.json",
+      "report_branch": "codex/kb-report-only-contract-validation",
+      "report_commit": "7b9ee72cde9dc5c8d3b2f40ded79bc7a9d09a27a",
+      "report_worktree_dirty": true,
+      "summary": {
+        "red": 0,
+        "yellow": 0,
+        "info": 2
+      },
+      "schema_status": "formal_kb_schema_present",
+      "reported_graph_package_manifest_sha256": "sha256:e6bd2536ed58dcc38661732620a6c4e8400a1b69ab11e764d4228fadc5971637"
+    }
+  },
+  "graph": {
+    "repo": "eco-execution-graph",
+    "path": "E:/eco-execution-graph",
+    "current_worktree": {
+      "branch": "main",
+      "commit": "b2c2f784571ca43ee804aae695d8caf6a921dbca"
+    },
+    "ontology_contract_report_only": {
+      "path": "reports/ontology-contract-report-only-validation.json",
+      "summary": {
+        "red": 0,
+        "yellow": 0,
+        "info": 0
+      }
+    },
+    "ontology_contract_blocking": {
+      "path": "reports/ontology-contract-blocking-validation.json",
+      "summary": {
+        "red": 0,
+        "yellow": 0,
+        "info": 0
+      },
+      "failed": false
+    },
+    "upstream_lock": {
+      "path": "data/upstream/upstream-lock.json",
+      "report_path": "reports/upstream-lock-report.json",
+      "generated_at": "2026-06-10",
+      "status": "pass",
+      "asset_count": 71,
+      "kb_locked_branch": "main",
+      "kb_locked_commit": "92cae4604eb659fc0fc70ef36c89538a0049471f",
+      "kb_graph_package_manifest_sha256": "sha256:0795f3b777ccc485af66f06e110f6941cafdc038c13be68005a242ba805b9910"
+    }
+  },
+  "p3_contract_acceptance": [
+    {
+      "slice": "P3-1",
+      "name": "public KB library extraction",
+      "semantic_output_policy": "no semantic product change",
+      "blocking_conditions": [
+        "old and new KB entrypoints produce hash-equivalent outputs",
+        "graph KB lock remains green",
+        "ontology schema validation remains green"
+      ]
+    },
+    {
+      "slice": "P3-2",
+      "name": "KB build entry formalization",
+      "semantic_output_policy": "reproducible entrypoint change only",
+      "blocking_conditions": [
+        "build_entry manifest records output path and sha256",
+        "old and new manifests are equivalent for approved runtime outputs",
+        "graph KB lock remains green",
+        "ontology schema validation remains green"
+      ]
+    }
+  ],
+  "external_pending": [
+    {
+      "gate": "Tencent RAG real smoke",
+      "status": "pending_external"
+    },
+    {
+      "gate": "CloudBase storage diagnostic and WeCom live scan",
+      "status": "pending_external"
+    },
+    {
+      "gate": "government lineage real import",
+      "status": "pending_external"
+    },
+    {
+      "gate": "real EcoCheck aggregate and ETO blind review",
+      "status": "pending_external"
+    }
+  ]
+}

@@ -64,6 +64,11 @@ The ontology report also lists `blocking_ready_checks` for checks that have a
 clean local report-only baseline, plus `external_gates` that must stay outside
 the repository validator.
 
+P3 baseline freeze:
+
+- `contracts/p3-baseline.v0.json`
+- `docs/validation/p3_baseline_freeze_2026_06_22.md`
+
 `eco-execution-graph`:
 
 ```powershell
@@ -94,6 +99,8 @@ Outputs:
   safety constants are spread across versioned scripts.
 - `kb_product_manifest.v1` is now formalized in `eco-ontology`; the KB graph
   package manifest is validated by path and sha256 in report-only mode.
+- P3-1/P3-2 build-entry governance is additive. It should prove output
+  hash/manifest equivalence before any blocking cutover.
 
 ## Suggested report format
 
