@@ -5,6 +5,7 @@
   "owner": "ETO platform engineering",
   "contracts": {
     "semantic_event": "ecocheck.semantic_event.v2",
+    "profile_gap_confirmed": "ecocheck.profile_gap_confirmed.v1",
     "release_manifest": "eco-ontology.release_manifest.v0",
     "consumer_compatibility_matrix": "eco-ontology.consumer_compatibility_matrix.v0"
   },
@@ -13,6 +14,11 @@
       "path": "schemas/semantic_event.v2.schema.json",
       "sha256": "report-only-generated",
       "description": "EcoCheck field fact event payload contract"
+    },
+    {
+      "path": "schemas/profile_gap_confirmed.v1.schema.json",
+      "sha256": "report-only-generated",
+      "description": "EcoCheck company-profile gap confirmation contract"
     },
     {
       "path": "schemas/release_manifest.schema.json",

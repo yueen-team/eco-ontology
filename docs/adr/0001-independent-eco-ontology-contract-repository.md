@@ -170,6 +170,7 @@ Until then, red findings are migration work, not CI failures.
 The first contract families are:
 
 - `semantic_event.v2`
+- `profile_gap_confirmed.v1`
 - `risk_domain`
 - `issue_type`
 - `observed_signal`
@@ -181,6 +182,33 @@ The first contract families are:
 - `graph_source`
 - `release_manifest`
 - `consumer_compatibility_matrix`
+
+## EcoCheck drift decisions on 2026-06-22
+
+These decisions settle the first `semantic_event.v2` report-only drift found by
+EcoCheck:
+
+- Event enum: current EcoCheck producer names are first-class contract values:
+  `ISSUE_ETO_REVIEWED`, `HEALTH_REPORT_ITEM_CONFIRMED`,
+  `RECTIFICATION_VERIFIED`, and `RECTIFICATION_REJECTED`. Generic event names
+  remain accepted for generated projections, but graph intake must not invent
+  undocumented aliases.
+- `business_key`: it is the canonical idempotency key for graph intake. EcoCheck
+  may keep a duplicate outbox-table column for indexing and retry, but before
+  blocking mode the graph request must receive the same value either in the
+  payload root or an explicit transport envelope.
+- `environmental_risk_category.dimension`: `dimension` is canonical for S01-S13.
+  EcoCheck's current `id` key is accepted as a report-only migration alias and
+  should be normalized to `dimension` by generated projections.
+- `evidence_chain`: the canonical semantic-event shape is an array of sanitized
+  evidence point summaries. Earlier object summary form is accepted only as a
+  migration-compatible fixture shape.
+- `recheck_points`: canonical shape is `string[]`. EcoCheck's current TEXT value
+  is accepted as a report-only migration alias and should be normalized to a
+  one-element array before blocking mode.
+- `COMPANY_PROFILE_GAP_CONFIRMED`: this event is not a `semantic_event.v2` field
+  issue or rectification fact. It belongs to the separate
+  `ecocheck.profile_gap_confirmed.v1` contract.
 
 ## Consequences
 

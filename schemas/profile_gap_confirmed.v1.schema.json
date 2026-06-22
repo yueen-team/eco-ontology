@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/profile_gap_confirmed.v1",
+  "title": "EcoCheckProfileGapConfirmedV1",
+  "description": "Report-only shared contract for EcoCheck company-profile gap confirmations. This is intentionally separate from semantic_event.v2 because it is an enterprise applicability signal, not a field issue or rectification fact.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "event_type",
+    "company_id",
+    "gap_dimension",
+    "eso_decision",
+    "site_verification",
+    "knowledge_approval_basis"
+  ],
+  "properties": {
+    "schema_version": { "const": "ecocheck.profile_gap_confirmed.v1" },
+    "event_type": { "const": "COMPANY_PROFILE_GAP_CONFIRMED" },
+    "company_id": { "type": "string", "minLength": 1 },
+    "industry_code": { "type": ["string", "null"] },
+    "gap_dimension": { "type": "string", "minLength": 1 },
+    "eso_decision": { "const": "PRESENT" },
+    "site_verification": { "const": "ESO_CONFIRMED_APPLICABLE" },
+    "knowledge_approval_basis": { "type": "string", "minLength": 1 },
+    "recall_basis": {
+      "type": ["object", "array", "string", "null"],
+      "description": "Sanitized recall provenance only. Do not include raw report text, raw evidence, file ids, GPS, or secrets."
+    },
+    "region": { "type": ["string", "null"] },
+    "raw_attachment": false,
+    "raw_attachments": false,
+    "attachment_url": false,
+    "photo_url": false,
+    "gps": false,
+    "latitude": false,
+    "longitude": false,
+    "authorization": false,
+    "token": false,
+    "secret": false,
+    "law_full_text": false,
+    "raw_report_text": false
+  },
+  "additionalProperties": true
+}

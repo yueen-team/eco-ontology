@@ -33,6 +33,7 @@ not fail CI, until a later ADR promotes a check to blocking.
 | ECOCHECK-001 | EcoCheck                    | `semantic_event_outbox.payload_json` | `semantic_event.v2`                                   | invalid rows by event id and field path               | First pass can run against synthetic or staging rows.        |
 | ECOCHECK-002 | EcoCheck                    | graph push request body              | `semantic_event.v2` plus sanitized transport envelope | payload keys removed/changed by sanitizer             | Confirms the push worker does not drift from outbox payload. |
 | ECOCHECK-003 | EcoCheck                    | generated semantic/rule projections  | ontology registry projections                         | unknown `deduct_rule_key`, risk domain, issue type    | Scoring values remain EcoCheck-owned.                        |
+| ECOCHECK-004 | EcoCheck                    | graph push idempotency key           | `semantic_event.v2` transport boundary                | missing or mismatched `business_key`                  | `business_key` must reach graph intake before blocking mode. |
 | GRAPH-001    | eco-execution-graph         | graph nodes export                   | `graph_node`                                          | invalid nodes by `node_id` and field path             | Validate exported data, not only `node.schema.json`.         |
 | GRAPH-002    | eco-execution-graph         | graph edges export                   | `graph_edge`                                          | invalid edges by `edge_id` and field path             | Expect initial enum drift findings.                          |
 | GRAPH-003    | eco-execution-graph         | graph sources export                 | `graph_source`                                        | invalid sources by `source_id` and field path         | Expect source type reconciliation.                           |
@@ -79,6 +80,12 @@ Outputs:
   import path still depends on local paths and hard-coded column expectations.
 - EcoCheck currently builds `ecocheck.semantic_event.v2` payloads, but outgoing
   payload validation is not yet centralized on a shared JSON Schema.
+- EcoCheck current payload uses `environmental_risk_category.id`,
+  array-shaped `evidence_chain`, and TEXT `recheck_points`. The contract accepts
+  these in report-only mode while documenting `dimension`, evidence-point arrays,
+  and `string[]` recheck points as the blocking-mode target.
+- `COMPANY_PROFILE_GAP_CONFIRMED` is intentionally separate:
+  `ecocheck.profile_gap_confirmed.v1`.
 - eco-semantic-knowledge-base has approved manifests, but build versioning and
   safety constants are spread across versioned scripts.
 

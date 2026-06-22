@@ -6,13 +6,22 @@
       "repo": "EcoCheck",
       "owner": "EcoCheck application engineering",
       "validation_mode": "report-only",
-      "contracts": ["ecocheck.semantic_event.v2"],
+      "contracts": [
+        "ecocheck.semantic_event.v2",
+        "ecocheck.profile_gap_confirmed.v1"
+      ],
       "known_drift": [
         {
           "check_id": "ECOCHECK-001",
           "severity": "yellow",
           "owner": "EcoCheck",
-          "summary": "Outgoing payload validation is not yet centralized on the shared schema."
+          "summary": "Outgoing payload validation is report-only. semantic_event.v2 accepts current EcoCheck producer event names plus transitional aliases for risk category, evidence chain, and recheck points."
+        },
+        {
+          "check_id": "ECOCHECK-004",
+          "severity": "yellow",
+          "owner": "EcoCheck",
+          "summary": "business_key is canonical for graph idempotency and should be present in the outgoing payload or explicit transport envelope before blocking mode."
         }
       ]
     },
@@ -23,6 +32,7 @@
       "validation_mode": "report-only",
       "contracts": [
         "ecocheck.semantic_event.v2",
+        "ecocheck.profile_gap_confirmed.v1",
         "graph_node",
         "graph_edge",
         "graph_source",

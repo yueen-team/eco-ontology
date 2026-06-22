@@ -21,7 +21,12 @@
   "properties": {
     "schema_version": { "const": "ecocheck.semantic_event.v2" },
     "event_type": {
+      "description": "Canonical EcoCheck semantic event types. Current producer event names are accepted directly; generic names are retained for forward-compatible generated projections.",
       "enum": [
+        "ISSUE_ETO_REVIEWED",
+        "HEALTH_REPORT_ITEM_CONFIRMED",
+        "RECTIFICATION_VERIFIED",
+        "RECTIFICATION_REJECTED",
         "FIELD_ISSUE_RECORDED",
         "FIELD_ISSUE_REVIEWED",
         "RECTIFICATION_REQUIRED",
@@ -34,7 +39,11 @@
     "occurred_at": { "type": "string" },
     "field_issue_uid": { "type": "string", "minLength": 1 },
     "event_id": { "type": "string", "minLength": 1 },
-    "business_key": { "type": "string", "minLength": 1 },
+    "business_key": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Canonical graph idempotency key. EcoCheck may also store the same value in the outbox row, but graph consumers should receive it in the payload or an explicit transport envelope before this check becomes blocking."
+    },
     "trace_ref": { "type": "object" },
     "source_context": {
       "type": "object",
@@ -64,10 +73,12 @@
     },
     "environmental_risk_category": {
       "type": "object",
-      "required": ["dimension"],
+      "description": "`dimension` is the canonical S01-S13 risk-domain key. `id` is accepted as a legacy EcoCheck alias during report-only migration.",
+      "anyOf": [{ "required": ["dimension"] }, { "required": ["id"] }],
       "additionalProperties": true,
       "properties": {
         "dimension": { "type": "string", "minLength": 1 },
+        "id": { "type": "string", "minLength": 1 },
         "name": { "type": "string" }
       }
     },
@@ -85,15 +96,32 @@
       }
     },
     "evidence_chain": {
-      "type": "object",
-      "additionalProperties": true,
-      "properties": {
-        "evidence_count": { "type": "integer", "minimum": 0 },
-        "evidence_types": {
+      "description": "Canonical shape is an array of sanitized evidence-point summaries. A summary object is accepted during report-only migration for earlier generated fixtures.",
+      "oneOf": [
+        {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "point_type": { "type": ["string", "null"] },
+              "validity": { "type": ["string", "null"] },
+              "missing_flag": { "type": "boolean" }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "evidence_count": { "type": "integer", "minimum": 0 },
+            "evidence_types": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
         }
-      }
+      ]
     },
     "rectification": {
       "type": "object",
@@ -102,15 +130,28 @@
         "requirement": { "type": "string", "maxLength": 1200 },
         "status": { "type": "string" },
         "recheck_points": {
-          "type": "array",
-          "items": { "type": "string" }
+          "oneOf": [
+            {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            { "type": "string", "maxLength": 1200 },
+            { "type": "null" }
+          ]
         }
       }
     },
     "rectification_history_summary": { "type": "object" },
     "recheck_points": {
-      "type": "array",
-      "items": { "type": "string" }
+      "description": "Canonical shape is an array of recheck point strings. A single string is accepted during report-only migration because EcoCheck stores the field as TEXT today.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        { "type": "string", "maxLength": 1200 },
+        { "type": "null" }
+      ]
     },
     "ai_regulatory_references": {
       "type": "array",
