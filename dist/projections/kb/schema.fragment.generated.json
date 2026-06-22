@@ -1,0 +1,38 @@
+{
+  "fragments": {
+    "forbidden_payload_policy": {
+      "contains_full_law_text": false,
+      "contains_gps": false,
+      "contains_private_enterprise_data": false,
+      "contains_raw_attachments": false,
+      "contains_secrets": false
+    },
+    "kb_product_manifest_schema": "schemas/kb_product_manifest.v1.schema.json",
+    "legal_basis_ref_kind": {
+      "enum": [
+        "legal_ref.law",
+        "legal_ref.regulation",
+        "legal_ref.standard",
+        "legal_ref.clause",
+        "legal_ref.local_policy"
+      ]
+    }
+  },
+  "generated_by": {
+    "generator": "scripts/generate-projections.mjs",
+    "generator_version": "1",
+    "ontology_version": "0.1.0",
+    "source_sha256": {
+      "registries/entity_anchors.v1.json": "d3c81a1ef9217514cb938f3eb6b6caf05abce1eaf9ef24c3b2a476c3b1975d3d",
+      "registries/issue_types.v1.json": "4603c6abfd2c29f5eae970ec039ec532174ce6ffae85d65a84c86810754654d1",
+      "registries/legal_basis_ref.v1.json": "3ba958736be66b9d9ed917dbf9144d22efccc63bcf90b5887c80e39f0e699457",
+      "registries/observed_signals.v1.json": "86fc1aa045c758df44d1675ff6f2a3e4d72040d94d57fd8454cd5c1b8b59590d",
+      "registries/risk_domains.v1.json": "766485ce94a36290d8a46800c700fa42b6383f503e175b06b0f1a1cc6e78bb0c",
+      "schemas/kb_product_manifest.v1.schema.json": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3",
+      "schemas/ontology_registry.v1.schema.json": "c0a97784d8f51243468e40f4268caa0f308bcf77e1491aded54a517044c0aba2",
+      "schemas/profile_gap_confirmed.v1.schema.json": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383",
+      "schemas/semantic_event.v2.schema.json": "d4d0bda9d608baa69970df1260446f00c9e26884c7d773d77a5ec847f5e4f737"
+    }
+  },
+  "schema_version": "eco-ontology.projection.kb.schema_fragment.v1"
+}

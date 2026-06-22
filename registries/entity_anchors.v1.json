@@ -1,0 +1,72 @@
+{
+  "schema_version": "eco-ontology.registry.v1",
+  "registry_id": "entity_anchors.v1",
+  "ontology_version": "0.1.0",
+  "owner": "eco-ontology",
+  "description": "Shared entity anchor classes. Entries describe anchor classes only, not real enterprise identities.",
+  "entries": [
+    {
+      "id": "anchor.enterprise",
+      "display_name": "Enterprise",
+      "description": "A regulated enterprise reference represented by a non-private identifier in consumer systems.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["entity_anchor"]
+    },
+    {
+      "id": "anchor.facility",
+      "display_name": "Facility",
+      "description": "A pollution-control or production facility relevant to an environmental review.",
+      "owner": "eco-execution-graph",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["entity_anchor"]
+    },
+    {
+      "id": "anchor.emission_point",
+      "display_name": "Emission point",
+      "description": "A wastewater, exhaust, noise, or other emission/discharge point class.",
+      "owner": "eco-execution-graph",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["entity_anchor"]
+    },
+    {
+      "id": "anchor.waste_storage_area",
+      "display_name": "Waste storage area",
+      "description": "A solid-waste or hazardous-waste storage area class.",
+      "owner": "eco-execution-graph",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["entity_anchor"]
+    },
+    {
+      "id": "anchor.material_or_substance",
+      "display_name": "Material or substance",
+      "description": "A pollutant, raw material, auxiliary material, waste, or chemical class.",
+      "owner": "eco-semantic-knowledge-base",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["entity_anchor"]
+    },
+    {
+      "id": "anchor.document",
+      "display_name": "Document",
+      "description": "A permit, ledger, monitoring report, emergency plan, or other document class without raw text.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["entity_anchor"]
+    },
+    {
+      "id": "anchor.legal_basis",
+      "display_name": "Legal basis",
+      "description": "A law, standard, clause, or policy reference identifier without full text.",
+      "owner": "eco-semantic-knowledge-base",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["entity_anchor", "legal_basis"]
+    }
+  ]
+}

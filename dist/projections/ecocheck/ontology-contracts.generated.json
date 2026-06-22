@@ -1,0 +1,92 @@
+{
+  "blocking_ready_checks": [
+    "schema_compile",
+    "safe_fixture_validation",
+    "registry_id_uniqueness",
+    "release_manifest_hashes"
+  ],
+  "contracts": {
+    "profile_gap_confirmed_v1": {
+      "schema_path": "schemas/profile_gap_confirmed.v1.schema.json",
+      "schema_version": "ecocheck.profile_gap_confirmed.v1"
+    },
+    "semantic_event_v2": {
+      "schema_path": "schemas/semantic_event.v2.schema.json",
+      "schema_version": "ecocheck.semantic_event.v2"
+    }
+  },
+  "generated_by": {
+    "generator": "scripts/generate-projections.mjs",
+    "generator_version": "1",
+    "ontology_version": "0.1.0",
+    "source_sha256": {
+      "registries/entity_anchors.v1.json": "d3c81a1ef9217514cb938f3eb6b6caf05abce1eaf9ef24c3b2a476c3b1975d3d",
+      "registries/issue_types.v1.json": "4603c6abfd2c29f5eae970ec039ec532174ce6ffae85d65a84c86810754654d1",
+      "registries/legal_basis_ref.v1.json": "3ba958736be66b9d9ed917dbf9144d22efccc63bcf90b5887c80e39f0e699457",
+      "registries/observed_signals.v1.json": "86fc1aa045c758df44d1675ff6f2a3e4d72040d94d57fd8454cd5c1b8b59590d",
+      "registries/risk_domains.v1.json": "766485ce94a36290d8a46800c700fa42b6383f503e175b06b0f1a1cc6e78bb0c",
+      "schemas/kb_product_manifest.v1.schema.json": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3",
+      "schemas/ontology_registry.v1.schema.json": "c0a97784d8f51243468e40f4268caa0f308bcf77e1491aded54a517044c0aba2",
+      "schemas/profile_gap_confirmed.v1.schema.json": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383",
+      "schemas/semantic_event.v2.schema.json": "d4d0bda9d608baa69970df1260446f00c9e26884c7d773d77a5ec847f5e4f737"
+    }
+  },
+  "registries": {
+    "entity_anchor_ids": [
+      "anchor.enterprise",
+      "anchor.facility",
+      "anchor.emission_point",
+      "anchor.waste_storage_area",
+      "anchor.material_or_substance",
+      "anchor.document",
+      "anchor.legal_basis"
+    ],
+    "issue_type_ids": [
+      "issue.missing_permit_or_approval",
+      "issue.uncontrolled_emission_or_discharge",
+      "issue.incomplete_monitoring_record",
+      "issue.improper_waste_storage",
+      "issue.facility_abnormal_operation",
+      "issue.incomplete_rectification",
+      "issue.entity_profile_gap",
+      "issue.unknown_or_needs_review"
+    ],
+    "legal_basis_ref_ids": [
+      "legal_ref.law",
+      "legal_ref.regulation",
+      "legal_ref.standard",
+      "legal_ref.clause",
+      "legal_ref.local_policy"
+    ],
+    "observed_signal_ids": [
+      "signal.photo_point_present",
+      "signal.ledger_or_record_present",
+      "signal.monitoring_value_present",
+      "signal.operator_statement_present",
+      "signal.facility_state_abnormal",
+      "signal.boundary_condition_unknown",
+      "signal.rectification_evidence_present"
+    ],
+    "risk_domain_ids": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S11",
+      "S12",
+      "S13"
+    ]
+  },
+  "report_only_checks": [
+    "real_cloudbase_smoke",
+    "real_graph_push_smoke",
+    "aggregate_eto_blind_review"
+  ],
+  "schema_version": "eco-ontology.projection.ecocheck.v1"
+}

@@ -77,7 +77,7 @@
         "info": 2
       },
       "schema_status": "formal_kb_schema_present",
-      "reported_graph_package_manifest_sha256": "sha256:e6bd2536ed58dcc38661732620a6c4e8400a1b69ab11e764d4228fadc5971637"
+      "reported_graph_package_manifest_sha256": "sha256:0795f3b777ccc485af66f06e110f6941cafdc038c13be68005a242ba805b9910"
     }
   },
   "graph": {

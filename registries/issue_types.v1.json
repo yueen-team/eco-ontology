@@ -1,0 +1,81 @@
+{
+  "schema_version": "eco-ontology.registry.v1",
+  "registry_id": "issue_types.v1",
+  "ontology_version": "0.1.0",
+  "owner": "eco-ontology",
+  "description": "Shared issue-type keys for cross-repo validation. EcoCheck owns scoring and rule severity.",
+  "entries": [
+    {
+      "id": "issue.missing_permit_or_approval",
+      "display_name": "Missing permit or approval",
+      "description": "A required environmental permit, approval, filing, or applicability decision is absent or incomplete.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["issue_type", "governance"]
+    },
+    {
+      "id": "issue.uncontrolled_emission_or_discharge",
+      "display_name": "Uncontrolled emission or discharge",
+      "description": "A pollutant emission or discharge path lacks the expected control, collection, or treatment boundary.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["issue_type", "field_review"]
+    },
+    {
+      "id": "issue.incomplete_monitoring_record",
+      "display_name": "Incomplete monitoring record",
+      "description": "Monitoring, self-testing, online monitoring, or reporting evidence is missing or incomplete.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["issue_type", "evidence"]
+    },
+    {
+      "id": "issue.improper_waste_storage",
+      "display_name": "Improper waste storage",
+      "description": "Solid or hazardous waste storage does not match expected segregation, labeling, ledger, or containment practice.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["issue_type", "waste"]
+    },
+    {
+      "id": "issue.facility_abnormal_operation",
+      "display_name": "Facility abnormal operation",
+      "description": "A pollution-control facility is stopped, bypassed, abnormal, or lacks operating evidence.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["issue_type", "facility"]
+    },
+    {
+      "id": "issue.incomplete_rectification",
+      "display_name": "Incomplete rectification",
+      "description": "A rectification task lacks required completion evidence, recheck points, or closure confirmation.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["issue_type", "workflow"]
+    },
+    {
+      "id": "issue.entity_profile_gap",
+      "display_name": "Entity profile gap",
+      "description": "A human-reviewed enterprise applicability or profile signal is missing from the current profile.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["issue_type", "profile_gap"]
+    },
+    {
+      "id": "issue.unknown_or_needs_review",
+      "display_name": "Unknown or needs review",
+      "description": "A candidate issue cannot be safely normalized without human review.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["issue_type", "review_required"]
+    }
+  ]
+}

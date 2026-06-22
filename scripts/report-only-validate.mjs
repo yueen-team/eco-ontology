@@ -25,19 +25,24 @@ const kbRoot = process.env.ECO_KB_ROOT || "E:/eco-semantic-knowledge-base";
 const graphRoot = process.env.ECO_GRAPH_ROOT || "E:/eco-execution-graph";
 const ecoCheckRoot = process.env.ECOCHECK_ROOT || "E:/EcoCheck";
 const draft07SchemaUri = "http://json-schema.org/draft-07/schema#";
+const externalReportMaxAgeMs =
+  Number(process.env.ECO_ONTOLOGY_EXTERNAL_REPORT_MAX_AGE_HOURS || 168) *
+  60 *
+  60 *
+  1000;
 
 const checks = [
   {
     id: "ECO-ONTO-001",
     owner: "eco-ontology",
-    artifact: "contracts/release-manifest.v0.json",
-    schema: "schemas/release_manifest.schema.json",
+    artifact: "contracts/release-manifest.v1.json",
+    schema: "schemas/release_manifest.v1.schema.json",
   },
   {
     id: "CROSS-001",
     owner: "eco-ontology",
-    artifact: "contracts/consumer-compatibility-matrix.v0.json",
-    schema: "schemas/consumer_compatibility_matrix.schema.json",
+    artifact: "contracts/consumer-compatibility-matrix.v1.json",
+    schema: "schemas/consumer_compatibility_matrix.v1.schema.json",
   },
   {
     id: "ECOCHECK-001",
@@ -68,13 +73,33 @@ const schemaFiles = [
     path: "schemas/kb_product_manifest.v1.schema.json",
   },
   {
-    id: "SCHEMA-RELEASE-MANIFEST",
+    id: "SCHEMA-ONTOLOGY-REGISTRY",
+    path: "schemas/ontology_registry.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-RELEASE-MANIFEST-V0",
     path: "schemas/release_manifest.schema.json",
   },
   {
-    id: "SCHEMA-CONSUMER-COMPATIBILITY",
+    id: "SCHEMA-RELEASE-MANIFEST",
+    path: "schemas/release_manifest.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-CONSUMER-COMPATIBILITY-V0",
     path: "schemas/consumer_compatibility_matrix.schema.json",
   },
+  {
+    id: "SCHEMA-CONSUMER-COMPATIBILITY",
+    path: "schemas/consumer_compatibility_matrix.v1.schema.json",
+  },
+];
+
+const registryFiles = [
+  "registries/risk_domains.v1.json",
+  "registries/issue_types.v1.json",
+  "registries/observed_signals.v1.json",
+  "registries/entity_anchors.v1.json",
+  "registries/legal_basis_ref.v1.json",
 ];
 
 function resolvePath(path, base = root) {
@@ -108,6 +133,12 @@ function sha256(path, base = root) {
 
 function sha256Uri(path, base = root) {
   return `sha256:${sha256(path, base)}`;
+}
+
+function normalizeSha256(value) {
+  return String(value || "")
+    .replace(/^sha256:/, "")
+    .toLowerCase();
 }
 
 function addFinding(findings, severity, check, path, message) {
@@ -253,6 +284,44 @@ function validateSchemaFiles(findings) {
   }
 }
 
+function validateRegistryFiles(findings) {
+  const check = { id: "ECO-ONTO-REGISTRY-SHAPE", owner: "eco-ontology" };
+  const schema = tryReadJson(
+    findings,
+    { id: "SCHEMA-ONTOLOGY-REGISTRY", owner: "eco-ontology" },
+    "schemas/ontology_registry.v1.schema.json",
+  );
+  if (!schema) return;
+  for (const registryPath of registryFiles) {
+    const registry = tryReadJson(findings, check, registryPath);
+    if (!registry) continue;
+    validateJsonSchema(findings, check, registry, schema);
+    const seen = new Set();
+    for (const [index, entry] of (registry.entries || []).entries()) {
+      if (!entry?.id) continue;
+      if (seen.has(entry.id)) {
+        addFinding(
+          findings,
+          "red",
+          check,
+          `${registryPath}:$.entries[${index}].id`,
+          `Duplicate registry id ${entry.id}.`,
+        );
+      }
+      seen.add(entry.id);
+      if (entry.deprecated === true && entry.status !== "deprecated") {
+        addFinding(
+          findings,
+          "yellow",
+          check,
+          `${registryPath}:$.entries[${index}].deprecated`,
+          "Deprecated entries must use status=deprecated.",
+        );
+      }
+    }
+  }
+}
+
 function validateCompatibility(findings, check, matrix) {
   const consumers = matrix.consumers || [];
   for (const repo of [
@@ -280,16 +349,144 @@ function validateCompatibility(findings, check, matrix) {
         "Consumer row must list consumed contracts.",
       );
     }
-    if (consumer.validation_mode !== "report-only") {
+    if (
+      consumer.validation_mode !== "report-only" &&
+      !matrix.blocking_cutover_adr
+    ) {
       addFinding(
         findings,
         "yellow",
         check,
         `$.consumers[${index}].validation_mode`,
-        "First adoption pass should stay report-only unless a cutover ADR exists.",
+        "Non-report-only adoption requires a cutover ADR.",
+      );
+    }
+    const projectionCheck = { id: "CROSS-002", owner: "eco-ontology" };
+    for (const [projectionIndex, projection] of (
+      consumer.projection_artifacts || []
+    ).entries()) {
+      if (!projection.path || !projection.sha256) {
+        addFinding(
+          findings,
+          "red",
+          projectionCheck,
+          `$.consumers[${index}].projection_artifacts[${projectionIndex}]`,
+          "Projection artifact must include path and sha256.",
+        );
+        continue;
+      }
+      if (!existsSync(resolvePath(projection.path))) {
+        addFinding(
+          findings,
+          "red",
+          projectionCheck,
+          `$.consumers[${index}].projection_artifacts[${projectionIndex}].path`,
+          "Projection artifact path does not exist.",
+        );
+        continue;
+      }
+      if (projection.sha256 !== sha256(projection.path)) {
+        addFinding(
+          findings,
+          "red",
+          projectionCheck,
+          `$.consumers[${index}].projection_artifacts[${projectionIndex}].sha256`,
+          "Projection artifact hash does not match current file.",
+        );
+      }
+    }
+  }
+}
+
+function validateReferencedContractArtifactHashes(findings, check, container) {
+  const consumers = container.consumer_snapshots || container.consumers || [];
+  for (const [consumerIndex, consumer] of consumers.entries()) {
+    for (const [artifactIndex, artifact] of (
+      consumer.contract_artifacts || []
+    ).entries()) {
+      if (!artifact.manifest_path || !artifact.manifest_sha256) continue;
+      const artifactBase =
+        consumer.repo === "eco-semantic-knowledge-base" ? kbRoot : root;
+      if (!existsSync(resolvePath(artifact.manifest_path, artifactBase))) {
+        addFinding(
+          findings,
+          "red",
+          check,
+          `$.consumers[${consumerIndex}].contract_artifacts[${artifactIndex}].manifest_path`,
+          "Referenced manifest path does not exist.",
+        );
+        continue;
+      }
+      const actual = normalizeSha256(
+        sha256Uri(artifact.manifest_path, artifactBase),
+      );
+      const expected = normalizeSha256(artifact.manifest_sha256);
+      if (actual !== expected) {
+        addFinding(
+          findings,
+          "red",
+          check,
+          `$.consumers[${consumerIndex}].contract_artifacts[${artifactIndex}].manifest_sha256`,
+          `Referenced manifest sha256 does not match current file. expected=${expected} actual=${actual}`,
+        );
+      }
+    }
+  }
+}
+
+function validateLegacyP3KbManifestFreeze(findings) {
+  const check = {
+    id: "P3-KB-MANIFEST-FREEZE-HASH",
+    owner: "eco-ontology",
+  };
+  const baseline = tryReadJson(
+    findings,
+    check,
+    "contracts/p3-baseline.v0.json",
+  );
+  const releaseV0 = tryReadJson(
+    findings,
+    check,
+    "contracts/release-manifest.v0.json",
+  );
+  const matrixV0 = tryReadJson(
+    findings,
+    check,
+    "contracts/consumer-compatibility-matrix.v0.json",
+  );
+  if (!baseline || !releaseV0 || !matrixV0) return;
+
+  const actual = normalizeSha256(
+    sha256Uri("manifests/graph_kb_package_manifest_v1_0.json", kbRoot),
+  );
+  const references = [
+    [
+      "$.kb.graph_package_manifest.sha256",
+      baseline.kb?.graph_package_manifest?.sha256,
+    ],
+    [
+      "$.kb.report_only.reported_graph_package_manifest_sha256",
+      baseline.kb?.report_only?.reported_graph_package_manifest_sha256,
+    ],
+    [
+      "$.graph.upstream_lock.kb_graph_package_manifest_sha256",
+      baseline.graph?.upstream_lock?.kb_graph_package_manifest_sha256,
+    ],
+  ];
+  for (const [path, value] of references) {
+    if (normalizeSha256(value) !== actual) {
+      addFinding(
+        findings,
+        "red",
+        check,
+        `contracts/p3-baseline.v0.json:${path}`,
+        `KB graph package manifest hash must match the frozen manifest. expected=${normalizeSha256(value)} actual=${actual}`,
       );
     }
   }
+
+  validateReferencedContractArtifactHashes(findings, check, releaseV0);
+  validateReferencedContractArtifactHashes(findings, check, matrixV0);
 }
 
 function validateJsonSchema(findings, check, artifact, schema) {
@@ -441,18 +638,85 @@ function validateKbProductManifest(findings, check, manifest, schema) {
   }
 }
 
-function readExternalReport(path) {
+function validateExternalReportFreshness(findings, check, path, report) {
+  if (!report.checked_at) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      `${path}:$.checked_at`,
+      "External validation report must record checked_at.",
+    );
+    return;
+  }
+  const checkedAt = Date.parse(report.checked_at);
+  if (Number.isNaN(checkedAt)) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      `${path}:$.checked_at`,
+      "External validation report checked_at must be parseable.",
+    );
+    return;
+  }
+  if (Date.now() - checkedAt > externalReportMaxAgeMs) {
+    addFinding(
+      findings,
+      "yellow",
+      check,
+      `${path}:$.checked_at`,
+      `External validation report is older than ${externalReportMaxAgeMs / 3600000} hours.`,
+    );
+  }
+}
+
+function readExternalReport(findings, check, path) {
   const resolvedPath = resolvePath(path);
-  if (!existsSync(resolvedPath)) return null;
-  return JSON.parse(readFileSync(resolvedPath, "utf8"));
+  if (!existsSync(resolvedPath)) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      path,
+      "Required external validation report is missing.",
+    );
+    return null;
+  }
+  try {
+    const report = JSON.parse(readFileSync(resolvedPath, "utf8"));
+    validateExternalReportFreshness(findings, check, path, report);
+    return report;
+  } catch (error) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      path,
+      `Unable to read external validation report: ${error.message}`,
+    );
+    return null;
+  }
 }
 
 function validateGraphReport(findings) {
   const check = { id: "GRAPH-REPORT-ONLY", owner: "eco-execution-graph" };
-  const report = readExternalReport(
-    join(graphRoot, "reports", "ontology-contract-report-only-validation.json"),
+  const reportPath = join(
+    graphRoot,
+    "reports",
+    "ontology-contract-report-only-validation.json",
   );
+  const report = readExternalReport(findings, check, reportPath);
   if (!report) return;
+  if (report.consumer_repo && report.consumer_repo !== "eco-execution-graph") {
+    addFinding(
+      findings,
+      "red",
+      check,
+      `${reportPath}:$.consumer_repo`,
+      "Graph external report belongs to an unexpected consumer.",
+    );
+  }
   if (
     report.summary?.red !== 0 ||
     report.summary?.yellow !== 0 ||
@@ -470,15 +734,23 @@ function validateGraphReport(findings) {
 
 function validateEcoCheckValidFixtures(findings) {
   const check = { id: "ECOCHECK-VALID-FIXTURES", owner: "EcoCheck" };
-  const report = readExternalReport(
-    join(
-      ecoCheckRoot,
-      "docs",
-      "validation",
-      "semantic-event-report-only.latest.json",
-    ),
+  const reportPath = join(
+    ecoCheckRoot,
+    "docs",
+    "validation",
+    "semantic-event-report-only.latest.json",
   );
+  const report = readExternalReport(findings, check, reportPath);
   if (!report) return;
+  if (report.consumer_repo && report.consumer_repo !== "EcoCheck") {
+    addFinding(
+      findings,
+      "red",
+      check,
+      `${reportPath}:$.consumer_repo`,
+      "EcoCheck external report belongs to an unexpected consumer.",
+    );
+  }
   for (const testCase of report.cases || []) {
     if (testCase.expected_valid !== true) continue;
     for (const statusField of [
@@ -573,12 +845,32 @@ function createBlockingReadyChecks(findings) {
         "Schema enum arrays have no duplicate values, including semantic_event.v2 event_type.",
     },
     {
+      check_id: "ECO-ONTO-REGISTRY-SHAPE",
+      status: hasBlockingFinding(findings, "ECO-ONTO-REGISTRY-SHAPE")
+        ? "not_ready"
+        : "ready",
+      evidence:
+        "Registry files validate against ontology_registry.v1, include ownership/status fields, and have unique ids.",
+    },
+    {
       check_id: "ECO-ONTO-RELEASE-MANIFEST-SHAPE",
       status: hasBlockingFinding(findings, "ECO-ONTO-001")
         ? "not_ready"
         : "ready",
       evidence:
         "release manifest required fields and artifact path/hash coverage validate locally.",
+    },
+    {
+      check_id: "CROSS-001-COMPATIBILITY-MATRIX",
+      status: hasBlockingFinding(findings, "CROSS-001") ? "not_ready" : "ready",
+      evidence:
+        "Consumer compatibility matrix validates and includes all three consumer rows.",
+    },
+    {
+      check_id: "CROSS-002-PROJECTION-HASH",
+      status: hasBlockingFinding(findings, "CROSS-002") ? "not_ready" : "ready",
+      evidence:
+        "Consumer projection artifacts exist and match compatibility matrix sha256 values.",
     },
     {
       check_id: "GRAPH-REPORT-ONLY-CLEAN",
@@ -593,6 +885,14 @@ function createBlockingReadyChecks(findings) {
       status: hasBlockingFinding(findings, "KB-001") ? "not_ready" : "ready",
       evidence:
         "KB graph package manifest validates against kb_product_manifest.v1 and each output path has matching sha256.",
+    },
+    {
+      check_id: "P3-KB-MANIFEST-FREEZE-HASH",
+      status: hasBlockingFinding(findings, "P3-KB-MANIFEST-FREEZE-HASH")
+        ? "not_ready"
+        : "ready",
+      evidence:
+        "P3 baseline, release manifest, and compatibility matrix pin the same KB graph package manifest sha256.",
     },
     {
       check_id: "ONTOLOGY-SAFE-SAMPLES",
@@ -646,6 +946,7 @@ function createExternalGates() {
 
 const findings = [];
 validateSchemaFiles(findings);
+validateRegistryFiles(findings);
 for (const check of checks) {
   const artifact = tryReadJson(
     findings,
@@ -669,6 +970,7 @@ for (const check of checks) {
     validateKbProductManifest(findings, check, artifact, schema);
 }
 validateKnownSchemaSamples(findings);
+validateLegacyP3KbManifestFreeze(findings);
 validateGraphReport(findings);
 validateEcoCheckValidFixtures(findings);
 
@@ -685,7 +987,7 @@ const report = {
     ? "ECO-ONTOLOGY-SCHEMA-BLOCKING-GATE"
     : "ECO-ONTOLOGY-REPORT-ONLY",
   mode,
-  ontology_version: "0.0.0-report-only.2026-06-22",
+  ontology_version: readJson("package.json").version,
   checked_at: new Date().toISOString(),
   summary,
   inputs: {

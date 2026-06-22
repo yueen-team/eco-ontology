@@ -1,0 +1,126 @@
+{
+  "schema_version": "eco-ontology.registry.v1",
+  "registry_id": "risk_domains.v1",
+  "ontology_version": "0.1.0",
+  "owner": "eco-ontology",
+  "description": "Canonical S01-S13 environmental risk domains shared as identifiers and labels only.",
+  "entries": [
+    {
+      "id": "S01",
+      "display_name": "Air emissions",
+      "description": "Air pollutant emission control and emission-point management.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "field_review"]
+    },
+    {
+      "id": "S02",
+      "display_name": "Wastewater discharge",
+      "description": "Wastewater collection, treatment, discharge, and monitoring boundaries.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "field_review"]
+    },
+    {
+      "id": "S03",
+      "display_name": "Solid waste",
+      "description": "General industrial solid-waste storage, transfer, and disposal control.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "field_review"]
+    },
+    {
+      "id": "S04",
+      "display_name": "Hazardous waste",
+      "description": "Hazardous-waste identification, storage, ledger, transfer, and disposal control.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "field_review"]
+    },
+    {
+      "id": "S05",
+      "display_name": "Noise and vibration",
+      "description": "Boundary noise, equipment noise, and vibration management signals.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "field_review"]
+    },
+    {
+      "id": "S06",
+      "display_name": "Soil and groundwater",
+      "description": "Soil, groundwater, seepage, and anti-leakage management signals.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "field_review"]
+    },
+    {
+      "id": "S07",
+      "display_name": "Chemicals and materials",
+      "description": "Chemical storage, handling, labeling, and containment controls.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "field_review"]
+    },
+    {
+      "id": "S08",
+      "display_name": "Permits and approvals",
+      "description": "Permit, approval, applicability, and filing boundary signals.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "governance"]
+    },
+    {
+      "id": "S09",
+      "display_name": "Monitoring and reporting",
+      "description": "Monitoring, self-testing, online monitoring, and report submission signals.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "governance"]
+    },
+    {
+      "id": "S10",
+      "display_name": "Emergency preparedness",
+      "description": "Emergency plan, drill, response material, and incident readiness signals.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "governance"]
+    },
+    {
+      "id": "S11",
+      "display_name": "Facility operation",
+      "description": "Pollution-control facility operation, maintenance, and abnormal-state signals.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "field_review"]
+    },
+    {
+      "id": "S12",
+      "display_name": "Rectification and closure",
+      "description": "Issue rectification, recheck, closure, and follow-up verification signals.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "workflow"]
+    },
+    {
+      "id": "S13",
+      "display_name": "Other environmental compliance",
+      "description": "Environmental compliance signals that do not fit S01-S12 and need review.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["risk_domain", "review_required"]
+    }
+  ]
+}

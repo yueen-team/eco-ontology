@@ -4,9 +4,11 @@
 semantic ontology shared by EcoCheck, eco-execution-graph, and
 eco-semantic-knowledge-base.
 
-This repository starts as a governance and contract source. It does not yet
-change any consumer repository. Adoption begins in report-only mode so the
-three systems can discover schema drift before any CI gate becomes blocking.
+This repository is now a governance and contract source with a consumable
+`0.1.0` package surface. Adoption still separates closed-world local gates from
+real-environment evidence: schema, registry, projection, and hash checks can be
+blocking, while live Tencent RAG, CloudBase/WeCom, government lineage import,
+and EcoCheck human review evidence remain report-only or external.
 
 ## Scope
 
@@ -35,17 +37,27 @@ across the three systems:
 contracts/          Versioned contract bundles and compatibility matrices.
 registries/         Canonical ontology registries, kept data-first.
 schemas/            JSON Schemas and generated schema projections.
+dist/projections/   Deterministic generated consumer projections.
 docs/adr/           Architecture decision records.
 docs/validation/    Report-only validation plan and checklists.
 reports/            Local validation reports, ignored unless explicitly kept.
 ```
 
-## First adoption path
+## v0.1.0 package
 
-1. Freeze the current three-repo contract baseline.
-2. Run report-only validators against current artifacts.
-3. Reconcile schema/data drift without changing runtime behavior.
-4. Publish `eco-ontology` v0 with compatibility notes.
-5. Generate projections for EcoCheck, eco-execution-graph, and
-   eco-semantic-knowledge-base.
-6. Turn selected validators from report-only into blocking gates after an ADR.
+- `contracts/release-manifest.v1.json`
+- `contracts/consumer-compatibility-matrix.v1.json`
+- `registries/*.v1.json`
+- `dist/projections/ecocheck/ontology-contracts.generated.json`
+- `dist/projections/graph/*.generated.json`
+- `dist/projections/kb/*.generated.json`
+
+## Common commands
+
+```powershell
+pnpm projections:generate
+pnpm projections:check
+pnpm release:manifest:update
+pnpm release:manifest:check
+pnpm verify:all
+```

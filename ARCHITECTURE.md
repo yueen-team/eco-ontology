@@ -19,6 +19,7 @@ through versioned releases instead of source-code convention.
 - Release manifests and sha256 coverage.
 - Consumer compatibility matrices.
 - Generator specifications and report-only validation definitions.
+- Deterministic consumer projections generated from schemas and registries.
 
 `eco-ontology` does not own:
 
@@ -33,6 +34,7 @@ through versioned releases instead of source-code convention.
 contracts/          Versioned release bundles and compatibility records.
 registries/         Canonical ontology keys and labels.
 schemas/            JSON Schemas for shared contracts.
+dist/projections/   Generated consumer projection artifacts.
 docs/adr/           Long-lived architecture and ownership decisions.
 docs/api/           Contract interface documentation.
 docs/validation/    Report-only validation plans and checklists.
@@ -41,11 +43,16 @@ verify/             Local verification entrypoints and AFK config.
 scripts/            Local automation, BDD export, and Git workflow hooks.
 ```
 
-## Adoption Model
+## v0.1.0 Adoption Model
 
-The repository starts in report-only mode. Validators should first measure drift
-against current consumer artifacts. A later ADR is required before any validator
-becomes a blocking gate.
+Closed-world local gates may block after ADR-0003: schema compile, enum
+uniqueness, registry shape/id uniqueness, release manifest hashes,
+compatibility matrix shape, projection hash drift, synthetic safe fixtures, and
+KB product manifest path/hash coverage.
+
+Consumer-owned runtime evidence remains report-only or external until the owner
+repo records clean evidence: live Tencent RAG, CloudBase/WeCom, government
+lineage import, graph push smoke, and EcoCheck aggregate plus ETO blind review.
 
 ## Performance Notes
 

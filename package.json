@@ -1,6 +1,6 @@
 {
   "name": "@yueen-team/eco-ontology",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.34.3",
@@ -8,9 +8,13 @@
   "scripts": {
     "prepare": "git config core.hooksPath .husky",
     "check": "node verify/verify.mjs",
+    "projections:generate": "node scripts/generate-projections.mjs",
+    "projections:check": "node scripts/generate-projections.mjs --check",
+    "release:manifest:update": "node scripts/update-release-manifest.mjs",
+    "release:manifest:check": "node scripts/update-release-manifest.mjs --check",
     "validate:report-only": "node scripts/report-only-validate.mjs",
     "validate:blocking": "node scripts/report-only-validate.mjs --blocking",
-    "verify:all": "pnpm check && pnpm validate:report-only && pnpm validate:blocking && pnpm format:check",
+    "verify:all": "pnpm projections:check && pnpm release:manifest:check && pnpm check && pnpm validate:report-only && pnpm validate:blocking && pnpm format:check",
     "bdd:export": "node scripts/export-bdd.mjs",
     "format:check": "prettier --check .",
     "format": "prettier --write .",

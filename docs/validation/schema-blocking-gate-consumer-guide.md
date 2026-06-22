@@ -23,6 +23,9 @@ failures include:
 - Invalid release manifest shape, missing artifact path, or mismatched artifact
   hash.
 - Invalid consumer compatibility matrix shape.
+- Invalid registry shape, duplicate registry ids, or missing ownership/status
+  fields.
+- Generated projection drift or projection sha256 mismatch.
 - Invalid safe sample instance for `semantic_event.v2` or
   `profile_gap_confirmed.v1`.
 - Invalid `kb_product_manifest.v1` instance, missing KB output path, or
@@ -35,8 +38,9 @@ failures include:
 - `schemas/semantic_event.v2.schema.json`
 - `schemas/profile_gap_confirmed.v1.schema.json`
 - `schemas/kb_product_manifest.v1.schema.json`
-- `schemas/release_manifest.schema.json`
-- `schemas/consumer_compatibility_matrix.schema.json`
+- `schemas/ontology_registry.v1.schema.json`
+- `schemas/release_manifest.v1.schema.json`
+- `schemas/consumer_compatibility_matrix.v1.schema.json`
 
 ## Consumer Notes
 

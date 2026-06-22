@@ -12,6 +12,7 @@
 - `contracts/`: versioned contract bundles.
 - `registries/`: shared ontology registries.
 - `schemas/`: JSON Schema source files.
+- `dist/projections/`: generated consumer projection artifacts.
 - `specs/`: BDD behavior specs and pending domain decisions.
 - `verify/`: verification entrypoints and AFK test configuration.
 - `scripts/git-workflow/`: reusable Git workflow hook scripts.
@@ -20,6 +21,8 @@
 
 ```powershell
 pnpm install
+pnpm projections:generate
+pnpm release:manifest:update
 pnpm verify:all
 pnpm check
 pnpm bdd:export
@@ -36,6 +39,6 @@ pnpm format:check
 
 ## Current Project Shape
 
-This is currently a contract-governance repository. The first implementation
-work should add schema files, registry files, report-only validators, and
-synthetic fixtures before any consumer repository is changed.
+This is a contract-governance repository with a consumable v0.1.0 package.
+Schema, registry, manifest, and projection checks are local closed-world gates;
+consumer runtime and real-environment checks stay in the owning repositories.

@@ -1,0 +1,72 @@
+{
+  "schema_version": "eco-ontology.registry.v1",
+  "registry_id": "observed_signals.v1",
+  "ontology_version": "0.1.0",
+  "owner": "eco-ontology",
+  "description": "Sanitized observation signal keys. Values point to signal classes, not private evidence or attachments.",
+  "entries": [
+    {
+      "id": "signal.photo_point_present",
+      "display_name": "Photo point present",
+      "description": "A sanitized photo-point summary exists without storing the raw attachment.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["observed_signal", "evidence"]
+    },
+    {
+      "id": "signal.ledger_or_record_present",
+      "display_name": "Ledger or record present",
+      "description": "A ledger, record, or register summary is available for review.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["observed_signal", "evidence"]
+    },
+    {
+      "id": "signal.monitoring_value_present",
+      "display_name": "Monitoring value present",
+      "description": "A monitoring or testing value summary is available without raw report text.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["observed_signal", "monitoring"]
+    },
+    {
+      "id": "signal.operator_statement_present",
+      "display_name": "Operator statement present",
+      "description": "A sanitized operator or reviewer statement summary is available.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["observed_signal", "review"]
+    },
+    {
+      "id": "signal.facility_state_abnormal",
+      "display_name": "Facility state abnormal",
+      "description": "A facility status summary indicates stopped, bypassed, damaged, or abnormal operation.",
+      "owner": "eco-execution-graph",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["observed_signal", "facility"]
+    },
+    {
+      "id": "signal.boundary_condition_unknown",
+      "display_name": "Boundary condition unknown",
+      "description": "A required applicability or operating boundary is unknown and needs review.",
+      "owner": "eco-ontology",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["observed_signal", "review_required"]
+    },
+    {
+      "id": "signal.rectification_evidence_present",
+      "display_name": "Rectification evidence present",
+      "description": "A sanitized rectification completion or recheck summary is available.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["observed_signal", "workflow"]
+    }
+  ]
+}

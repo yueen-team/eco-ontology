@@ -1,0 +1,141 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/release_manifest.v1",
+  "title": "EcoOntologyReleaseManifestV1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "ontology_version",
+    "release_date",
+    "owner",
+    "contracts",
+    "artifacts",
+    "consumer_snapshots",
+    "validation_summary",
+    "gate_status",
+    "rollback_notes"
+  ],
+  "properties": {
+    "schema_version": { "const": "eco-ontology.release_manifest.v1" },
+    "ontology_version": { "const": "0.1.0" },
+    "release_date": { "type": "string" },
+    "owner": { "type": "string", "minLength": 1 },
+    "ontology_baseline_commit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{7,40}$"
+    },
+    "contracts": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/artifact" }
+    },
+    "consumer_snapshots": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/definitions/consumer_snapshot" }
+    },
+    "validation_summary": {
+      "type": "object",
+      "required": ["mode", "red", "yellow", "info"],
+      "properties": {
+        "mode": { "enum": ["report-only", "blocking", "mixed"] },
+        "red": { "type": "integer", "minimum": 0 },
+        "yellow": { "type": "integer", "minimum": 0 },
+        "info": { "type": "integer", "minimum": 0 },
+        "reports": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "gate_status": {
+      "type": "object",
+      "required": ["blocking", "report_only"],
+      "properties": {
+        "blocking": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/gate" }
+        },
+        "report_only": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/gate" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "rollback_notes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "definitions": {
+    "artifact": {
+      "type": "object",
+      "required": ["path", "sha256", "kind", "description"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "kind": {
+          "enum": [
+            "schema",
+            "registry",
+            "contract",
+            "projection",
+            "documentation"
+          ]
+        },
+        "description": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "consumer_snapshot": {
+      "type": "object",
+      "required": ["repo", "branch", "commit", "validation_mode", "contracts"],
+      "properties": {
+        "repo": { "type": "string", "minLength": 1 },
+        "branch": { "type": "string", "minLength": 1 },
+        "commit": { "type": "string", "pattern": "^[a-f0-9]{7,40}$" },
+        "validation_mode": { "enum": ["report-only", "blocking", "mixed"] },
+        "contracts": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "projection_artifacts": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/artifact_ref" }
+        },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "artifact_ref": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "gate": {
+      "type": "object",
+      "required": ["gate_id", "status", "reason"],
+      "properties": {
+        "gate_id": { "type": "string", "minLength": 1 },
+        "status": {
+          "enum": ["blocking", "report-only", "external_required"]
+        },
+        "reason": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

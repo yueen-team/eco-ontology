@@ -7,6 +7,11 @@ Date: 2026-06-22
 Mode: report-only. These checks should produce reports and migration findings,
 not fail CI, until a later ADR promotes a check to blocking.
 
+ADR-0003 promotes closed-world v0.1.0 checks to blocking: schema compile,
+registry shape/id uniqueness, release manifest hashes, compatibility matrix
+shape, projection hash drift, synthetic safe fixtures, and KB manifest
+path/hash coverage. Real-environment evidence remains report-only or external.
+
 ## Principles
 
 - Validate actual produced artifacts, not only schema files.
@@ -52,6 +57,8 @@ not fail CI, until a later ADR promotes a check to blocking.
 `eco-ontology`:
 
 ```powershell
+pnpm projections:check
+pnpm release:manifest:check
 pnpm validate:report-only
 pnpm validate:blocking
 ```

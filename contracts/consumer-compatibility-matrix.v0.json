@@ -97,7 +97,7 @@
           "schema_status": "formal",
           "schema_path": "schemas/kb_product_manifest.v1.schema.json",
           "manifest_path": "E:/eco-semantic-knowledge-base/manifests/graph_kb_package_manifest_v1_0.json",
-          "manifest_sha256": "sha256:a89625ed33263e3f57adeb802ce98c69a25b155444334b74e80e37671359a1b3",
+          "manifest_sha256": "sha256:0795f3b777ccc485af66f06e110f6941cafdc038c13be68005a242ba805b9910",
           "report_path": "E:/eco-semantic-knowledge-base/reports/kb_report_only_contract_validation.json"
         }
       ]

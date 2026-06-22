@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/consumer_compatibility_matrix.v1",
+  "title": "EcoOntologyConsumerCompatibilityMatrixV1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "ontology_version",
+    "blocking_cutover_adr",
+    "consumers"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "eco-ontology.consumer_compatibility_matrix.v1"
+    },
+    "ontology_version": { "const": "0.1.0" },
+    "blocking_cutover_adr": { "type": "string", "minLength": 1 },
+    "consumers": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/definitions/consumer" }
+    }
+  },
+  "definitions": {
+    "consumer": {
+      "type": "object",
+      "required": [
+        "repo",
+        "owner",
+        "expected_path",
+        "baseline_branch",
+        "baseline_commit",
+        "validation_mode",
+        "contracts",
+        "projection_artifacts",
+        "blocking_checks",
+        "report_only_checks"
+      ],
+      "properties": {
+        "repo": { "type": "string", "minLength": 1 },
+        "owner": { "type": "string", "minLength": 1 },
+        "expected_path": { "type": "string", "minLength": 1 },
+        "baseline_branch": { "type": "string", "minLength": 1 },
+        "baseline_commit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{7,40}$"
+        },
+        "dry_run_branch": { "type": "string" },
+        "validation_mode": { "enum": ["report-only", "blocking", "mixed"] },
+        "contracts": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "projection_artifacts": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/projection_artifact" }
+        },
+        "blocking_checks": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/check" }
+        },
+        "report_only_checks": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/check" }
+        },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "projection_artifact": {
+      "type": "object",
+      "required": ["path", "sha256", "kind"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "kind": { "enum": ["json", "schema-fragment"] }
+      },
+      "additionalProperties": false
+    },
+    "check": {
+      "type": "object",
+      "required": ["check_id", "reason"],
+      "properties": {
+        "check_id": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,156 @@
+{
+  "schema_version": "eco-ontology.consumer_compatibility_matrix.v1",
+  "ontology_version": "0.1.0",
+  "blocking_cutover_adr": "docs/adr/0003-eco-ontology-v0-1-0-versioned-contract-package.md",
+  "consumers": [
+    {
+      "repo": "EcoCheck",
+      "owner": "EcoCheck application engineering",
+      "expected_path": "E:/EcoCheck",
+      "baseline_branch": "main",
+      "baseline_commit": "a2983d61c0ede6ff0506c3f1a900e67ff205f358",
+      "dry_run_branch": "codex/ontology-v0.1.0",
+      "validation_mode": "mixed",
+      "contracts": [
+        "ecocheck.semantic_event.v2",
+        "ecocheck.profile_gap_confirmed.v1",
+        "eco-ontology.registry.v1"
+      ],
+      "projection_artifacts": [
+        {
+          "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+          "sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457",
+          "kind": "json"
+        }
+      ],
+      "blocking_checks": [
+        {
+          "check_id": "ECOCHECK-SCHEMA-COMPILE",
+          "reason": "Shared semantic_event.v2 and profile_gap_confirmed.v1 schemas compile locally."
+        },
+        {
+          "check_id": "ECOCHECK-VALID-FIXTURES",
+          "reason": "Expected-valid synthetic fixtures pass schema, local payload, and graph request checks."
+        },
+        {
+          "check_id": "ECOCHECK-PROJECTION-HASH",
+          "reason": "Dry-run uses the v0.1.0 EcoCheck projection hash."
+        }
+      ],
+      "report_only_checks": [
+        {
+          "check_id": "ECOCHECK-GRAPH-PUSH-REAL-SMOKE",
+          "reason": "Requires real graph push or accepted staging evidence."
+        },
+        {
+          "check_id": "ECOCHECK-AGGREGATE-ETO-BLIND-REVIEW",
+          "reason": "Requires EcoCheck-owned human review evidence."
+        }
+      ],
+      "notes": "EcoCheck keeps scoring and field workflow ownership. Ontology only supplies schema and registry projection ids."
+    },
+    {
+      "repo": "eco-execution-graph",
+      "owner": "ETO graph platform engineering",
+      "expected_path": "E:/eco-execution-graph",
+      "baseline_branch": "main",
+      "baseline_commit": "52932f051d714103281944753c9a2a4276bbb5bd",
+      "dry_run_branch": "codex/ontology-v0.1.0",
+      "validation_mode": "mixed",
+      "contracts": [
+        "ecocheck.semantic_event.v2",
+        "ecocheck.profile_gap_confirmed.v1",
+        "kb.product_manifest.v1",
+        "eco-ontology.registry.v1"
+      ],
+      "projection_artifacts": [
+        {
+          "path": "dist/projections/graph/ontology-registry.generated.json",
+          "sha256": "18846a7375b54b034c8512a5e71de6222fd8db086b2b031594ba87b0ad173479",
+          "kind": "json"
+        },
+        {
+          "path": "dist/projections/graph/schema.fragment.generated.json",
+          "sha256": "f2720412066da1d80ff3eeadcdb070863338f7053a01a23719b3fa714bb81ea6",
+          "kind": "schema-fragment"
+        }
+      ],
+      "blocking_checks": [
+        {
+          "check_id": "GRAPH-SCHEMA-BLOCKING",
+          "reason": "Graph node, edge, and source instance gates are closed-world and clean locally."
+        },
+        {
+          "check_id": "GRAPH-ONTOLOGY-PROJECTION-HASH",
+          "reason": "Dry-run validates graph projection artifacts by sha256."
+        },
+        {
+          "check_id": "GRAPH-KB-MANIFEST-PATH-SHA",
+          "reason": "Graph validates KB product manifest output paths and sha256 values."
+        }
+      ],
+      "report_only_checks": [
+        {
+          "check_id": "GRAPH-KB-UPSTREAM-LOCK-REFRESH",
+          "reason": "The existing KB upstream lock remains pinned until a v0.1.0 KB manifest update is shipped with hash evidence."
+        },
+        {
+          "check_id": "GRAPH-RAG-REAL-SMOKE",
+          "reason": "Requires real Tencent RAG credentials and live retrieval evidence."
+        }
+      ],
+      "notes": "Graph keeps topology, tiering, review, and export ownership. Ontology supplies ids, schema refs, and hash evidence."
+    },
+    {
+      "repo": "eco-semantic-knowledge-base",
+      "owner": "Knowledge base engineering",
+      "expected_path": "E:/eco-semantic-knowledge-base",
+      "baseline_branch": "main",
+      "baseline_commit": "3f761e6434ec0ac19d0bf7182c9e73778dcb950f",
+      "dry_run_branch": "codex/ontology-v0.1.0",
+      "validation_mode": "mixed",
+      "contracts": [
+        "kb.product_manifest.v1",
+        "eco-ontology.registry.v1",
+        "baseline_dataset_contract"
+      ],
+      "projection_artifacts": [
+        {
+          "path": "dist/projections/kb/ontology-registry.generated.json",
+          "sha256": "77312a8f0602092cae83d175d2fe91e388ab86721455bb37a543868f56c9878a",
+          "kind": "json"
+        },
+        {
+          "path": "dist/projections/kb/schema.fragment.generated.json",
+          "sha256": "99ac8d0ce129b0f06cd2c5189d30da500389a16ce5889746273df7e48550a5bc",
+          "kind": "schema-fragment"
+        }
+      ],
+      "blocking_checks": [
+        {
+          "check_id": "KB-PRODUCT-MANIFEST-PATH-SHA",
+          "reason": "KB product manifest has formal schema coverage and output hashes."
+        },
+        {
+          "check_id": "KB-PROJECTION-HASH",
+          "reason": "Dry-run validates KB projection artifacts by sha256."
+        },
+        {
+          "check_id": "KB-SYNTHETIC-SAFE-FIXTURES",
+          "reason": "Contract reports contain paths, hashes, counts, and non-private ids only."
+        }
+      ],
+      "report_only_checks": [
+        {
+          "check_id": "KB-GOVERNMENT-LINEAGE-REAL-IMPORT",
+          "reason": "Requires real lineage import evidence outside ontology."
+        },
+        {
+          "check_id": "KB-RAG-REAL-SMOKE",
+          "reason": "Requires live RAG retrieval and external credentials."
+        }
+      ],
+      "notes": "KB keeps approved knowledge atoms and manifests. Ontology supplies schema, reference shapes, and release hashes."
+    }
+  ]
+}

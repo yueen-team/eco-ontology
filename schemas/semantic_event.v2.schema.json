@@ -42,10 +42,14 @@
       "minLength": 1,
       "description": "Canonical graph idempotency key. EcoCheck may also store the same value in the outbox row, but graph consumers should receive it in the payload or an explicit transport envelope before this check becomes blocking."
     },
-    "trace_ref": { "type": "object" },
+    "trace_ref": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/definitions/sanitized_property_name" }
+    },
     "source_context": {
       "type": "object",
       "additionalProperties": true,
+      "propertyNames": { "$ref": "#/definitions/sanitized_property_name" },
       "properties": {
         "company_id": { "type": "string" },
         "enterprise_ref": { "type": "string" },
@@ -62,6 +66,7 @@
       "type": "object",
       "required": ["name"],
       "additionalProperties": true,
+      "propertyNames": { "$ref": "#/definitions/sanitized_property_name" },
       "properties": {
         "issue_type_ref": { "type": "string" },
         "node_id": { "type": "string" },
@@ -74,6 +79,7 @@
       "description": "`dimension` is the canonical S01-S13 risk-domain key. `id` is accepted as a legacy EcoCheck alias during report-only migration.",
       "anyOf": [{ "required": ["dimension"] }, { "required": ["id"] }],
       "additionalProperties": true,
+      "propertyNames": { "$ref": "#/definitions/sanitized_property_name" },
       "properties": {
         "dimension": { "type": "string", "minLength": 1 },
         "id": { "type": "string", "minLength": 1 },
@@ -88,6 +94,7 @@
     "field_fact": {
       "type": "object",
       "additionalProperties": true,
+      "propertyNames": { "$ref": "#/definitions/sanitized_property_name" },
       "properties": {
         "summary": { "type": "string", "maxLength": 1200 },
         "problem_raw": { "type": "string", "maxLength": 1200 }
@@ -101,6 +108,9 @@
           "items": {
             "type": "object",
             "additionalProperties": true,
+            "propertyNames": {
+              "$ref": "#/definitions/sanitized_property_name"
+            },
             "properties": {
               "point_type": { "type": ["string", "null"] },
               "validity": { "type": ["string", "null"] },
@@ -111,6 +121,7 @@
         {
           "type": "object",
           "additionalProperties": true,
+          "propertyNames": { "$ref": "#/definitions/sanitized_property_name" },
           "properties": {
             "evidence_count": { "type": "integer", "minimum": 0 },
             "evidence_types": {
@@ -124,6 +135,7 @@
     "rectification": {
       "type": "object",
       "additionalProperties": true,
+      "propertyNames": { "$ref": "#/definitions/sanitized_property_name" },
       "properties": {
         "requirement": { "type": "string", "maxLength": 1200 },
         "status": { "type": "string" },
@@ -139,7 +151,10 @@
         }
       }
     },
-    "rectification_history_summary": { "type": "object" },
+    "rectification_history_summary": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/definitions/sanitized_property_name" }
+    },
     "recheck_points": {
       "description": "Canonical shape is an array of recheck point strings. A single string is accepted during report-only migration because EcoCheck stores the field as TEXT today.",
       "oneOf": [
@@ -156,6 +171,7 @@
       "items": {
         "type": "object",
         "additionalProperties": true,
+        "propertyNames": { "$ref": "#/definitions/sanitized_property_name" },
         "properties": {
           "ref": { "type": "string" },
           "node_id": { "type": "string" },
@@ -169,9 +185,18 @@
       "type": "array",
       "items": { "type": "string" }
     },
-    "backfill_context": { "type": "object" },
-    "field_completion": { "type": "object" },
-    "machine_fill_provenance": { "type": "object" },
+    "backfill_context": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/definitions/sanitized_property_name" }
+    },
+    "field_completion": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/definitions/sanitized_property_name" }
+    },
+    "machine_fill_provenance": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/definitions/sanitized_property_name" }
+    },
     "raw_attachment": false,
     "raw_attachments": false,
     "attachment_url": false,
@@ -184,6 +209,13 @@
     "secret": false,
     "law_full_text": false,
     "raw_report_text": false
+  },
+  "definitions": {
+    "sanitized_property_name": {
+      "not": {
+        "pattern": "(raw[_-]?attachments?|attachment[_-]?url|photo[_-]?url|gps|latitude|longitude|authorization|api[_-]?token|access[_-]?token|token|secret|secret[_-]?key|secret[_-]?id|SecretId|SecretKey|password|private[_-]?key|law[_-]?full[_-]?text|raw[_-]?report[_-]?text)"
+      }
+    }
   },
   "additionalProperties": true
 }

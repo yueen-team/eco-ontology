@@ -1,0 +1,269 @@
+{
+  "artifacts": [
+    {
+      "description": "EcoCheck field fact candidate payload contract.",
+      "kind": "schema",
+      "path": "schemas/semantic_event.v2.schema.json",
+      "sha256": "d4d0bda9d608baa69970df1260446f00c9e26884c7d773d77a5ec847f5e4f737"
+    },
+    {
+      "description": "EcoCheck company-profile gap confirmation contract.",
+      "kind": "schema",
+      "path": "schemas/profile_gap_confirmed.v1.schema.json",
+      "sha256": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383"
+    },
+    {
+      "description": "KB graph package product manifest contract.",
+      "kind": "schema",
+      "path": "schemas/kb_product_manifest.v1.schema.json",
+      "sha256": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3"
+    },
+    {
+      "description": "Shared ontology registry shape.",
+      "kind": "schema",
+      "path": "schemas/ontology_registry.v1.schema.json",
+      "sha256": "c0a97784d8f51243468e40f4268caa0f308bcf77e1491aded54a517044c0aba2"
+    },
+    {
+      "description": "Ontology v0.1.0 release manifest shape.",
+      "kind": "schema",
+      "path": "schemas/release_manifest.v1.schema.json",
+      "sha256": "b615edc74b7723be6ded5dba0a92e3fcaac6827c58d130527268e146a3cb60c1"
+    },
+    {
+      "description": "Consumer compatibility matrix shape.",
+      "kind": "schema",
+      "path": "schemas/consumer_compatibility_matrix.v1.schema.json",
+      "sha256": "23c8253f29efaa79b9372ebdcb5981b92ada507fd9aa1d3045c9f20bb31c30cb"
+    },
+    {
+      "description": "S01-S13 environmental risk-domain registry.",
+      "kind": "registry",
+      "path": "registries/risk_domains.v1.json",
+      "sha256": "766485ce94a36290d8a46800c700fa42b6383f503e175b06b0f1a1cc6e78bb0c"
+    },
+    {
+      "description": "Shared issue-type registry.",
+      "kind": "registry",
+      "path": "registries/issue_types.v1.json",
+      "sha256": "4603c6abfd2c29f5eae970ec039ec532174ce6ffae85d65a84c86810754654d1"
+    },
+    {
+      "description": "Shared observed-signal registry.",
+      "kind": "registry",
+      "path": "registries/observed_signals.v1.json",
+      "sha256": "86fc1aa045c758df44d1675ff6f2a3e4d72040d94d57fd8454cd5c1b8b59590d"
+    },
+    {
+      "description": "Shared entity-anchor registry.",
+      "kind": "registry",
+      "path": "registries/entity_anchors.v1.json",
+      "sha256": "d3c81a1ef9217514cb938f3eb6b6caf05abce1eaf9ef24c3b2a476c3b1975d3d"
+    },
+    {
+      "description": "Legal-basis reference class registry without full legal text.",
+      "kind": "registry",
+      "path": "registries/legal_basis_ref.v1.json",
+      "sha256": "3ba958736be66b9d9ed917dbf9144d22efccc63bcf90b5887c80e39f0e699457"
+    },
+    {
+      "description": "Three-consumer compatibility matrix for v0.1.0.",
+      "kind": "contract",
+      "path": "contracts/consumer-compatibility-matrix.v1.json",
+      "sha256": "2e699a7a4484403cf3468e0ae2ca969fc2b1dbfcdc9a03347af9e36ebc16e508"
+    },
+    {
+      "description": "P3 baseline freeze retained as release input evidence.",
+      "kind": "contract",
+      "path": "contracts/p3-baseline.v0.json",
+      "sha256": "d80dae4ec42ab5111b863f8fea35791109750950674350c7e12d45194c7a93de"
+    },
+    {
+      "description": "EcoCheck JSON projection.",
+      "kind": "projection",
+      "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+      "sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457"
+    },
+    {
+      "description": "Graph registry projection.",
+      "kind": "projection",
+      "path": "dist/projections/graph/ontology-registry.generated.json",
+      "sha256": "18846a7375b54b034c8512a5e71de6222fd8db086b2b031594ba87b0ad173479"
+    },
+    {
+      "description": "Graph schema fragment projection.",
+      "kind": "projection",
+      "path": "dist/projections/graph/schema.fragment.generated.json",
+      "sha256": "f2720412066da1d80ff3eeadcdb070863338f7053a01a23719b3fa714bb81ea6"
+    },
+    {
+      "description": "KB registry projection.",
+      "kind": "projection",
+      "path": "dist/projections/kb/ontology-registry.generated.json",
+      "sha256": "77312a8f0602092cae83d175d2fe91e388ab86721455bb37a543868f56c9878a"
+    },
+    {
+      "description": "KB schema fragment projection.",
+      "kind": "projection",
+      "path": "dist/projections/kb/schema.fragment.generated.json",
+      "sha256": "99ac8d0ce129b0f06cd2c5189d30da500389a16ce5889746273df7e48550a5bc"
+    },
+    {
+      "description": "Projection artifact manifest.",
+      "kind": "projection",
+      "path": "dist/projections/projection-manifest.v1.json",
+      "sha256": "f2a4b355b9f5cd65bf1698d893a3e97476a87522d14080e90b548f6df2bd4dba"
+    },
+    {
+      "description": "Boundary and blocking cutover ADR for v0.1.0.",
+      "kind": "documentation",
+      "path": "docs/adr/0003-eco-ontology-v0-1-0-versioned-contract-package.md",
+      "sha256": "5ee1e86de8018add5c2aed646a4d0721226938b9932c596e7ab8ab4db89086c4"
+    }
+  ],
+  "consumer_snapshots": [
+    {
+      "branch": "main",
+      "commit": "a2983d61c0ede6ff0506c3f1a900e67ff205f358",
+      "contracts": [
+        "ecocheck.semantic_event.v2",
+        "ecocheck.profile_gap_confirmed.v1",
+        "eco-ontology.registry.v1"
+      ],
+      "notes": "EcoCheck keeps scoring and field workflow ownership. Ontology only supplies schema and registry projection ids.",
+      "projection_artifacts": [
+        {
+          "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+          "sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457"
+        }
+      ],
+      "repo": "EcoCheck",
+      "validation_mode": "mixed"
+    },
+    {
+      "branch": "main",
+      "commit": "52932f051d714103281944753c9a2a4276bbb5bd",
+      "contracts": [
+        "ecocheck.semantic_event.v2",
+        "ecocheck.profile_gap_confirmed.v1",
+        "kb.product_manifest.v1",
+        "eco-ontology.registry.v1"
+      ],
+      "notes": "Graph keeps topology, tiering, review, and export ownership. Ontology supplies ids, schema refs, and hash evidence.",
+      "projection_artifacts": [
+        {
+          "path": "dist/projections/graph/ontology-registry.generated.json",
+          "sha256": "18846a7375b54b034c8512a5e71de6222fd8db086b2b031594ba87b0ad173479"
+        },
+        {
+          "path": "dist/projections/graph/schema.fragment.generated.json",
+          "sha256": "f2720412066da1d80ff3eeadcdb070863338f7053a01a23719b3fa714bb81ea6"
+        }
+      ],
+      "repo": "eco-execution-graph",
+      "validation_mode": "mixed"
+    },
+    {
+      "branch": "main",
+      "commit": "3f761e6434ec0ac19d0bf7182c9e73778dcb950f",
+      "contracts": [
+        "kb.product_manifest.v1",
+        "eco-ontology.registry.v1",
+        "baseline_dataset_contract"
+      ],
+      "notes": "KB keeps approved knowledge atoms and manifests. Ontology supplies schema, reference shapes, and release hashes.",
+      "projection_artifacts": [
+        {
+          "path": "dist/projections/kb/ontology-registry.generated.json",
+          "sha256": "77312a8f0602092cae83d175d2fe91e388ab86721455bb37a543868f56c9878a"
+        },
+        {
+          "path": "dist/projections/kb/schema.fragment.generated.json",
+          "sha256": "99ac8d0ce129b0f06cd2c5189d30da500389a16ce5889746273df7e48550a5bc"
+        }
+      ],
+      "repo": "eco-semantic-knowledge-base",
+      "validation_mode": "mixed"
+    }
+  ],
+  "contracts": {
+    "consumer_compatibility_matrix": "eco-ontology.consumer_compatibility_matrix.v1",
+    "kb_product_manifest": "kb.product_manifest.v1",
+    "ontology_registry": "eco-ontology.registry.v1",
+    "profile_gap_confirmed": "ecocheck.profile_gap_confirmed.v1",
+    "projection_manifest": "eco-ontology.projection_manifest.v1",
+    "release_manifest": "eco-ontology.release_manifest.v1",
+    "semantic_event": "ecocheck.semantic_event.v2"
+  },
+  "gate_status": {
+    "blocking": [
+      {
+        "gate_id": "ECO-ONTO-SCHEMA-COMPILE",
+        "reason": "Closed-world ontology schemas compile with Ajv v6.",
+        "status": "blocking"
+      },
+      {
+        "gate_id": "ECO-ONTO-REGISTRY-SHAPE",
+        "reason": "Registry files validate against ontology_registry.v1 and have unique ids.",
+        "status": "blocking"
+      },
+      {
+        "gate_id": "ECO-ONTO-RELEASE-MANIFEST-SHAPE",
+        "reason": "Release manifest shape and artifact hashes are deterministic.",
+        "status": "blocking"
+      },
+      {
+        "gate_id": "CROSS-002-PROJECTION-HASH",
+        "reason": "Generated projection files are checked for deterministic drift.",
+        "status": "blocking"
+      },
+      {
+        "gate_id": "KB-MANIFEST-PATH-SHA",
+        "reason": "KB graph package manifest output path and sha256 coverage is local and closed-world.",
+        "status": "blocking"
+      }
+    ],
+    "report_only": [
+      {
+        "gate_id": "TENCENT-RAG-REAL-SMOKE",
+        "reason": "Requires real Tencent RAG credentials and live environment evidence.",
+        "status": "external_required"
+      },
+      {
+        "gate_id": "CLOUDBASE-WECOM-REAL-SMOKE",
+        "reason": "Requires CloudBase/WeCom live smoke and enterprise data handling outside ontology.",
+        "status": "external_required"
+      },
+      {
+        "gate_id": "GOVERNMENT-LINEAGE-REAL-IMPORT",
+        "reason": "Requires real government lineage import evidence.",
+        "status": "external_required"
+      },
+      {
+        "gate_id": "ECOCHECK-AGGREGATE-ETO-BLIND-REVIEW",
+        "reason": "Requires EcoCheck-owned aggregate and human blind review evidence.",
+        "status": "report-only"
+      }
+    ]
+  },
+  "ontology_baseline_commit": "e136a21422ab221d75c5269e3f1a8c7017651789",
+  "ontology_version": "0.1.0",
+  "owner": "ETO platform engineering",
+  "release_date": "2026-06-22",
+  "rollback_notes": [
+    "Consumers can pin the previous release-manifest.v0.json while v0.1.0 adoption is reverted.",
+    "Projection files are generated artifacts and can be regenerated from registries and schemas.",
+    "No consumer scoring policy, graph topology, or KB fact content is owned by this release."
+  ],
+  "schema_version": "eco-ontology.release_manifest.v1",
+  "validation_summary": {
+    "info": 0,
+    "mode": "mixed",
+    "red": 0,
+    "reports": [
+      "reports/report-only-validation.json",
+      "reports/schema-blocking-gate-validation.json"
+    ],
+    "yellow": 0
+  }
+}

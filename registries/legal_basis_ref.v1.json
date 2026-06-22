@@ -1,0 +1,59 @@
+{
+  "schema_version": "eco-ontology.registry.v1",
+  "registry_id": "legal_basis_ref.v1",
+  "ontology_version": "0.1.0",
+  "owner": "eco-ontology",
+  "description": "Legal-basis reference classes. Store identifiers and citation structure only, never full law or standard text.",
+  "entries": [
+    {
+      "id": "legal_ref.law",
+      "display_name": "Law reference",
+      "description": "A law-level reference identified by a stable external or KB-managed id.",
+      "owner": "eco-semantic-knowledge-base",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["legal_basis_ref"],
+      "metadata": { "legal_basis_status_required": true }
+    },
+    {
+      "id": "legal_ref.regulation",
+      "display_name": "Regulation reference",
+      "description": "A regulation-level reference identified without storing full text.",
+      "owner": "eco-semantic-knowledge-base",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["legal_basis_ref"],
+      "metadata": { "legal_basis_status_required": true }
+    },
+    {
+      "id": "legal_ref.standard",
+      "display_name": "Standard reference",
+      "description": "A technical standard reference identified without storing full text.",
+      "owner": "eco-semantic-knowledge-base",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["legal_basis_ref"],
+      "metadata": { "legal_basis_status_required": true }
+    },
+    {
+      "id": "legal_ref.clause",
+      "display_name": "Clause reference",
+      "description": "A clause or article reference keyed by identifier, number, or lineage id only.",
+      "owner": "eco-semantic-knowledge-base",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["legal_basis_ref"],
+      "metadata": { "legal_basis_status_required": true }
+    },
+    {
+      "id": "legal_ref.local_policy",
+      "display_name": "Local policy reference",
+      "description": "A local environmental policy or management requirement reference without full text.",
+      "owner": "eco-semantic-knowledge-base",
+      "status": "active",
+      "deprecated": false,
+      "tags": ["legal_basis_ref"],
+      "metadata": { "legal_basis_status_required": true }
+    }
+  ]
+}

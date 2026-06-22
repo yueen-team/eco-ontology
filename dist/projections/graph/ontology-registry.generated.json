@@ -1,0 +1,355 @@
+{
+  "generated_by": {
+    "generator": "scripts/generate-projections.mjs",
+    "generator_version": "1",
+    "ontology_version": "0.1.0",
+    "source_sha256": {
+      "registries/entity_anchors.v1.json": "d3c81a1ef9217514cb938f3eb6b6caf05abce1eaf9ef24c3b2a476c3b1975d3d",
+      "registries/issue_types.v1.json": "4603c6abfd2c29f5eae970ec039ec532174ce6ffae85d65a84c86810754654d1",
+      "registries/legal_basis_ref.v1.json": "3ba958736be66b9d9ed917dbf9144d22efccc63bcf90b5887c80e39f0e699457",
+      "registries/observed_signals.v1.json": "86fc1aa045c758df44d1675ff6f2a3e4d72040d94d57fd8454cd5c1b8b59590d",
+      "registries/risk_domains.v1.json": "766485ce94a36290d8a46800c700fa42b6383f503e175b06b0f1a1cc6e78bb0c",
+      "schemas/kb_product_manifest.v1.schema.json": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3",
+      "schemas/ontology_registry.v1.schema.json": "c0a97784d8f51243468e40f4268caa0f308bcf77e1491aded54a517044c0aba2",
+      "schemas/profile_gap_confirmed.v1.schema.json": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383",
+      "schemas/semantic_event.v2.schema.json": "d4d0bda9d608baa69970df1260446f00c9e26884c7d773d77a5ec847f5e4f737"
+    }
+  },
+  "ownership_boundary": {
+    "graph_owns": ["assembly", "tiering", "review", "exports"],
+    "ontology_owns": ["shared_ids", "schema_refs", "release_hashes"]
+  },
+  "registries": {
+    "entity_anchors": [
+      {
+        "deprecated": false,
+        "description": "A regulated enterprise reference represented by a non-private identifier in consumer systems.",
+        "display_name": "Enterprise",
+        "id": "anchor.enterprise",
+        "owner": "EcoCheck",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A pollution-control or production facility relevant to an environmental review.",
+        "display_name": "Facility",
+        "id": "anchor.facility",
+        "owner": "eco-execution-graph",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A wastewater, exhaust, noise, or other emission/discharge point class.",
+        "display_name": "Emission point",
+        "id": "anchor.emission_point",
+        "owner": "eco-execution-graph",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A solid-waste or hazardous-waste storage area class.",
+        "display_name": "Waste storage area",
+        "id": "anchor.waste_storage_area",
+        "owner": "eco-execution-graph",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A pollutant, raw material, auxiliary material, waste, or chemical class.",
+        "display_name": "Material or substance",
+        "id": "anchor.material_or_substance",
+        "owner": "eco-semantic-knowledge-base",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A permit, ledger, monitoring report, emergency plan, or other document class without raw text.",
+        "display_name": "Document",
+        "id": "anchor.document",
+        "owner": "EcoCheck",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A law, standard, clause, or policy reference identifier without full text.",
+        "display_name": "Legal basis",
+        "id": "anchor.legal_basis",
+        "owner": "eco-semantic-knowledge-base",
+        "status": "active"
+      }
+    ],
+    "issue_types": [
+      {
+        "deprecated": false,
+        "description": "A required environmental permit, approval, filing, or applicability decision is absent or incomplete.",
+        "display_name": "Missing permit or approval",
+        "id": "issue.missing_permit_or_approval",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A pollutant emission or discharge path lacks the expected control, collection, or treatment boundary.",
+        "display_name": "Uncontrolled emission or discharge",
+        "id": "issue.uncontrolled_emission_or_discharge",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Monitoring, self-testing, online monitoring, or reporting evidence is missing or incomplete.",
+        "display_name": "Incomplete monitoring record",
+        "id": "issue.incomplete_monitoring_record",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Solid or hazardous waste storage does not match expected segregation, labeling, ledger, or containment practice.",
+        "display_name": "Improper waste storage",
+        "id": "issue.improper_waste_storage",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A pollution-control facility is stopped, bypassed, abnormal, or lacks operating evidence.",
+        "display_name": "Facility abnormal operation",
+        "id": "issue.facility_abnormal_operation",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A rectification task lacks required completion evidence, recheck points, or closure confirmation.",
+        "display_name": "Incomplete rectification",
+        "id": "issue.incomplete_rectification",
+        "owner": "EcoCheck",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A human-reviewed enterprise applicability or profile signal is missing from the current profile.",
+        "display_name": "Entity profile gap",
+        "id": "issue.entity_profile_gap",
+        "owner": "EcoCheck",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A candidate issue cannot be safely normalized without human review.",
+        "display_name": "Unknown or needs review",
+        "id": "issue.unknown_or_needs_review",
+        "owner": "eco-ontology",
+        "status": "active"
+      }
+    ],
+    "legal_basis_ref": [
+      {
+        "deprecated": false,
+        "description": "A law-level reference identified by a stable external or KB-managed id.",
+        "display_name": "Law reference",
+        "id": "legal_ref.law",
+        "owner": "eco-semantic-knowledge-base",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A regulation-level reference identified without storing full text.",
+        "display_name": "Regulation reference",
+        "id": "legal_ref.regulation",
+        "owner": "eco-semantic-knowledge-base",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A technical standard reference identified without storing full text.",
+        "display_name": "Standard reference",
+        "id": "legal_ref.standard",
+        "owner": "eco-semantic-knowledge-base",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A clause or article reference keyed by identifier, number, or lineage id only.",
+        "display_name": "Clause reference",
+        "id": "legal_ref.clause",
+        "owner": "eco-semantic-knowledge-base",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A local environmental policy or management requirement reference without full text.",
+        "display_name": "Local policy reference",
+        "id": "legal_ref.local_policy",
+        "owner": "eco-semantic-knowledge-base",
+        "status": "active"
+      }
+    ],
+    "observed_signals": [
+      {
+        "deprecated": false,
+        "description": "A sanitized photo-point summary exists without storing the raw attachment.",
+        "display_name": "Photo point present",
+        "id": "signal.photo_point_present",
+        "owner": "EcoCheck",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A ledger, record, or register summary is available for review.",
+        "display_name": "Ledger or record present",
+        "id": "signal.ledger_or_record_present",
+        "owner": "EcoCheck",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A monitoring or testing value summary is available without raw report text.",
+        "display_name": "Monitoring value present",
+        "id": "signal.monitoring_value_present",
+        "owner": "EcoCheck",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A sanitized operator or reviewer statement summary is available.",
+        "display_name": "Operator statement present",
+        "id": "signal.operator_statement_present",
+        "owner": "EcoCheck",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A facility status summary indicates stopped, bypassed, damaged, or abnormal operation.",
+        "display_name": "Facility state abnormal",
+        "id": "signal.facility_state_abnormal",
+        "owner": "eco-execution-graph",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A required applicability or operating boundary is unknown and needs review.",
+        "display_name": "Boundary condition unknown",
+        "id": "signal.boundary_condition_unknown",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "A sanitized rectification completion or recheck summary is available.",
+        "display_name": "Rectification evidence present",
+        "id": "signal.rectification_evidence_present",
+        "owner": "EcoCheck",
+        "status": "active"
+      }
+    ],
+    "risk_domains": [
+      {
+        "deprecated": false,
+        "description": "Air pollutant emission control and emission-point management.",
+        "display_name": "Air emissions",
+        "id": "S01",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Wastewater collection, treatment, discharge, and monitoring boundaries.",
+        "display_name": "Wastewater discharge",
+        "id": "S02",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "General industrial solid-waste storage, transfer, and disposal control.",
+        "display_name": "Solid waste",
+        "id": "S03",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Hazardous-waste identification, storage, ledger, transfer, and disposal control.",
+        "display_name": "Hazardous waste",
+        "id": "S04",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Boundary noise, equipment noise, and vibration management signals.",
+        "display_name": "Noise and vibration",
+        "id": "S05",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Soil, groundwater, seepage, and anti-leakage management signals.",
+        "display_name": "Soil and groundwater",
+        "id": "S06",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Chemical storage, handling, labeling, and containment controls.",
+        "display_name": "Chemicals and materials",
+        "id": "S07",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Permit, approval, applicability, and filing boundary signals.",
+        "display_name": "Permits and approvals",
+        "id": "S08",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Monitoring, self-testing, online monitoring, and report submission signals.",
+        "display_name": "Monitoring and reporting",
+        "id": "S09",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Emergency plan, drill, response material, and incident readiness signals.",
+        "display_name": "Emergency preparedness",
+        "id": "S10",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Pollution-control facility operation, maintenance, and abnormal-state signals.",
+        "display_name": "Facility operation",
+        "id": "S11",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Issue rectification, recheck, closure, and follow-up verification signals.",
+        "display_name": "Rectification and closure",
+        "id": "S12",
+        "owner": "eco-ontology",
+        "status": "active"
+      },
+      {
+        "deprecated": false,
+        "description": "Environmental compliance signals that do not fit S01-S12 and need review.",
+        "display_name": "Other environmental compliance",
+        "id": "S13",
+        "owner": "eco-ontology",
+        "status": "active"
+      }
+    ]
+  },
+  "schema_version": "eco-ontology.projection.graph.registry.v1"
+}
