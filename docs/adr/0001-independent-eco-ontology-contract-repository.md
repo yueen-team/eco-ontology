@@ -141,4 +141,3 @@ Tradeoffs:
   should selected contract surfaces be mirrored into `eco-ontology`?
 - Which validators graduate to blocking first: EcoCheck outgoing events, graph
   exports, or KB manifests?
-

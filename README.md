@@ -49,4 +49,3 @@ reports/            Local validation reports, ignored unless explicitly kept.
 5. Generate projections for EcoCheck, eco-execution-graph, and
    eco-semantic-knowledge-base.
 6. Turn selected validators from report-only into blocking gates after an ADR.
-

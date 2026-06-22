@@ -31,4 +31,3 @@ eco-semantic-knowledge-base.
 The first validation mode is report-only. A validator may produce red/yellow
 findings, but it must not fail consumer CI until a later ADR explicitly promotes
 that check to blocking.
-

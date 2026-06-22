@@ -1,0 +1,35 @@
+{
+  "schema_version": "afk-test.config.v1",
+  "project": "eco-ontology",
+  "mode": "contract-governance",
+  "baseline": {
+    "unit": null,
+    "integration": null,
+    "e2e": null,
+    "contract": "pnpm verify:all"
+  },
+  "optional": {
+    "format": "pnpm format:check",
+    "bdd_export": "pnpm bdd:export"
+  },
+  "artifacts": {
+    "markdown_report": "reports/afk-test-report.md",
+    "json_report": "reports/afk-test-report.json",
+    "behavior_contracts": "bdd/behavior-contracts.ndjson"
+  },
+  "environment": {
+    "node": ">=22",
+    "package_manager": "pnpm",
+    "network": "not_required_for_verify"
+  },
+  "blockers": [
+    "No unit baseline yet because no runtime library exists.",
+    "No integration baseline yet because no consumer repo validator exists.",
+    "No E2E baseline yet because this repository has no runtime UI or service."
+  ],
+  "adoption_todo": [
+    "Add schema validator unit tests when the first validator exists.",
+    "Add integration checks against graph exports in report-only mode.",
+    "Add BDD feature files for the first accepted contract workflow."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@yueen-team/eco-ontology",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.3",
+  "description": "Versioned environmental ontology contracts for EcoCheck, eco-execution-graph, and eco-semantic-knowledge-base.",
+  "scripts": {
+    "prepare": "git config core.hooksPath .husky",
+    "check": "node verify/verify.mjs",
+    "verify:all": "pnpm check && pnpm format:check",
+    "bdd:export": "node scripts/export-bdd.mjs",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "main:ship": "node scripts/git-workflow/main-ship.mjs"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.6.2"
+  }
+}
