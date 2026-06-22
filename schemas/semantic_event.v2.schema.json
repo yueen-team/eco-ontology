@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/semantic_event.v2",
+  "title": "EcoCheckSemanticEventV2",
+  "description": "Report-only shared contract for EcoCheck field fact candidate payloads accepted by eco-execution-graph. Payloads must stay sanitized: no raw attachments, GPS, secrets, raw enterprise reports, or full law text.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "event_type",
+    "source_system",
+    "occurred_at",
+    "source_context",
+    "standard_issue_type_candidate",
+    "environmental_risk_category"
+  ],
+  "anyOf": [
+    { "required": ["field_issue_uid"] },
+    { "required": ["event_id"] },
+    { "required": ["business_key"] }
+  ],
+  "properties": {
+    "schema_version": { "const": "ecocheck.semantic_event.v2" },
+    "event_type": {
+      "enum": [
+        "FIELD_ISSUE_RECORDED",
+        "FIELD_ISSUE_REVIEWED",
+        "RECTIFICATION_REQUIRED",
+        "RECTIFICATION_VERIFIED",
+        "RECTIFICATION_REJECTED",
+        "BACKFILL_REVIEWED"
+      ]
+    },
+    "source_system": { "type": "string", "minLength": 1 },
+    "occurred_at": { "type": "string" },
+    "field_issue_uid": { "type": "string", "minLength": 1 },
+    "event_id": { "type": "string", "minLength": 1 },
+    "business_key": { "type": "string", "minLength": 1 },
+    "trace_ref": { "type": "object" },
+    "source_context": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "company_id": { "type": "string" },
+        "enterprise_ref": { "type": "string" },
+        "company_name": { "type": "string" },
+        "region": { "type": "string" },
+        "industry_type": { "type": "string" },
+        "industry": { "type": "string" },
+        "permit_type": { "type": "string" },
+        "inspection_date": { "type": "string" },
+        "report_month": { "type": "string" }
+      }
+    },
+    "standard_issue_type_candidate": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": true,
+      "properties": {
+        "issue_type_ref": { "type": "string" },
+        "node_id": { "type": "string" },
+        "name": { "type": "string", "minLength": 1 },
+        "issue_type_name": { "type": "string" }
+      }
+    },
+    "environmental_risk_category": {
+      "type": "object",
+      "required": ["dimension"],
+      "additionalProperties": true,
+      "properties": {
+        "dimension": { "type": "string", "minLength": 1 },
+        "name": { "type": "string" }
+      }
+    },
+    "observed_signals": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "risk_impact_summary": { "type": "string", "maxLength": 1200 },
+    "field_fact": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "summary": { "type": "string", "maxLength": 1200 },
+        "problem_raw": { "type": "string", "maxLength": 1200 }
+      }
+    },
+    "evidence_chain": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "evidence_count": { "type": "integer", "minimum": 0 },
+        "evidence_types": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "rectification": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "requirement": { "type": "string", "maxLength": 1200 },
+        "status": { "type": "string" },
+        "recheck_points": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "rectification_history_summary": { "type": "object" },
+    "recheck_points": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "ai_regulatory_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "ref": { "type": "string" },
+          "node_id": { "type": "string" },
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "name": { "type": "string" }
+        }
+      }
+    },
+    "source_tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "backfill_context": { "type": "object" },
+    "field_completion": { "type": "object" },
+    "machine_fill_provenance": { "type": "object" },
+    "raw_attachment": false,
+    "raw_attachments": false,
+    "attachment_url": false,
+    "photo_url": false,
+    "gps": false,
+    "latitude": false,
+    "longitude": false,
+    "authorization": false,
+    "token": false,
+    "secret": false,
+    "law_full_text": false,
+    "raw_report_text": false
+  },
+  "additionalProperties": true
+}

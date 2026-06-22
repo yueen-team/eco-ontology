@@ -1,6 +1,6 @@
 # Report-only schema validation checklist
 
-Status: Draft
+Status: Active report-only baseline.
 
 Date: 2026-06-22
 
@@ -45,6 +45,30 @@ not fail CI, until a later ADR promotes a check to blocking.
 | KB-004       | eco-semantic-knowledge-base | candidate-only domain packs          | runtime status contract                               | runtime-blocked products accidentally marked approved | Especially noise/radiation domain extensions.                |
 | CROSS-001    | all                         | consumer compatibility matrix        | ontology release compatibility                        | repo commit, package version, projection hash         | One row per consumer repo.                                   |
 | CROSS-002    | all                         | generated projections                | generator snapshot contract                           | diff summary against checked-in generated files       | Starts as report-only; later becomes detect-drift.           |
+
+## Current commands
+
+`eco-ontology`:
+
+```powershell
+pnpm validate:report-only
+```
+
+Outputs:
+
+- `reports/report-only-validation.json`
+- `reports/report-only-validation.md`
+
+`eco-execution-graph`:
+
+```powershell
+pnpm ontology:validate:report-only
+```
+
+Outputs:
+
+- `reports/ontology-contract-report-only-validation.json`
+- `reports/ontology-contract-report-only-validation.md`
 
 ## Known first-pass findings to expect
 

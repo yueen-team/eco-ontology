@@ -1,0 +1,62 @@
+{
+  "schema_version": "eco-ontology.consumer_compatibility_matrix.v0",
+  "ontology_version": "0.0.0-report-only.2026-06-22",
+  "consumers": [
+    {
+      "repo": "EcoCheck",
+      "owner": "EcoCheck application engineering",
+      "validation_mode": "report-only",
+      "contracts": ["ecocheck.semantic_event.v2"],
+      "known_drift": [
+        {
+          "check_id": "ECOCHECK-001",
+          "severity": "yellow",
+          "owner": "EcoCheck",
+          "summary": "Outgoing payload validation is not yet centralized on the shared schema."
+        }
+      ]
+    },
+    {
+      "repo": "eco-execution-graph",
+      "owner": "ETO graph platform engineering",
+      "expected_path": "E:/eco-execution-graph",
+      "validation_mode": "report-only",
+      "contracts": [
+        "ecocheck.semantic_event.v2",
+        "graph_node",
+        "graph_edge",
+        "graph_source",
+        "kb_product_manifest"
+      ],
+      "known_drift": [
+        {
+          "check_id": "GRAPH-001",
+          "severity": "yellow",
+          "owner": "eco-execution-graph",
+          "summary": "Graph instance validation exists as a report-only check before blocking adoption."
+        },
+        {
+          "check_id": "GRAPH-004",
+          "severity": "yellow",
+          "owner": "eco-execution-graph",
+          "summary": "KB package manifest is being promoted from local path convention to explicit input."
+        }
+      ]
+    },
+    {
+      "repo": "eco-semantic-knowledge-base",
+      "owner": "Knowledge base engineering",
+      "expected_path": "E:/eco-semantic-knowledge-base",
+      "validation_mode": "report-only",
+      "contracts": ["kb_product_manifest", "baseline_dataset_contract"],
+      "known_drift": [
+        {
+          "check_id": "KB-001",
+          "severity": "yellow",
+          "owner": "eco-semantic-knowledge-base",
+          "summary": "Approved baseline manifests exist, but a shared manifest schema has not yet been enforced."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "eco-ontology/consumer_compatibility_matrix.v0",
+  "title": "EcoOntologyConsumerCompatibilityMatrixV0",
+  "type": "object",
+  "required": ["schema_version", "ontology_version", "consumers"],
+  "properties": {
+    "schema_version": {
+      "const": "eco-ontology.consumer_compatibility_matrix.v0"
+    },
+    "ontology_version": { "type": "string" },
+    "consumers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["repo", "owner", "validation_mode", "contracts"],
+        "properties": {
+          "repo": { "type": "string" },
+          "owner": { "type": "string" },
+          "expected_path": { "type": "string" },
+          "commit": { "type": "string" },
+          "validation_mode": { "enum": ["report-only", "blocking", "mixed"] },
+          "contracts": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "known_drift": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["check_id", "severity", "owner", "summary"],
+              "properties": {
+                "check_id": { "type": "string" },
+                "severity": { "enum": ["red", "yellow", "info"] },
+                "owner": { "type": "string" },
+                "summary": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "projection_hash": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

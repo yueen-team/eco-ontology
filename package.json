@@ -8,7 +8,8 @@
   "scripts": {
     "prepare": "git config core.hooksPath .husky",
     "check": "node verify/verify.mjs",
-    "verify:all": "pnpm check && pnpm format:check",
+    "validate:report-only": "node scripts/report-only-validate.mjs",
+    "verify:all": "pnpm check && pnpm validate:report-only && pnpm format:check",
     "bdd:export": "node scripts/export-bdd.mjs",
     "format:check": "prettier --check .",
     "format": "prettier --write .",

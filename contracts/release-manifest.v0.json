@@ -1,0 +1,34 @@
+{
+  "schema_version": "eco-ontology.release_manifest.v0",
+  "ontology_version": "0.0.0-report-only.2026-06-22",
+  "release_date": "2026-06-22",
+  "owner": "ETO platform engineering",
+  "contracts": {
+    "semantic_event": "ecocheck.semantic_event.v2",
+    "release_manifest": "eco-ontology.release_manifest.v0",
+    "consumer_compatibility_matrix": "eco-ontology.consumer_compatibility_matrix.v0"
+  },
+  "artifacts": [
+    {
+      "path": "schemas/semantic_event.v2.schema.json",
+      "sha256": "report-only-generated",
+      "description": "EcoCheck field fact event payload contract"
+    },
+    {
+      "path": "schemas/release_manifest.schema.json",
+      "sha256": "report-only-generated",
+      "description": "Ontology release manifest contract"
+    },
+    {
+      "path": "schemas/consumer_compatibility_matrix.schema.json",
+      "sha256": "report-only-generated",
+      "description": "Consumer compatibility matrix contract"
+    }
+  ],
+  "validation_summary": {
+    "mode": "report-only",
+    "red": 0,
+    "yellow": 0,
+    "info": 0
+  }
+}
