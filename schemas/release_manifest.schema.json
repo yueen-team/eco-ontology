@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "eco-ontology/release_manifest.v0",
+  "title": "EcoOntologyReleaseManifestV0",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "ontology_version",
+    "release_date",
+    "contracts",
+    "artifacts",
+    "validation_summary"
+  ],
+  "properties": {
+    "schema_version": { "const": "eco-ontology.release_manifest.v0" },
+    "ontology_version": { "type": "string" },
+    "release_date": { "type": "string" },
+    "owner": { "type": "string" },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "type": "string" },
+          "sha256": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "validation_summary": {
+      "type": "object",
+      "required": ["mode", "red", "yellow", "info"],
+      "properties": {
+        "mode": { "enum": ["report-only", "blocking"] },
+        "red": { "type": "integer", "minimum": 0 },
+        "yellow": { "type": "integer", "minimum": 0 },
+        "info": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "consumer_snapshots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["repo", "branch", "commit", "validation_summary"],
+        "properties": {
+          "repo": { "type": "string" },
+          "branch": { "type": "string" },
+          "commit": { "type": "string" },
+          "validation_summary": {
+            "type": "object",
+            "required": ["mode", "red", "yellow", "info"],
+            "properties": {
+              "mode": { "enum": ["report-only", "blocking"] },
+              "red": { "type": "integer", "minimum": 0 },
+              "yellow": { "type": "integer", "minimum": 0 },
+              "info": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          },
+          "contract_artifacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["contract_id", "schema_status"],
+              "properties": {
+                "contract_id": { "type": "string" },
+                "schema_status": {
+                  "enum": ["proposal", "formal", "deprecated"]
+                },
+                "schema_path": { "type": "string" },
+                "manifest_path": { "type": "string" },
+                "manifest_sha256": { "type": "string" },
+                "report_path": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/kb_product_manifest.v1",
+  "title": "EcoSemanticKnowledgeBaseProductManifestV1",
+  "description": "Shared schema for eco-semantic-knowledge-base product manifests consumed by eco-execution-graph and locked by eco-ontology releases.",
+  "type": "object",
+  "required": [
+    "contract_id",
+    "schema_version",
+    "package_id",
+    "package_version",
+    "package_status",
+    "knowledge_base_version",
+    "owner_repo",
+    "final_state",
+    "runtime_status",
+    "runtime_integration",
+    "approval_status",
+    "approval_source",
+    "outputs"
+  ],
+  "properties": {
+    "contract_id": {
+      "const": "kb.product_manifest.v1"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^kb\\.[a-z0-9_]+_manifest\\.v[0-9]+$"
+    },
+    "schema_ref": {
+      "type": "object",
+      "required": ["schema_id", "schema_status"],
+      "properties": {
+        "schema_id": {
+          "const": "eco-ontology/kb_product_manifest.v1"
+        },
+        "schema_status": {
+          "enum": ["proposal", "formal", "deprecated"]
+        },
+        "proposal_path": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "package_id": {
+      "type": "string",
+      "pattern": "^eco-semantic-knowledge-base\\.[a-z0-9_]+\\.v[0-9]+$"
+    },
+    "package_version": {
+      "type": "string"
+    },
+    "package_status": {
+      "enum": [
+        "REPORT_ONLY_GRAPH_IMPORT_LOCK",
+        "APPROVED_BASELINE_PACKAGE",
+        "CANDIDATE_ONLY_PACKAGE",
+        "DEPRECATED"
+      ]
+    },
+    "knowledge_base_version": {
+      "type": "string"
+    },
+    "owner_repo": {
+      "const": "eco-semantic-knowledge-base"
+    },
+    "consumer_repo": {
+      "type": "string"
+    },
+    "final_state": {
+      "type": "string"
+    },
+    "runtime_status": {
+      "enum": ["APPROVED_BASELINE", "DRAFT_NOT_FOR_RUNTIME", "CANDIDATE_ONLY"]
+    },
+    "runtime_integration": {
+      "type": "string"
+    },
+    "approval_status": {
+      "type": "string"
+    },
+    "approval_source": {
+      "type": "string"
+    },
+    "release_lock": {
+      "type": "object",
+      "required": ["validation_mode"],
+      "properties": {
+        "ontology_release_manifest_path": {
+          "type": "string"
+        },
+        "ontology_release_manifest_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "ontology_commit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{7,40}$"
+        },
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{7,40}$"
+        },
+        "validation_mode": {
+          "enum": ["report-only", "blocking"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "package_scope": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "producer_repo": {
+          "type": "string"
+        },
+        "producer_branch": {
+          "type": "string"
+        },
+        "source_manifests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_reports": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "outputs": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "privacy_boundary": {
+      "type": "object",
+      "properties": {
+        "contains_private_enterprise_data": {
+          "type": "boolean"
+        },
+        "contains_gps": {
+          "type": "boolean"
+        },
+        "contains_raw_attachments": {
+          "type": "boolean"
+        },
+        "contains_full_law_text": {
+          "type": "boolean"
+        },
+        "contains_secrets": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

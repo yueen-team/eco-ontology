@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "eco-ontology/consumer_compatibility_matrix.v0",
+  "title": "EcoOntologyConsumerCompatibilityMatrixV0",
+  "type": "object",
+  "required": ["schema_version", "ontology_version", "consumers"],
+  "properties": {
+    "schema_version": {
+      "const": "eco-ontology.consumer_compatibility_matrix.v0"
+    },
+    "ontology_version": { "type": "string" },
+    "consumers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["repo", "owner", "validation_mode", "contracts"],
+        "properties": {
+          "repo": { "type": "string" },
+          "owner": { "type": "string" },
+          "expected_path": { "type": "string" },
+          "branch": { "type": "string" },
+          "commit": { "type": "string" },
+          "validation_mode": { "enum": ["report-only", "blocking", "mixed"] },
+          "contracts": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "report_summary": {
+            "type": "object",
+            "required": ["mode", "red", "yellow", "info"],
+            "properties": {
+              "mode": { "enum": ["report-only", "blocking"] },
+              "red": { "type": "integer", "minimum": 0 },
+              "yellow": { "type": "integer", "minimum": 0 },
+              "info": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          },
+          "known_drift": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["check_id", "severity", "owner", "summary"],
+              "properties": {
+                "check_id": { "type": "string" },
+                "severity": { "enum": ["red", "yellow", "info"] },
+                "owner": { "type": "string" },
+                "summary": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "contract_artifacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["contract_id", "schema_status"],
+              "properties": {
+                "contract_id": { "type": "string" },
+                "schema_status": {
+                  "enum": ["proposal", "formal", "deprecated"]
+                },
+                "schema_path": { "type": "string" },
+                "manifest_path": { "type": "string" },
+                "manifest_sha256": { "type": "string" },
+                "report_path": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "projection_hash": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

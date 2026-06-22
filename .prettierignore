@@ -4,5 +4,6 @@ node_modules/
 pnpm-lock.yaml
 .gitnexus/
 .claude/skills/
+.agents/
 AGENTS.md
 CLAUDE.md

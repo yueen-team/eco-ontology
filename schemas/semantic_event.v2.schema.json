@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/semantic_event.v2",
+  "title": "EcoCheckSemanticEventV2",
+  "description": "Report-only shared contract for EcoCheck field fact candidate payloads accepted by eco-execution-graph. Payloads must stay sanitized: no raw attachments, GPS, secrets, raw enterprise reports, or full law text.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "event_type",
+    "source_system",
+    "occurred_at",
+    "source_context",
+    "standard_issue_type_candidate",
+    "environmental_risk_category"
+  ],
+  "anyOf": [
+    { "required": ["field_issue_uid"] },
+    { "required": ["event_id"] },
+    { "required": ["business_key"] }
+  ],
+  "properties": {
+    "schema_version": { "const": "ecocheck.semantic_event.v2" },
+    "event_type": {
+      "description": "Canonical EcoCheck semantic event types. Current producer event names are accepted directly; generic names are retained for forward-compatible generated projections.",
+      "enum": [
+        "ISSUE_ETO_REVIEWED",
+        "HEALTH_REPORT_ITEM_CONFIRMED",
+        "RECTIFICATION_VERIFIED",
+        "RECTIFICATION_REJECTED",
+        "FIELD_ISSUE_RECORDED",
+        "FIELD_ISSUE_REVIEWED",
+        "RECTIFICATION_REQUIRED",
+        "BACKFILL_REVIEWED"
+      ]
+    },
+    "source_system": { "type": "string", "minLength": 1 },
+    "occurred_at": { "type": "string" },
+    "field_issue_uid": { "type": "string", "minLength": 1 },
+    "event_id": { "type": "string", "minLength": 1 },
+    "business_key": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Canonical graph idempotency key. EcoCheck may also store the same value in the outbox row, but graph consumers should receive it in the payload or an explicit transport envelope before this check becomes blocking."
+    },
+    "trace_ref": { "type": "object" },
+    "source_context": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "company_id": { "type": "string" },
+        "enterprise_ref": { "type": "string" },
+        "company_name": { "type": "string" },
+        "region": { "type": "string" },
+        "industry_type": { "type": "string" },
+        "industry": { "type": "string" },
+        "permit_type": { "type": "string" },
+        "inspection_date": { "type": "string" },
+        "report_month": { "type": "string" }
+      }
+    },
+    "standard_issue_type_candidate": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": true,
+      "properties": {
+        "issue_type_ref": { "type": "string" },
+        "node_id": { "type": "string" },
+        "name": { "type": "string", "minLength": 1 },
+        "issue_type_name": { "type": "string" }
+      }
+    },
+    "environmental_risk_category": {
+      "type": "object",
+      "description": "`dimension` is the canonical S01-S13 risk-domain key. `id` is accepted as a legacy EcoCheck alias during report-only migration.",
+      "anyOf": [{ "required": ["dimension"] }, { "required": ["id"] }],
+      "additionalProperties": true,
+      "properties": {
+        "dimension": { "type": "string", "minLength": 1 },
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string" }
+      }
+    },
+    "observed_signals": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "risk_impact_summary": { "type": "string", "maxLength": 1200 },
+    "field_fact": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "summary": { "type": "string", "maxLength": 1200 },
+        "problem_raw": { "type": "string", "maxLength": 1200 }
+      }
+    },
+    "evidence_chain": {
+      "description": "Canonical shape is an array of sanitized evidence-point summaries. A summary object is accepted during report-only migration for earlier generated fixtures.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "point_type": { "type": ["string", "null"] },
+              "validity": { "type": ["string", "null"] },
+              "missing_flag": { "type": "boolean" }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "evidence_count": { "type": "integer", "minimum": 0 },
+            "evidence_types": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      ]
+    },
+    "rectification": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "requirement": { "type": "string", "maxLength": 1200 },
+        "status": { "type": "string" },
+        "recheck_points": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            { "type": "string", "maxLength": 1200 },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "rectification_history_summary": { "type": "object" },
+    "recheck_points": {
+      "description": "Canonical shape is an array of recheck point strings. A single string is accepted during report-only migration because EcoCheck stores the field as TEXT today.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        { "type": "string", "maxLength": 1200 },
+        { "type": "null" }
+      ]
+    },
+    "ai_regulatory_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "ref": { "type": "string" },
+          "node_id": { "type": "string" },
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "name": { "type": "string" }
+        }
+      }
+    },
+    "source_tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "backfill_context": { "type": "object" },
+    "field_completion": { "type": "object" },
+    "machine_fill_provenance": { "type": "object" },
+    "raw_attachment": false,
+    "raw_attachments": false,
+    "attachment_url": false,
+    "photo_url": false,
+    "gps": false,
+    "latitude": false,
+    "longitude": false,
+    "authorization": false,
+    "token": false,
+    "secret": false,
+    "law_full_text": false,
+    "raw_report_text": false
+  },
+  "additionalProperties": true
+}

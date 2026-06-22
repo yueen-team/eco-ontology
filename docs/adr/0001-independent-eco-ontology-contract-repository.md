@@ -1,6 +1,6 @@
 # ADR-0001: Establish independent eco-ontology contract repository
 
-Status: Accepted for direction; staged for report-only adoption.
+Status: Accepted.
 
 Date: 2026-06-22
 
@@ -27,8 +27,9 @@ runtime or human review.
 
 ## Decision
 
-Create `E:\eco-ontology` as an independent repository and make it the future
-single source for shared environmental ontology contracts.
+Create `E:\eco-ontology` as an independent repository and make it the single
+source for shared environmental ontology contracts that cross EcoCheck,
+eco-execution-graph, and eco-semantic-knowledge-base.
 
 The repository will own:
 
@@ -38,6 +39,7 @@ The repository will own:
 - Compatibility matrices for consumer repositories.
 - Generator specifications for consumer projections.
 - Report-only validation checklists and reports.
+- Release approval records for ontology packages.
 
 The repository will not own:
 
@@ -64,6 +66,25 @@ publishes graph exports.
 The three systems integrate through versioned packages and manifests, not by
 reading each other's source files through hard-coded local paths.
 
+## Owners and release authority
+
+`eco-ontology` has one contract owner group: ETO platform engineering. candy is
+the release approver for breaking ontology boundaries, blocking validation
+cutovers, and any change that affects legal-basis expression or private-data
+handling.
+
+Consumer ownership remains local:
+
+- EcoCheck owns scoring policy, deduction values, field workflow state, and
+  outgoing event implementation.
+- eco-execution-graph owns graph topology, tier enforcement, review workflow,
+  exports, and graph-api behavior.
+- eco-semantic-knowledge-base owns approved knowledge atoms, baseline data
+  generation, package manifests, and runtime approval state.
+- semantic-profile-lab remains an upstream semantic-profile source. Selected
+  graph-export and provenance surfaces may be mirrored into `eco-ontology`, but
+  `eco-ontology` does not silently overwrite graph-local schema extensions.
+
 ## Versioning policy
 
 `eco-ontology` releases use semantic versioning:
@@ -87,6 +108,36 @@ Runtime payload schema versions, such as `ecocheck.semantic_event.v2`, remain
 explicit contract identifiers. They are related to but not replaced by the
 package semantic version.
 
+## Release flow
+
+Every release uses this flow:
+
+1. Update schema, registry, compatibility, and documentation artifacts together.
+2. Run report-only validators and write JSON plus Markdown reports under
+   `reports/`.
+3. Record consumer repo commits, accepted drift, and projection hashes in
+   `contracts/consumer-compatibility-matrix.v*.json`.
+4. Record package version, schema versions, artifact paths, hashes, and
+   validation summary in `contracts/release-manifest.v*.json`.
+5. Tag or package only after the release manifest is complete and reviewed.
+
+Patch and minor releases can ship after report-only validation is current.
+Major releases require an ADR update or follow-up ADR and candy approval.
+
+## Compatibility matrix rule
+
+The compatibility matrix is the consumer-facing release contract. A consumer is
+compatible only when the matrix records:
+
+- repository name and expected local path or remote URL;
+- pinned commit or accepted version range;
+- consumed contract ids and schema versions;
+- validation mode for each check, either `report-only` or `blocking`;
+- known drift and owner for each finding class;
+- projection or package hash when a generated artifact is consumed.
+
+Missing rows are treated as unknown compatibility, not implicit support.
+
 ## Adoption strategy
 
 Adoption begins in report-only mode.
@@ -99,11 +150,27 @@ Adoption begins in report-only mode.
 6. Switch selected checks to blocking only after the report-only baseline is
    clean and a follow-up ADR records the cutover.
 
+## Report-only to blocking cutover
+
+A validator may move from report-only to blocking only when all conditions are
+true:
+
+- The owning consumer repo has a clean report-only baseline, or an accepted
+  migration exception is recorded with owner and expiry.
+- The validator points to actionable artifact ids and JSON paths.
+- The rollback path is documented.
+- The check runs locally and in CI without relying on private data.
+- The compatibility matrix names the exact check ids and blocking version.
+- A follow-up ADR records the promotion and candy approval.
+
+Until then, red findings are migration work, not CI failures.
+
 ## Initial contract families
 
 The first contract families are:
 
 - `semantic_event.v2`
+- `profile_gap_confirmed.v1`
 - `risk_domain`
 - `issue_type`
 - `observed_signal`
@@ -115,6 +182,33 @@ The first contract families are:
 - `graph_source`
 - `release_manifest`
 - `consumer_compatibility_matrix`
+
+## EcoCheck drift decisions on 2026-06-22
+
+These decisions settle the first `semantic_event.v2` report-only drift found by
+EcoCheck:
+
+- Event enum: current EcoCheck producer names are first-class contract values:
+  `ISSUE_ETO_REVIEWED`, `HEALTH_REPORT_ITEM_CONFIRMED`,
+  `RECTIFICATION_VERIFIED`, and `RECTIFICATION_REJECTED`. Generic event names
+  remain accepted for generated projections, but graph intake must not invent
+  undocumented aliases.
+- `business_key`: it is the canonical idempotency key for graph intake. EcoCheck
+  may keep a duplicate outbox-table column for indexing and retry, but before
+  blocking mode the graph request must receive the same value either in the
+  payload root or an explicit transport envelope.
+- `environmental_risk_category.dimension`: `dimension` is canonical for S01-S13.
+  EcoCheck's current `id` key is accepted as a report-only migration alias and
+  should be normalized to `dimension` by generated projections.
+- `evidence_chain`: the canonical semantic-event shape is an array of sanitized
+  evidence point summaries. Earlier object summary form is accepted only as a
+  migration-compatible fixture shape.
+- `recheck_points`: canonical shape is `string[]`. EcoCheck's current TEXT value
+  is accepted as a report-only migration alias and should be normalized to a
+  one-element array before blocking mode.
+- `COMPANY_PROFILE_GAP_CONFIRMED`: this event is not a `semantic_event.v2` field
+  issue or rectification fact. It belongs to the separate
+  `ecocheck.profile_gap_confirmed.v1` contract.
 
 ## Consequences
 
@@ -131,13 +225,3 @@ Tradeoffs:
 - The first report-only pass will likely reveal existing drift.
 - Generators introduce a new release workflow that must stay lightweight.
 - Cross-repo adoption requires staged coordination.
-
-## Open questions
-
-- Should the first release artifact be npm-only, file-package-only, or both npm
-  and Python-friendly JSON bundles?
-- Which repo owns publishing and release approval?
-- Should `semantic-profile-lab` remain a separate upstream contract source, or
-  should selected contract surfaces be mirrored into `eco-ontology`?
-- Which validators graduate to blocking first: EcoCheck outgoing events, graph
-  exports, or KB manifests?

@@ -1,0 +1,106 @@
+{
+  "schema_version": "eco-ontology.consumer_compatibility_matrix.v0",
+  "ontology_version": "0.0.0-report-only.2026-06-22",
+  "consumers": [
+    {
+      "repo": "EcoCheck",
+      "owner": "EcoCheck application engineering",
+      "branch": "codex/semantic-event-report-validator",
+      "commit": "97bd693e4e9903456276c1355944e93199dca589",
+      "validation_mode": "report-only",
+      "contracts": [
+        "ecocheck.semantic_event.v2",
+        "ecocheck.profile_gap_confirmed.v1"
+      ],
+      "report_summary": {
+        "mode": "report-only",
+        "red": 28,
+        "yellow": 0,
+        "info": 1
+      },
+      "known_drift": [
+        {
+          "check_id": "ECOCHECK-001",
+          "severity": "yellow",
+          "owner": "EcoCheck",
+          "summary": "Outgoing payload validation is report-only. semantic_event.v2 accepts current EcoCheck producer event names plus transitional aliases for risk category, evidence chain, and recheck points."
+        },
+        {
+          "check_id": "ECOCHECK-004",
+          "severity": "yellow",
+          "owner": "EcoCheck",
+          "summary": "business_key is canonical for graph idempotency and should be proven in real graph push smoke before blocking mode."
+        }
+      ]
+    },
+    {
+      "repo": "eco-execution-graph",
+      "owner": "ETO graph platform engineering",
+      "expected_path": "E:/eco-execution-graph",
+      "branch": "codex/ontology-contract-governance",
+      "commit": "79de902846f42fde83629c47f514fd328d6e1324",
+      "validation_mode": "report-only",
+      "contracts": [
+        "ecocheck.semantic_event.v2",
+        "ecocheck.profile_gap_confirmed.v1",
+        "graph_node",
+        "graph_edge",
+        "graph_source",
+        "kb_product_manifest"
+      ],
+      "report_summary": {
+        "mode": "report-only",
+        "red": 0,
+        "yellow": 0,
+        "info": 0
+      },
+      "known_drift": [
+        {
+          "check_id": "GRAPH-001",
+          "severity": "info",
+          "owner": "eco-execution-graph",
+          "summary": "Graph node/edge/source instance validation is clean in report-only mode after P8 schema drift reconciliation."
+        },
+        {
+          "check_id": "GRAPH-007",
+          "severity": "info",
+          "owner": "eco-execution-graph",
+          "summary": "profile_gap_confirmed.v1 is accepted as a separate non-aggregate intake record."
+        }
+      ]
+    },
+    {
+      "repo": "eco-semantic-knowledge-base",
+      "owner": "Knowledge base engineering",
+      "expected_path": "E:/eco-semantic-knowledge-base",
+      "branch": "codex/kb-report-only-contract-validation",
+      "commit": "ca2312c13295f68583e9d1d3fa7f6035d99cc4d8",
+      "validation_mode": "report-only",
+      "contracts": ["kb_product_manifest", "baseline_dataset_contract"],
+      "report_summary": {
+        "mode": "report-only",
+        "red": 0,
+        "yellow": 0,
+        "info": 2
+      },
+      "known_drift": [
+        {
+          "check_id": "KB-001",
+          "severity": "info",
+          "owner": "eco-semantic-knowledge-base",
+          "summary": "graph_kb_package_manifest_v1_0 is covered by formal eco-ontology schema kb_product_manifest.v1; KB report retains legacy info findings from the proposal-era inventory."
+        }
+      ],
+      "contract_artifacts": [
+        {
+          "contract_id": "kb.product_manifest.v1",
+          "schema_status": "formal",
+          "schema_path": "schemas/kb_product_manifest.v1.schema.json",
+          "manifest_path": "E:/eco-semantic-knowledge-base/manifests/graph_kb_package_manifest_v1_0.json",
+          "manifest_sha256": "sha256:a89625ed33263e3f57adeb802ce98c69a25b155444334b74e80e37671359a1b3",
+          "report_path": "E:/eco-semantic-knowledge-base/reports/kb_report_only_contract_validation.json"
+        }
+      ]
+    }
+  ]
+}
