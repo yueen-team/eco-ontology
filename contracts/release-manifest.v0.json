@@ -33,12 +33,12 @@
     },
     {
       "path": "schemas/release_manifest.schema.json",
-      "sha256": "aeacbfe4c423a207a9058e3ca5b205a4ba67cee60fe1d04073f3b48b2d0b6631",
+      "sha256": "d102b8b4c3b01f62e0e1660e3f1f16ace3d15896bf599734848923ef47295ed0",
       "description": "Ontology release manifest contract"
     },
     {
       "path": "schemas/consumer_compatibility_matrix.schema.json",
-      "sha256": "97134ccf6dcc8a7744ac205ba3049e9c64b90389af9d286921c669cf119c45ef",
+      "sha256": "607ea7b8ee02a9f04416529ac7204deab9d79983698b7a75b5d2195c96c9cd72",
       "description": "Consumer compatibility matrix contract"
     }
   ],

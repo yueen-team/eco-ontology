@@ -53,16 +53,24 @@ not fail CI, until a later ADR promotes a check to blocking.
 
 ```powershell
 pnpm validate:report-only
+pnpm validate:blocking
 ```
 
 Outputs:
 
 - `reports/report-only-validation.json`
 - `reports/report-only-validation.md`
+- `reports/schema-blocking-gate-validation.json`
+- `reports/schema-blocking-gate-validation.md`
 
 The ontology report also lists `blocking_ready_checks` for checks that have a
 clean local report-only baseline, plus `external_gates` that must stay outside
 the repository validator.
+
+`validate:blocking` exits non-zero when a closed-world schema finding is red or
+yellow. It must not fail on external gates that require real Tencent RAG,
+CloudBase/WeCom, government lineage import, or real EcoCheck aggregate/ETO
+review evidence.
 
 P3 baseline freeze:
 
@@ -133,7 +141,8 @@ Each validator should write one JSON report and one short Markdown summary:
 
 ## Cutover criteria for blocking mode
 
-A check may become blocking only when all are true:
+Closed-world ontology schema checks are blocking in `pnpm validate:blocking`.
+Consumer runtime checks may become blocking only when all are true:
 
 - The owning repo has a clean report-only baseline or accepted migration
   exceptions.

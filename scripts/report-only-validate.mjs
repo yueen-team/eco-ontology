@@ -5,12 +5,26 @@ import process from "node:process";
 import Ajv from "ajv";
 
 const root = process.cwd();
-const reportJson = join(root, "reports", "report-only-validation.json");
-const reportMd = join(root, "reports", "report-only-validation.md");
+const mode = process.argv.includes("--blocking") ? "blocking" : "report-only";
+const isBlocking = mode === "blocking";
+const reportJson = join(
+  root,
+  "reports",
+  isBlocking
+    ? "schema-blocking-gate-validation.json"
+    : "report-only-validation.json",
+);
+const reportMd = join(
+  root,
+  "reports",
+  isBlocking
+    ? "schema-blocking-gate-validation.md"
+    : "report-only-validation.md",
+);
 const kbRoot = process.env.ECO_KB_ROOT || "E:/eco-semantic-knowledge-base";
 const graphRoot = process.env.ECO_GRAPH_ROOT || "E:/eco-execution-graph";
 const ecoCheckRoot = process.env.ECOCHECK_ROOT || "E:/EcoCheck";
-const ajv = new Ajv({ allErrors: true, schemaId: "auto", jsonPointers: true });
+const draft07SchemaUri = "http://json-schema.org/draft-07/schema#";
 
 const checks = [
   {
@@ -40,12 +54,50 @@ const checks = [
   },
 ];
 
+const schemaFiles = [
+  {
+    id: "SCHEMA-SEMANTIC-EVENT",
+    path: "schemas/semantic_event.v2.schema.json",
+  },
+  {
+    id: "SCHEMA-PROFILE-GAP",
+    path: "schemas/profile_gap_confirmed.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-KB-PRODUCT-MANIFEST",
+    path: "schemas/kb_product_manifest.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-RELEASE-MANIFEST",
+    path: "schemas/release_manifest.schema.json",
+  },
+  {
+    id: "SCHEMA-CONSUMER-COMPATIBILITY",
+    path: "schemas/consumer_compatibility_matrix.schema.json",
+  },
+];
+
 function resolvePath(path, base = root) {
   return isAbsolute(path) ? path : join(base, path);
 }
 
 function readJson(path, base = root) {
   return JSON.parse(readFileSync(resolvePath(path, base), "utf8"));
+}
+
+function tryReadJson(findings, check, path, base = root) {
+  try {
+    return readJson(path, base);
+  } catch (error) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      path,
+      `Unable to read JSON artifact: ${error.message}`,
+    );
+    return null;
+  }
 }
 
 function sha256(path, base = root) {
@@ -66,6 +118,10 @@ function addFinding(findings, severity, check, path, message) {
     message,
     owner: check.owner,
   });
+}
+
+function addInfo(findings, check, path, message) {
+  addFinding(findings, "info", check, path, message);
 }
 
 function hasBlockingFinding(findings, checkId) {
@@ -135,6 +191,68 @@ function validateArtifactHashes(findings, check, manifest) {
   }
 }
 
+function createAjv() {
+  return new Ajv({ allErrors: true, schemaId: "auto", jsonPointers: true });
+}
+
+function findDuplicateEnumValues(schema, path = "$", results = []) {
+  if (!schema || typeof schema !== "object") return results;
+  if (Array.isArray(schema.enum)) {
+    const duplicates = schema.enum.filter(
+      (item, index) => schema.enum.indexOf(item) !== index,
+    );
+    if (duplicates.length > 0) {
+      results.push({
+        path: `${path}.enum`,
+        duplicates: [...new Set(duplicates)],
+      });
+    }
+  }
+  for (const [key, value] of Object.entries(schema)) {
+    if (value && typeof value === "object") {
+      findDuplicateEnumValues(value, `${path}.${key}`, results);
+    }
+  }
+  return results;
+}
+
+function validateSchemaFiles(findings) {
+  for (const schemaFile of schemaFiles) {
+    const check = { id: schemaFile.id, owner: "eco-ontology" };
+    const schema = tryReadJson(findings, check, schemaFile.path);
+    if (!schema) continue;
+    if (schema.$schema !== draft07SchemaUri) {
+      addFinding(
+        findings,
+        "red",
+        check,
+        "$.$schema",
+        "Schema must declare Draft-07 for Ajv v6 consumers.",
+      );
+    }
+    try {
+      createAjv().compile(schema);
+    } catch (error) {
+      addFinding(
+        findings,
+        "red",
+        check,
+        "$schema",
+        `Schema failed to compile with Ajv v6: ${error.message}`,
+      );
+    }
+    for (const duplicate of findDuplicateEnumValues(schema)) {
+      addFinding(
+        findings,
+        "red",
+        check,
+        duplicate.path,
+        `Duplicate enum values are invalid for Ajv v6 consumers: ${duplicate.duplicates.join(", ")}.`,
+      );
+    }
+  }
+}
+
 function validateCompatibility(findings, check, matrix) {
   const consumers = matrix.consumers || [];
   for (const repo of [
@@ -177,7 +295,7 @@ function validateCompatibility(findings, check, matrix) {
 function validateJsonSchema(findings, check, artifact, schema) {
   let validate;
   try {
-    validate = ajv.compile(schema);
+    validate = createAjv().compile(schema);
   } catch (error) {
     addFinding(
       findings,
@@ -199,6 +317,89 @@ function validateJsonSchema(findings, check, artifact, schema) {
     );
   }
   return false;
+}
+
+function validateKnownSchemaSamples(findings) {
+  const samples = [
+    {
+      check: { id: "SEMANTIC-EVENT-SAMPLE", owner: "eco-ontology" },
+      schema: "schemas/semantic_event.v2.schema.json",
+      artifact: {
+        schema_version: "ecocheck.semantic_event.v2",
+        event_type: "ISSUE_ETO_REVIEWED",
+        source_system: "EcoCheck",
+        occurred_at: "2026-06-22T00:00:00.000Z",
+        event_id: "synthetic-semantic-event-sample",
+        source_context: {
+          enterprise_ref: "synthetic-enterprise-ref",
+          region: "synthetic-region",
+        },
+        standard_issue_type_candidate: {
+          name: "synthetic issue type",
+        },
+        environmental_risk_category: {
+          dimension: "S01",
+          name: "synthetic risk domain",
+        },
+      },
+    },
+    {
+      check: { id: "PROFILE-GAP-SAMPLE", owner: "eco-ontology" },
+      schema: "schemas/profile_gap_confirmed.v1.schema.json",
+      artifact: {
+        schema_version: "ecocheck.profile_gap_confirmed.v1",
+        event_type: "COMPANY_PROFILE_GAP_CONFIRMED",
+        company_id: "synthetic-company-id",
+        gap_dimension: "synthetic-gap-dimension",
+        eso_decision: "PRESENT",
+        site_verification: "ESO_CONFIRMED_APPLICABLE",
+        knowledge_approval_basis: "synthetic approval basis",
+      },
+    },
+  ];
+  for (const sample of samples) {
+    const schema = tryReadJson(findings, sample.check, sample.schema);
+    if (schema)
+      validateJsonSchema(findings, sample.check, sample.artifact, schema);
+  }
+
+  const optionalFixtures = [
+    {
+      check: { id: "ECOCHECK-SEMANTIC-EVENT-FIXTURE", owner: "EcoCheck" },
+      schema: "schemas/semantic_event.v2.schema.json",
+      artifact:
+        "cloudrun/fixtures/semantic-event-report-only/valid-minimal-semantic-event-v2.json",
+      artifactRoot: ecoCheckRoot,
+    },
+    {
+      check: { id: "ECOCHECK-PROFILE-GAP-FIXTURE", owner: "EcoCheck" },
+      schema: "schemas/profile_gap_confirmed.v1.schema.json",
+      artifact:
+        "cloudrun/fixtures/profile-gap-report-only/valid-profile-gap-confirmed-v1.json",
+      artifactRoot: ecoCheckRoot,
+    },
+  ];
+  for (const fixture of optionalFixtures) {
+    if (!existsSync(resolvePath(fixture.artifact, fixture.artifactRoot))) {
+      addInfo(
+        findings,
+        fixture.check,
+        fixture.artifact,
+        "Optional sibling fixture was not present; inline synthetic sample covers this schema.",
+      );
+      continue;
+    }
+    const schema = tryReadJson(findings, fixture.check, fixture.schema);
+    const fixtureArtifact = tryReadJson(
+      findings,
+      fixture.check,
+      fixture.artifact,
+      fixture.artifactRoot,
+    );
+    const artifact = fixtureArtifact?.payload || fixtureArtifact;
+    if (schema && artifact)
+      validateJsonSchema(findings, fixture.check, artifact, schema);
+  }
 }
 
 function validateKbProductManifest(findings, check, manifest, schema) {
@@ -351,12 +552,25 @@ function validateSemanticEventSchema(findings, check, schema) {
 function createBlockingReadyChecks(findings) {
   return [
     {
-      check_id: "ECO-ONTO-SCHEMA-ENUM-UNIQUENESS",
-      status: hasBlockingFinding(findings, "ECOCHECK-001")
+      check_id: "ECO-ONTO-SCHEMA-COMPILE",
+      status: schemaFiles.some((schemaFile) =>
+        hasBlockingFinding(findings, schemaFile.id),
+      )
         ? "not_ready"
         : "ready",
       evidence:
-        "semantic_event.v2 event_type enum has no duplicate values and remains Ajv v6 compatible.",
+        "All ontology JSON Schemas declare Draft-07 and compile with Ajv v6.",
+    },
+    {
+      check_id: "ECO-ONTO-SCHEMA-ENUM-UNIQUENESS",
+      status:
+        schemaFiles.some((schemaFile) =>
+          hasBlockingFinding(findings, schemaFile.id),
+        ) || hasBlockingFinding(findings, "ECOCHECK-001")
+          ? "not_ready"
+          : "ready",
+      evidence:
+        "Schema enum arrays have no duplicate values, including semantic_event.v2 event_type.",
     },
     {
       check_id: "ECO-ONTO-RELEASE-MANIFEST-SHAPE",
@@ -381,6 +595,16 @@ function createBlockingReadyChecks(findings) {
         "KB graph package manifest validates against kb_product_manifest.v1 and each output path has matching sha256.",
     },
     {
+      check_id: "ONTOLOGY-SAFE-SAMPLES",
+      status:
+        hasBlockingFinding(findings, "SEMANTIC-EVENT-SAMPLE") ||
+        hasBlockingFinding(findings, "PROFILE-GAP-SAMPLE")
+          ? "not_ready"
+          : "ready",
+      evidence:
+        "Synthetic safe semantic_event.v2 and profile_gap_confirmed.v1 instances validate without reading private data.",
+    },
+    {
       check_id: "ECOCHECK-VALID-FIXTURES",
       status: hasBlockingFinding(findings, "ECOCHECK-VALID-FIXTURES")
         ? "not_ready"
@@ -391,12 +615,49 @@ function createBlockingReadyChecks(findings) {
   ];
 }
 
+function createExternalGates() {
+  return [
+    {
+      gate_id: "TENCENT-RAG-REAL-SMOKE",
+      status: "external_required",
+      reason:
+        "Requires real Tencent RAG smoke evidence outside this local schema gate.",
+    },
+    {
+      gate_id: "CLOUDBASE-SCAN-REAL-SMOKE",
+      status: "external_required",
+      reason:
+        "Requires real CloudBase storage diagnostic, WeCom live scan, and online enterprise-data smoke evidence outside this repository.",
+    },
+    {
+      gate_id: "GOVERNMENT-LINEAGE-REAL-IMPORT",
+      status: "external_required",
+      reason:
+        "Requires government lineage real import evidence outside this local schema gate.",
+    },
+    {
+      gate_id: "ECOCHECK-AGGREGATE-ETO-BLIND-REVIEW",
+      status: "external_required",
+      reason:
+        "Requires real EcoCheck aggregate and ETO blind review evidence outside this local schema gate.",
+    },
+  ];
+}
+
 const findings = [];
+validateSchemaFiles(findings);
 for (const check of checks) {
-  const artifact = readJson(check.artifact, check.artifactRoot);
-  const schema = readJson(check.schema);
+  const artifact = tryReadJson(
+    findings,
+    check,
+    check.artifact,
+    check.artifactRoot,
+  );
+  const schema = tryReadJson(findings, check, check.schema);
+  if (!artifact || !schema) continue;
   if (check.id !== "ECOCHECK-001" && check.id !== "KB-001") {
     validateRequiredObject(findings, check, artifact, schema);
+    validateJsonSchema(findings, check, artifact, schema);
   }
   if (check.id === "ECO-ONTO-001")
     validateArtifactHashes(findings, check, artifact);
@@ -407,16 +668,23 @@ for (const check of checks) {
   if (check.id === "KB-001")
     validateKbProductManifest(findings, check, artifact, schema);
 }
+validateKnownSchemaSamples(findings);
 validateGraphReport(findings);
 validateEcoCheckValidFixtures(findings);
 
 const summary = { red: 0, yellow: 0, info: 0 };
 for (const finding of findings) summary[finding.severity] += 1;
 const blockingReadyChecks = createBlockingReadyChecks(findings);
+const blockingFailures = findings.filter((finding) =>
+  ["red", "yellow"].includes(finding.severity),
+);
+const externalGates = createExternalGates();
 
 const report = {
-  validator_id: "ECO-ONTOLOGY-REPORT-ONLY",
-  mode: "report-only",
+  validator_id: isBlocking
+    ? "ECO-ONTOLOGY-SCHEMA-BLOCKING-GATE"
+    : "ECO-ONTOLOGY-REPORT-ONLY",
+  mode,
   ontology_version: "0.0.0-report-only.2026-06-22",
   checked_at: new Date().toISOString(),
   summary,
@@ -430,20 +698,8 @@ const report = {
       "E:/EcoCheck/docs/validation/semantic-event-report-only.latest.json",
   },
   blocking_ready_checks: blockingReadyChecks,
-  external_gates: [
-    {
-      gate_id: "TENCENT-RAG-REAL-SMOKE",
-      status: "external_required",
-      reason:
-        "Requires real Tencent RAG smoke evidence outside this ontology report-only validator.",
-    },
-    {
-      gate_id: "CLOUDBASE-SCAN-REAL-SMOKE",
-      status: "external_required",
-      reason:
-        "Requires real CloudBase scan and online enterprise-data smoke evidence outside this repository.",
-    },
-  ],
+  external_gates: externalGates,
+  blocking_failures: isBlocking ? blockingFailures : [],
   findings,
 };
 
@@ -451,13 +707,16 @@ mkdirSync(join(root, "reports"), { recursive: true });
 writeFileSync(reportJson, `${JSON.stringify(report, null, 2)}\n`);
 
 const lines = [
-  "# Eco Ontology Report-only Validation",
+  isBlocking
+    ? "# Eco Ontology Schema Blocking Gate"
+    : "# Eco Ontology Report-only Validation",
   "",
   `- mode: \`${report.mode}\``,
   `- ontology_version: \`${report.ontology_version}\``,
   `- red: ${summary.red}`,
   `- yellow: ${summary.yellow}`,
   `- info: ${summary.info}`,
+  `- blocking_failures: ${blockingFailures.length}`,
   "",
   "## Blocking-ready Checks",
   "",
@@ -465,16 +724,21 @@ const lines = [
 for (const check of blockingReadyChecks) {
   lines.push(`- ${check.status} ${check.check_id}: ${check.evidence}`);
 }
-lines.push(
-  "",
-  "## External Gates",
-  "",
-  "- external_required TENCENT-RAG-REAL-SMOKE: requires real Tencent RAG smoke evidence outside this validator.",
-  "- external_required CLOUDBASE-SCAN-REAL-SMOKE: requires real CloudBase scan and online enterprise-data smoke evidence outside this repository.",
-  "",
-  "## Findings",
-  "",
-);
+lines.push("", "## External Gates", "");
+for (const gate of externalGates) {
+  lines.push(`- ${gate.status} ${gate.gate_id}: ${gate.reason}`);
+}
+lines.push("", "## Blocking Failures", "");
+if (blockingFailures.length === 0) {
+  lines.push("- none");
+} else {
+  for (const finding of blockingFailures) {
+    lines.push(
+      `- ${finding.severity} ${finding.check_id} ${finding.path}: ${finding.message}`,
+    );
+  }
+}
+lines.push("", "## Findings", "");
 if (findings.length === 0) {
   lines.push("- none");
 } else {
@@ -487,5 +751,9 @@ if (findings.length === 0) {
 writeFileSync(reportMd, `${lines.join("\n")}\n`);
 
 console.log(
-  `report-only validation wrote reports/report-only-validation.json and reports/report-only-validation.md`,
+  `${mode} validation wrote ${reportJson.replace(`${root}\\`, "").replaceAll("\\", "/")} and ${reportMd.replace(`${root}\\`, "").replaceAll("\\", "/")}`,
 );
+
+if (isBlocking && blockingFailures.length > 0) {
+  process.exit(1);
+}

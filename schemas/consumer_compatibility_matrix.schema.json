@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "eco-ontology/consumer_compatibility_matrix.v0",
   "title": "EcoOntologyConsumerCompatibilityMatrixV0",
   "type": "object",

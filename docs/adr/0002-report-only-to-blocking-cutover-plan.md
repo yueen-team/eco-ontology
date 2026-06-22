@@ -20,24 +20,31 @@ The first clean report-only surfaces are now:
 
 ## Decision
 
-Keep all checks report-only for this release package. Promote checks to blocking
-only in the next release after the owning repo has a stable clean baseline and
-the compatibility matrix names the exact promoted check ids.
+Promote closed-world ontology schema checks to a local blocking gate through
+`pnpm validate:blocking`. Consumer runtime and real-environment checks remain
+report-only or external until their owning repos record clean evidence.
 
-Blocking-ready candidates:
+Blocking schema gate:
 
+- `ECO-ONTO-SCHEMA-COMPILE`: every ontology JSON Schema declares Draft-07 and
+  compiles with Ajv v6.
 - `ECO-ONTO-SCHEMA-ENUM-UNIQUENESS`: ontology schema enum uniqueness,
   including the `semantic_event.v2` duplicate-enum guard for Ajv v6 consumers.
 - `ECO-ONTO-RELEASE-MANIFEST-SHAPE`: release manifest required shape and
   artifact path/hash coverage.
-- `GRAPH-REPORT-ONLY-CLEAN`: eco-execution-graph report-only validation with
-  summary `red=0 yellow=0 info=0`.
+- `CROSS-001`: consumer compatibility matrix shape.
 - `KB-MANIFEST-PATH-SHA`: `graph_kb_package_manifest_v1_0.json` validation
   against formal `kb_product_manifest.v1`, including output `path` and
   `sha256` checks.
-- `ECOCHECK-VALID-FIXTURES`: EcoCheck expected-valid `semantic_event.v2` and
-  `profile_gap_confirmed.v1` fixtures passing schema, local payload, and graph
-  request report layers.
+- `SEMANTIC-EVENT-SAMPLE` and `PROFILE-GAP-SAMPLE`: synthetic safe instance
+  validation.
+- `ECOCHECK-VALID-FIXTURES`: optional sibling EcoCheck expected-valid fixtures,
+  when present locally, must validate without exposing payload values.
+
+Blocking-ready but still owned by consumer reports:
+
+- `GRAPH-REPORT-ONLY-CLEAN`: eco-execution-graph report-only validation with
+  summary `red=0 yellow=0 info=0`.
 
 Remain report-only:
 
@@ -50,7 +57,9 @@ Remain report-only:
 Remain external gates before production blocking cutover:
 
 - Tencent RAG real smoke.
-- Real CloudBase scan and online enterprise-data smoke.
+- CloudBase storage diagnostic and WeCom live scan.
+- Government lineage real import.
+- Real EcoCheck aggregate and ETO blind review.
 
 ## P3 reproducible KB build cutover
 
