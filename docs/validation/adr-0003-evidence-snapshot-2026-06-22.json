@@ -39,10 +39,15 @@
       ],
       "summary": {
         "dry_run": "pass",
-        "live": "fail",
-        "live_blocker": "ECO_GRAPH_FIELD_EVENT_ENDPOINT is not configured"
+        "live": "pass",
+        "endpoint": "https://www.yueen.cc/container-eco-execution-graph/api/ecocheck/field-events",
+        "http_status": 201,
+        "business_key": "synthetic-smoke:semantic-event-v2-20260623-extlane",
+        "synthetic_review_id": "review:52f1f3250c5f050e",
+        "post_smoke_disposition": "marked_not_for_graph",
+        "aggregate_allowed": false
       },
-      "decision": "stay_external_report_only"
+      "decision": "evidence_collected_keep_external_until_cloudrun_worker_and_review_storage_are_repeated"
     },
     {
       "gate_family": "graph_local_contracts",
@@ -70,12 +75,20 @@
         "embedding_probe": "pass",
         "tokenhub_probe": "pass",
         "rag_retrieve_probe": "pass",
-        "report": "reports/rag-citation-resolution-report.json"
+        "report": "reports/rag-citation-resolution-report.json",
+        "repeat_evidence": {
+          "source": "clean main worktree",
+          "worktree": "E:\\eco-execution-graph-clean-main-smoke",
+          "main_commit": "0555cca",
+          "command": "pnpm verify:external",
+          "result": "pass",
+          "notes": "Temporary worktree used only for evidence collection; removed after recording."
+        }
       },
       "decision": "candidate_for_environment_scoped_blocking",
       "promotion_requirements": [
-        "repeat from clean main or CI external verifier",
         "documented secret and raw-response redaction boundary",
+        "credentialed external CI lane or equivalent owner-repo verifier",
         "rollback note to return to external/report-only"
       ]
     },
@@ -120,7 +133,6 @@
     "promote_to_global_blocking_now": [],
     "candidate_next": ["GRAPH-RAG-REAL-SMOKE"],
     "remain_external_or_report_only": [
-      "ECOCHECK-GRAPH-PUSH-REAL-SMOKE",
       "CLOUDBASE-WECOM-REAL-SMOKE",
       "GOVERNMENT-LINEAGE-REAL-IMPORT",
       "ECOCHECK-AGGREGATE-ETO-BLIND-REVIEW"

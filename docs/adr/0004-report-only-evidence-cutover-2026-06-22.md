@@ -39,18 +39,19 @@ Mark `GRAPH-RAG-REAL-SMOKE` as a candidate for environment-scoped blocking in
 `eco-execution-graph`, not as a global ontology gate. It may be promoted only
 after:
 
-- a second successful run from clean `main`, or CI evidence from the graph
-  external verifier;
 - the owning repo documents which external verification command is allowed to
   fail CI when credentials are present;
 - the report redacts secrets and raw RAG response content;
 - rollback returns the check to external/report-only without changing ontology
   contracts.
 
+Update on 2026-06-23: the second successful run from clean `main` has been
+collected in a temporary graph worktree at commit `0555cca` with
+`pnpm verify:external`. The remaining cutover requirement is now owner-repo
+documentation/CI wiring, not another local proof run.
+
 Keep these gates report-only or external:
 
-- `ECOCHECK-GRAPH-PUSH-REAL-SMOKE`, because live smoke is blocked without
-  `ECO_GRAPH_FIELD_EVENT_ENDPOINT`.
 - `CLOUDBASE-WECOM-REAL-SMOKE`, because no real CloudBase storage diagnostic,
   WeCom live scan, or review-account runtime evidence was collected in this
   pass.
@@ -65,8 +66,11 @@ Keep these gates report-only or external:
 - The next promotion target is narrow and owned by
   `eco-execution-graph`: `GRAPH-RAG-REAL-SMOKE` in an external verification
   lane.
-- EcoCheck graph push, CloudBase/WeCom, government lineage, and aggregate/ETO
-  blind review remain honest external gates.
+- EcoCheck graph push has one live synthetic pass against the configured
+  endpoint, but remains external until CloudRun worker/outbox and review-store
+  evidence are repeated.
+- CloudBase/WeCom, government lineage, and aggregate/ETO blind review remain
+  honest external gates.
 
 ## Rollback
 
