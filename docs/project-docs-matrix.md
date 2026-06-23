@@ -5,6 +5,7 @@
 | Project overview | README             | `README.md`                        | present | Includes scope and adoption path.                                                                                        |
 | Architecture     | Architecture guide | `ARCHITECTURE.md`                  | present | Defines ownership boundaries.                                                                                            |
 | Navigation       | Codemap            | `CODEMAP.md`                       | present | Lists commands and directories.                                                                                          |
+| Usage            | Task workflows     | `docs/USAGE.md`                    | present | Day-to-day commands, change workflow, and the two-tier governance boundary.                                              |
 | Agent protocol   | Agent guide        | `AGENTS.md`                        | present | Includes validation posture and safety rules.                                                                            |
 | Domain context   | Context doc        | `CONTEXT.md`                       | present | Captures ontology terms and governance principles.                                                                       |
 | ADR              | Decision records   | `docs/adr/`                        | present | ADR-0001 through ADR-0004 record repository boundary, cutover, v0.1.0 package, and evidence-based promotion decisions.   |

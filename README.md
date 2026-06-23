@@ -61,3 +61,6 @@ pnpm release:manifest:update
 pnpm release:manifest:check
 pnpm verify:all
 ```
+
+For the day-to-day change workflow and the two-tier governance boundary, see
+[`docs/USAGE.md`](docs/USAGE.md).
