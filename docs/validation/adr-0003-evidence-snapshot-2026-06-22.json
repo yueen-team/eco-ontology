@@ -42,12 +42,13 @@
         "live": "pass",
         "endpoint": "https://www.yueen.cc/container-eco-execution-graph/api/ecocheck/field-events",
         "http_status": 201,
-        "business_key": "synthetic-smoke:semantic-event-v2-20260623-extlane",
-        "synthetic_review_id": "review:52f1f3250c5f050e",
+        "business_key": "synthetic-smoke:semantic-event-v2-20260623-autoclean2",
+        "synthetic_review_id": "review:bc1da557a06a72d3",
         "post_smoke_disposition": "marked_not_for_graph",
-        "aggregate_allowed": false
+        "aggregate_allowed": false,
+        "synthetic_cleanup": "automatic"
       },
-      "decision": "evidence_collected_keep_external_until_cloudrun_worker_and_review_storage_are_repeated"
+      "decision": "candidate_for_environment_scoped_external_lane_blocking"
     },
     {
       "gate_family": "graph_local_contracts",
@@ -67,10 +68,23 @@
       "decision": "keep_blocking_for_closed_world_checks"
     },
     {
-      "gate_family": "graph_rag_real_smoke",
+      "gate_family": "graph_external_verification_lane",
       "owner_repo": "eco-execution-graph",
-      "commands": ["pnpm rag:real:gate"],
+      "commands": [
+        "pnpm verify:external",
+        "GRAPH_EXTERNAL_REQUIRED_GATES=all pnpm verify:external"
+      ],
       "summary": {
+        "lane_id": "GRAPH-EXTERNAL-VERIFICATION",
+        "default_required_gate_ids": ["GRAPH-RAG-REAL-SMOKE"],
+        "default_result": "pass",
+        "all_required_result": "blocked",
+        "gates": {
+          "GRAPH-RAG-REAL-SMOKE": "pass",
+          "ECOCHECK-GRAPH-PUSH-REAL-SMOKE": "pass",
+          "ECOCHECK-AGGREGATE-ETO-BLIND-REVIEW": "blocked",
+          "GOVERNMENT-LINEAGE-REAL-IMPORT": "blocked"
+        },
         "rag_real_smoke": "pass",
         "embedding_probe": "pass",
         "tokenhub_probe": "pass",
@@ -85,10 +99,11 @@
           "notes": "Temporary worktree used only for evidence collection; removed after recording."
         }
       },
-      "decision": "candidate_for_environment_scoped_blocking",
+      "decision": "candidate_for_environment_scoped_external_lane_blocking",
       "promotion_requirements": [
         "documented secret and raw-response redaction boundary",
-        "credentialed external CI lane or equivalent owner-repo verifier",
+        "credentialed/data-bearing external CI lane or equivalent owner-repo verifier",
+        "explicit GRAPH_EXTERNAL_REQUIRED_GATES selection",
         "rollback note to return to external/report-only"
       ]
     },
@@ -131,7 +146,10 @@
   ],
   "global_cutover_decision": {
     "promote_to_global_blocking_now": [],
-    "candidate_next": ["GRAPH-RAG-REAL-SMOKE"],
+    "candidate_next": [
+      "GRAPH-RAG-REAL-SMOKE",
+      "ECOCHECK-GRAPH-PUSH-REAL-SMOKE"
+    ],
     "remain_external_or_report_only": [
       "CLOUDBASE-WECOM-REAL-SMOKE",
       "GOVERNMENT-LINEAGE-REAL-IMPORT",

@@ -35,20 +35,23 @@ Keep ADR-0003 closed-world checks blocking:
 - `ONTOLOGY-SAFE-SAMPLES`
 - `ECOCHECK-VALID-FIXTURES`
 
-Mark `GRAPH-RAG-REAL-SMOKE` as a candidate for environment-scoped blocking in
-`eco-execution-graph`, not as a global ontology gate. It may be promoted only
-after:
+Mark `GRAPH-RAG-REAL-SMOKE` and `ECOCHECK-GRAPH-PUSH-REAL-SMOKE` as candidates
+for environment-scoped blocking in `eco-execution-graph`, not as global ontology
+gates. They may be promoted only after:
 
 - the owning repo documents which external verification command is allowed to
-  fail CI when credentials are present;
+  fail CI when credentials or real external inputs are present;
 - the report redacts secrets and raw RAG response content;
 - rollback returns the check to external/report-only without changing ontology
   contracts.
 
 Update on 2026-06-23: the second successful run from clean `main` has been
 collected in a temporary graph worktree at commit `0555cca` with
-`pnpm verify:external`. The remaining cutover requirement is now owner-repo
-documentation/CI wiring, not another local proof run.
+`pnpm verify:external`. The graph repo now owns a multi-gate external lane:
+default `pnpm verify:external` requires `GRAPH-RAG-REAL-SMOKE`, while
+`GRAPH_EXTERNAL_REQUIRED_GATES=all` or a comma-separated subset makes additional
+external gates fail closed. EcoCheck's live synthetic graph smoke also now
+auto-marks synthetic reviews as `不入图` after POST.
 
 Keep these gates report-only or external:
 
@@ -63,18 +66,17 @@ Keep these gates report-only or external:
 ## Consequences
 
 - v0.1.0 release contracts remain stable and unchanged.
-- The next promotion target is narrow and owned by
-  `eco-execution-graph`: `GRAPH-RAG-REAL-SMOKE` in an external verification
-  lane.
-- EcoCheck graph push has one live synthetic pass against the configured
-  endpoint, but remains external until CloudRun worker/outbox and review-store
-  evidence are repeated.
+- The next promotion targets are narrow and owned by `eco-execution-graph`:
+  selected gate ids in the external verification lane, not ontology defaults.
+- EcoCheck graph push has live synthetic evidence against the configured
+  endpoint and automatic synthetic cleanup. Real CloudRun outbox rows still
+  require a separate data-bearing run before aggregate/ETO claims are promoted.
 - CloudBase/WeCom, government lineage, and aggregate/ETO blind review remain
-  honest external gates.
+  honest external gates, but their fail-closed lane wiring now exists.
 
 ## Rollback
 
-If a future `GRAPH-RAG-REAL-SMOKE` promotion produces false failures, revert
-that consumer-repo gate to external/report-only. Do not weaken ontology schema,
-registry, projection, or manifest validation to compensate for live service
-instability.
+If a future external gate promotion produces false failures, remove that gate id
+from `GRAPH_EXTERNAL_REQUIRED_GATES` and revert it to external/report-only. Do
+not weaken ontology schema, registry, projection, or manifest validation to
+compensate for live service instability.

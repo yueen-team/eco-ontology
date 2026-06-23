@@ -46,19 +46,19 @@ python kb_build.py validate --version graph_package_v1_0
 
 ## Evidence Summary
 
-| Gate family                               | Current result                                                                                                                                                                                               | Promotion decision                                                                                                   |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
-| Closed-world ontology package checks      | `red=0 yellow=0 info=0` in report-only and blocking modes.                                                                                                                                                   | Keep blocking under ADR-0003.                                                                                        |
-| EcoCheck semantic-event contract fixtures | Blocking command passed. Report summary is `red=32 yellow=0 info=1`; red findings are intentionally invalid guard fixtures.                                                                                  | Keep current mixed mode. Do not promote live graph push.                                                             |
-| EcoCheck graph synthetic smoke dry-run    | Dry-run passed before live run.                                                                                                                                                                              | Useful local evidence only.                                                                                          |
-| EcoCheck graph live smoke                 | `live-pass` on 2026-06-23 against `https://www.yueen.cc/container-eco-execution-graph/api/ecocheck/field-events`; synthetic review `review:52f1f3250c5f050e` was marked `不入图`, `aggregate_allowed=false`. | Keep external until CloudRun worker/outbox and review-store evidence are repeated.                                   |
-| Graph ontology contract validation        | Report-only and blocking summaries are `red=0 yellow=0 info=0`.                                                                                                                                              | Keep blocking for closed-world graph-local contract checks.                                                          |
-| Graph schema blocking gate                | `red=0 yellow=0 info=0`.                                                                                                                                                                                     | Keep blocking in graph repo.                                                                                         |
-| Graph API synthetic intake smoke          | Passed for `semantic_event`, `profile_gap_confirmed`, and member review access denial.                                                                                                                       | Keep as graph-local blocking evidence.                                                                               |
-| Graph Tencent RAG real smoke              | Passed: embedding, tokenhub, and RAG retrieve probes all passed. Clean `main` worktree `E:\eco-execution-graph-clean-main-smoke` at commit `0555cca` also passed `pnpm verify:external`.                     | Candidate for environment-scoped blocking after owner-repo ADR/CI boundary. Do not make it global ontology blocking. |
-| Graph EcoCheck aggregate candidates       | `status=blocked`, `rows=0`.                                                                                                                                                                                  | Stay report-only/external. Needs real aggregate data and ETO review evidence.                                        |
-| Government lineage import                 | Contract fixture passed, real government lineage import remains blocked.                                                                                                                                     | Stay external/report-only.                                                                                           |
-| KB report-only contracts                  | `red=0 yellow=0 info=2`.                                                                                                                                                                                     | Keep report-only for info findings; product manifest path/hash coverage remains blocking-ready.                      |
+| Gate family                               | Current result                                                                                                                                                                                                                                                                                                                 | Promotion decision                                                                                      |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| Closed-world ontology package checks      | `red=0 yellow=0 info=0` in report-only and blocking modes.                                                                                                                                                                                                                                                                     | Keep blocking under ADR-0003.                                                                           |
+| EcoCheck semantic-event contract fixtures | Blocking command passed. Report summary is `red=32 yellow=0 info=1`; red findings are intentionally invalid guard fixtures.                                                                                                                                                                                                    | Keep current mixed mode. Do not promote live graph push.                                                |
+| EcoCheck graph synthetic smoke dry-run    | Dry-run passed before live run.                                                                                                                                                                                                                                                                                                | Useful local evidence only.                                                                             |
+| EcoCheck graph live smoke                 | `live-pass` on 2026-06-23 against `https://www.yueen.cc/container-eco-execution-graph/api/ecocheck/field-events`; updated smoke script automatically marked synthetic review `review:bc1da557a06a72d3` as `不入图`, `aggregate_allowed=false`.                                                                                 | Keep as an environment-scoped external gate; do not make it global ontology blocking.                   |
+| Graph ontology contract validation        | Report-only and blocking summaries are `red=0 yellow=0 info=0`.                                                                                                                                                                                                                                                                | Keep blocking for closed-world graph-local contract checks.                                             |
+| Graph schema blocking gate                | `red=0 yellow=0 info=0`.                                                                                                                                                                                                                                                                                                       | Keep blocking in graph repo.                                                                            |
+| Graph API synthetic intake smoke          | Passed for `semantic_event`, `profile_gap_confirmed`, and member review access denial.                                                                                                                                                                                                                                         | Keep as graph-local blocking evidence.                                                                  |
+| Graph external verification lane          | Default `pnpm verify:external` requires `GRAPH-RAG-REAL-SMOKE` and passed. The lane also reports `ECOCHECK-GRAPH-PUSH-REAL-SMOKE=pass`, `ECOCHECK-AGGREGATE-ETO-BLIND-REVIEW=blocked`, and `GOVERNMENT-LINEAGE-REAL-IMPORT=blocked`; `GRAPH_EXTERNAL_REQUIRED_GATES=all` fails closed while the latter two remain unavailable. | Use as the future cutover surface for external gates. Do not make any of them global ontology blocking. |
+| Graph EcoCheck aggregate candidates       | `status=blocked`, `rows=0`.                                                                                                                                                                                                                                                                                                    | Stay report-only/external. Needs real aggregate data and ETO review evidence.                           |
+| Government lineage import                 | Contract fixture passed, real government lineage import remains blocked.                                                                                                                                                                                                                                                       | Stay external/report-only.                                                                              |
+| KB report-only contracts                  | `red=0 yellow=0 info=2`.                                                                                                                                                                                                                                                                                                       | Keep report-only for info findings; product manifest path/hash coverage remains blocking-ready.         |
 
 ## Drift Notes
 
@@ -72,11 +72,12 @@ python kb_build.py validate --version graph_package_v1_0
   local evidence pass. The verified endpoint is
   `https://www.yueen.cc/container-eco-execution-graph/api/ecocheck/field-events`;
   the smoke used only synthetic payloads, did not read production outbox rows,
-  and the returned review item was marked `不入图` after verification.
-- Graph RAG real smoke has repeat evidence from clean `main` plus the new
-  external lane. This is enough to draft an owner-repo cutover ADR for a
-  credentialed external lane, not enough to make ontology's default gates
-  depend on Tencent availability.
+  and the updated script now supports automatic `不入图` marking after
+  verification.
+- Graph RAG real smoke has repeat evidence from clean `main` plus the external
+  lane. The external lane now models future required gates with
+  `GRAPH_EXTERNAL_REQUIRED_GATES`; missing aggregate/ETO or government lineage
+  inputs fail closed only when those gate ids are selected.
 - The v0.1.0 compatibility matrix still records the original baseline commits
   used for release adoption. Treat current consumer commit hashes as evidence
   snapshot data, not as a mutation to the already-published release manifest.
@@ -88,13 +89,16 @@ python kb_build.py validate --version graph_package_v1_0
 No additional external/report-only gate should be promoted to global blocking
 from this single run.
 
-`GRAPH-RAG-REAL-SMOKE` is the only newly eligible candidate for a follow-up
-environment-scoped blocking gate because live RAG evidence passed twice,
-including a clean `main` worktree run. Before promotion, require:
+`GRAPH-RAG-REAL-SMOKE` and `ECOCHECK-GRAPH-PUSH-REAL-SMOKE` are now eligible
+for environment-scoped external lane blocking, not global ontology blocking.
+`GRAPH-RAG-REAL-SMOKE` has repeat RAG evidence, including a clean `main`
+worktree run. `ECOCHECK-GRAPH-PUSH-REAL-SMOKE` has live synthetic endpoint
+evidence with automatic not-for-graph cleanup. Before promotion, require:
 
 - a documented CI/secret boundary that fails closed without printing secrets or
   raw RAG response content;
-- a credentialed graph external CI lane or equivalent owner-repo verifier;
+- a credentialed/data-bearing graph external CI lane or equivalent owner-repo
+  verifier that sets `GRAPH_EXTERNAL_REQUIRED_GATES` explicitly;
 - a rollback note that returns the gate to external/report-only without
   changing ontology contracts.
 
