@@ -43,6 +43,12 @@ All three local `main` branches were aligned with `origin/main` before merge
 (`main...origin/main` was `0 0` in each repo). After merge, local branches are
 ahead only by the reviewed local commits.
 
+> Matrix note: the `eco-ontology` "Local main after merge" tip listed above
+> (`3f4b033`) predates this review package. The current `eco-ontology` `main`
+> tip is `b24109e docs: add external governance review package`, which is the
+> commit that introduced this document. See the Post-Review Amendments section
+> for changes made after the initial review.
+
 ## Commit Inventory
 
 ### `eco-ontology`
@@ -209,8 +215,13 @@ Results:
 External fail-closed check:
 
 ```powershell
-GRAPH_EXTERNAL_REQUIRED_GATES=all pnpm verify:external
+$env:GRAPH_EXTERNAL_REQUIRED_GATES = 'all'; pnpm verify:external; Remove-Item Env:\GRAPH_EXTERNAL_REQUIRED_GATES
 ```
+
+> Note: `verify:external` runs through `pwsh ... verify/verify.ps1 external`. Use
+> the PowerShell `$env:VAR = '...'` form above; the bash-style inline prefix
+> `GRAPH_EXTERNAL_REQUIRED_GATES=all pnpm ...` does not set the variable in
+> PowerShell and is not reproducible on this Windows project.
 
 Result:
 
@@ -323,11 +334,103 @@ Operational rollback:
       blocked until real inputs are available.
 - [ ] Decide whether to push local `main` for each repo after review.
 
+## Post-Review Amendments (2026-06-23)
+
+These changes were made after the initial review, in response to findings from a
+second-pass audit. They are **committed to each repo's local `main`** (no remote
+push). New commits:
+
+| Repo                  | New local commits                                                                                                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `EcoCheck`            | `ab118d1 fix: enforce graph push fail-closed before server listen`                                                                                                                 |
+| `eco-execution-graph` | `a1f8575 build: fix husky v9 hooks and pin BDD line endings`, `6b6fd57 fix: harden graph external verification lane`, `6d09f95 chore: refresh external verification lane evidence` |
+| `eco-ontology`        | this document update                                                                                                                                                               |
+
+### P0 — EcoCheck graph push fail-closed was not wired through (fixed)
+
+Finding: `assertGraphFieldEventPushConfigReady` does throw on enabled-but-missing
+config, but `startGraphFieldEventPushWorker` runs inside
+`startBackgroundServicesOnce()`, which executes **after** `fastify.listen()` and
+wraps each worker in a `startService()` `try/catch` that swallows the throw. Net
+effect in production/CloudRun: the container reported ready and stayed healthy
+while the graph push worker silently never ran — fail-open, not the documented
+fail-closed.
+
+Fix (`EcoCheck` `ab118d1`): `cloudrun/src/index.ts` now calls
+`assertGraphFieldEventPushConfigReady(getGraphFieldEventPushConfig())` **before**
+`fastify.listen()`, inside the existing `start()` try whose `catch` calls
+`process.exit(1)`. A misconfigured production/CloudRun deploy now never becomes
+ready. Local diagnostic runtime is unaffected (`shouldFailClosed` is false
+without `NODE_ENV=production` / `K_SERVICE` / `TENCENTCLOUD_RUNENV` /
+`CLOUDBASE_ENV`, or with `ECO_GRAPH_PUSH_FAIL_CLOSED=false`). Added a unit test
+covering the CloudRun runtime markers (previously untested). Verified:
+`npm run typecheck` PASS; graph push unit suite 11 PASS (was 10).
+
+### P1 — Graph external-lane redaction regex escaping bug (fixed)
+
+Finding: in `pipeline/external_verification_lane.py`, `redact_text` used
+`[^\\r\\n]` and `[^\\s,;}]` (escaped backslashes inside raw strings), so the
+`Authorization:` and `secret_key=`/`api_key=` structured-line rules excluded the
+literal characters `r`/`n`/`s` instead of newline/whitespace and stopped at the
+first such character, leaving the tail of the value unredacted. Verbatim env
+secrets were still scrubbed by the env-value replacement and `Bearer` rules
+(defense in depth held), but the structured rules were effectively inert.
+
+Fix (`eco-execution-graph` `6b6fd57`): corrected to `[^\r\n]` / `[^\s,;}]` and
+added a `redact_text` unit test. Verified: graph python suite 66 PASS (was 61);
+`pnpm verify:check` and `pnpm verify:external` PASS.
+
+### P2 — External lane hardening / three open items resolved (`6b6fd57`)
+
+- **Portable EcoCheck path.** `external_verification_lane.py` no longer assumes
+  `E:/EcoCheck`. The smoke report is resolved only from `ECOCHECK_GRAPH_SMOKE_REPORT`
+  or `ECOCHECK_ROOT`; with neither set the `ECOCHECK-GRAPH-PUSH-REAL-SMOKE` gate
+  reports `blocked` with an explicit `required_input` instead of silently reading
+  a machine-specific path. The lane is now portable to CI/Linux.
+- **Credential-binding made explicit.** The report carries a `reproducibility`
+  block (`closed_world_independent: false`, `credentials_present`,
+  `required_credential_env_names`) and `run_lane` prints a reviewer hint that a
+  credential-less run is a config gap (`blocked`), not a code regression. The
+  default `verify:external` PASS evidence remains environment-bound, but that is
+  now self-describing in the artifact.
+- **Evidence pinned to a commit.** The report now records `source_commit`
+  (`sha`/`short_sha`/`dirty`), surfaced in the JSON summary and markdown header,
+  so each evidence run is tied to the tree it ran against.
+
+### Infrastructure — graph commit hooks unblocked (`a1f8575`)
+
+The `eco-execution-graph` `.husky/{pre-commit,commit-msg,pre-push}` hooks were
+Node scripts, but husky v9 runs hooks via `sh -e`, so every commit failed with a
+shell syntax error (this is the "Husky shell shim" residual risk noted above).
+Replaced all three with the husky v9 shell form, and added `.gitattributes`
+pinning `*.feature`, `bdd/behavior-contracts.ndjson`, and `.husky/*` to LF so
+`bdd:export` is deterministic across OS (the repo uses `core.autocrlf=true`).
+Graph commits now pass their own pre-commit/commit-msg gates on Windows.
+
+### P1 — Documentation corrections (this file)
+
+- The `GRAPH_EXTERNAL_REQUIRED_GATES=all` evidence command is bash syntax and is
+  not reproducible in PowerShell; corrected to the `$env:VAR = '...'` form.
+- Added a matrix note that the current `eco-ontology` `main` tip is `b24109e`.
+
+### Still open (not changed here)
+
+- Default `pnpm verify:external` still depends on real Tencent credentials to
+  reach `pass`; this is by design (it runs the real RAG smoke), now made explicit
+  via the `reproducibility` block rather than removed.
+- `CLOUDBASE-WECOM-REAL-SMOKE` remains external/manual, outside this local merge
+  proof.
+- No remote push has occurred, so remote CI has not yet validated these tips.
+
 ## To bo
 
-- Review this document and the three local `main` tips.
-- If accepted, push the three local `main` branches using each repo's normal
-  shipping path.
+- The post-review P0/P1/P2 fixes are committed locally in `EcoCheck` and
+  `eco-execution-graph` (see Post-Review Amendments) and re-verified; no remote
+  push has occurred.
+- Review this document and the updated local `main` tips
+  (`EcoCheck ab118d1`, `eco-execution-graph 6d09f95`).
+- If accepted, push the local `main` branches using each repo's normal shipping
+  path.
 - After remote push is confirmed, prune merged isolation branches.
 - Do not enable `GRAPH_EXTERNAL_REQUIRED_GATES=all` in CI until aggregate/ETO
   and government lineage inputs are actually available.
