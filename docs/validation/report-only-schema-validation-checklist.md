@@ -70,9 +70,13 @@ Outputs:
 - `reports/schema-blocking-gate-validation.json`
 - `reports/schema-blocking-gate-validation.md`
 
-The ontology report also lists `blocking_ready_checks` for checks that have a
-clean local report-only baseline, plus `external_gates` that must stay outside
-the repository validator.
+The ontology report lists `blocking_ready_checks` for closed-world checks that
+have a clean local baseline. It also reports `consumer_evidence_checks` and
+`consumer_evidence_findings` for sibling Graph/EcoCheck report freshness and
+expected-valid evidence. Those evidence findings do not determine
+`validate:blocking` exit status; only `blocking_failures` does.
+
+`external_gates` remain outside the repository validator.
 
 `validate:blocking` exits non-zero when a closed-world schema finding is red or
 yellow. It must not fail on external gates that require real Tencent RAG,

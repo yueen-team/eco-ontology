@@ -48,7 +48,9 @@ scripts/            Local automation, BDD export, and Git workflow hooks.
 Closed-world local gates may block after ADR-0003: schema compile, enum
 uniqueness, registry shape/id uniqueness, release manifest hashes,
 compatibility matrix shape, projection hash drift, synthetic safe fixtures, and
-KB product manifest path/hash coverage.
+KB product manifest path/hash coverage. ADR-0005 also treats generated
+projection artifact shape as a closed-world check through
+`schemas/projections.*.v1.schema.json`.
 
 Consumer-owned runtime evidence remains report-only or external until the owner
 repo records clean evidence: live Tencent RAG, CloudBase/WeCom, government

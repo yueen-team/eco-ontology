@@ -92,6 +92,22 @@ const schemaFiles = [
     id: "SCHEMA-CONSUMER-COMPATIBILITY",
     path: "schemas/consumer_compatibility_matrix.v1.schema.json",
   },
+  {
+    id: "SCHEMA-PROJECTIONS-ECOCHECK",
+    path: "schemas/projections.ecocheck.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-PROJECTIONS-REGISTRY",
+    path: "schemas/projections.registry.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-PROJECTIONS-SCHEMA-FRAGMENT",
+    path: "schemas/projections.schema_fragment.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-PROJECTIONS-MANIFEST",
+    path: "schemas/projections.manifest.v1.schema.json",
+  },
 ];
 
 const registryFiles = [
@@ -101,6 +117,38 @@ const registryFiles = [
   "registries/entity_anchors.v1.json",
   "registries/legal_basis_ref.v1.json",
 ];
+
+const projectionArtifactChecks = [
+  {
+    artifact: "dist/projections/ecocheck/ontology-contracts.generated.json",
+    schema: "schemas/projections.ecocheck.v1.schema.json",
+  },
+  {
+    artifact: "dist/projections/graph/ontology-registry.generated.json",
+    schema: "schemas/projections.registry.v1.schema.json",
+  },
+  {
+    artifact: "dist/projections/kb/ontology-registry.generated.json",
+    schema: "schemas/projections.registry.v1.schema.json",
+  },
+  {
+    artifact: "dist/projections/graph/schema.fragment.generated.json",
+    schema: "schemas/projections.schema_fragment.v1.schema.json",
+  },
+  {
+    artifact: "dist/projections/kb/schema.fragment.generated.json",
+    schema: "schemas/projections.schema_fragment.v1.schema.json",
+  },
+  {
+    artifact: "dist/projections/projection-manifest.v1.json",
+    schema: "schemas/projections.manifest.v1.schema.json",
+  },
+];
+
+const consumerEvidenceCheckIds = new Set([
+  "GRAPH-REPORT-ONLY",
+  "ECOCHECK-VALID-FIXTURES",
+]);
 
 function resolvePath(path, base = root) {
   return isAbsolute(path) ? path : join(base, path);
@@ -161,6 +209,14 @@ function hasBlockingFinding(findings, checkId) {
       finding.check_id === checkId &&
       (finding.severity === "red" || finding.severity === "yellow"),
   );
+}
+
+function isBlockingSeverity(finding) {
+  return finding.severity === "red" || finding.severity === "yellow";
+}
+
+function isConsumerEvidenceFinding(finding) {
+  return consumerEvidenceCheckIds.has(finding.check_id);
 }
 
 function validateRequiredObject(findings, check, artifact, schema) {
@@ -318,6 +374,41 @@ function validateRegistryFiles(findings) {
           "Deprecated entries must use status=deprecated.",
         );
       }
+    }
+  }
+}
+
+function validateProjectionArtifacts(findings) {
+  const check = { id: "ECO-ONTO-PROJECTION-SHAPE", owner: "eco-ontology" };
+  for (const projectionCheck of projectionArtifactChecks) {
+    const schema = tryReadJson(findings, check, projectionCheck.schema);
+    if (!schema) continue;
+
+    let validate;
+    try {
+      validate = createAjv().compile(schema);
+    } catch (error) {
+      addFinding(
+        findings,
+        "red",
+        check,
+        `${projectionCheck.schema}:$schema`,
+        `Projection artifact schema failed to compile with Ajv v6: ${error.message}`,
+      );
+      continue;
+    }
+
+    const artifact = tryReadJson(findings, check, projectionCheck.artifact);
+    if (!artifact) continue;
+    if (validate(artifact)) continue;
+    for (const error of validate.errors || []) {
+      addFinding(
+        findings,
+        "red",
+        check,
+        `${projectionCheck.artifact}:${error.dataPath ? `$${error.dataPath}` : "$"}`,
+        `Projection artifact schema violation: ${error.message}`,
+      );
     }
   }
 }
@@ -734,12 +825,30 @@ function validateGraphReport(findings) {
 
 function validateEcoCheckValidFixtures(findings) {
   const check = { id: "ECOCHECK-VALID-FIXTURES", owner: "EcoCheck" };
-  const reportPath = join(
-    ecoCheckRoot,
-    "docs",
-    "validation",
-    "semantic-event-report-only.latest.json",
-  );
+  const reportPath = [
+    join(
+      ecoCheckRoot,
+      "docs",
+      "validation",
+      "semantic-event-report-only.latest.json",
+    ),
+    join(
+      ecoCheckRoot,
+      "docs",
+      "validation",
+      "semantic-event-blocking.latest.json",
+    ),
+  ].find((candidate) => existsSync(candidate));
+  if (!reportPath) {
+    addFinding(
+      findings,
+      "yellow",
+      check,
+      join(ecoCheckRoot, "docs", "validation", "semantic-event-*.latest.json"),
+      "EcoCheck validation report is missing; expected either report-only or blocking latest report.",
+    );
+    return;
+  }
   const report = readExternalReport(findings, check, reportPath);
   if (!report) return;
   if (report.consumer_repo && report.consumer_repo !== "EcoCheck") {
@@ -873,12 +982,12 @@ function createBlockingReadyChecks(findings) {
         "Consumer projection artifacts exist and match compatibility matrix sha256 values.",
     },
     {
-      check_id: "GRAPH-REPORT-ONLY-CLEAN",
-      status: hasBlockingFinding(findings, "GRAPH-REPORT-ONLY")
+      check_id: "ECO-ONTO-PROJECTION-SHAPE",
+      status: hasBlockingFinding(findings, "ECO-ONTO-PROJECTION-SHAPE")
         ? "not_ready"
         : "ready",
       evidence:
-        "eco-execution-graph report-only validation summary is red=0 yellow=0 info=0.",
+        "Generated projection artifacts validate against projections.*.v1 schemas and remain deterministic by hash.",
     },
     {
       check_id: "KB-MANIFEST-PATH-SHA",
@@ -904,11 +1013,24 @@ function createBlockingReadyChecks(findings) {
       evidence:
         "Synthetic safe semantic_event.v2 and profile_gap_confirmed.v1 instances validate without reading private data.",
     },
+  ];
+}
+
+function createConsumerEvidenceChecks(findings) {
+  return [
+    {
+      check_id: "GRAPH-REPORT-ONLY-CLEAN",
+      status: hasBlockingFinding(findings, "GRAPH-REPORT-ONLY")
+        ? "stale_or_missing"
+        : "current",
+      evidence:
+        "eco-execution-graph report-only validation summary is red=0 yellow=0 info=0 when current.",
+    },
     {
       check_id: "ECOCHECK-VALID-FIXTURES",
       status: hasBlockingFinding(findings, "ECOCHECK-VALID-FIXTURES")
-        ? "not_ready"
-        : "ready",
+        ? "stale_or_missing"
+        : "current",
       evidence:
         "EcoCheck expected-valid semantic_event.v2 and profile_gap_confirmed.v1 fixtures pass schema, local payload, and graph-request report layers.",
     },
@@ -947,6 +1069,7 @@ function createExternalGates() {
 const findings = [];
 validateSchemaFiles(findings);
 validateRegistryFiles(findings);
+validateProjectionArtifacts(findings);
 for (const check of checks) {
   const artifact = tryReadJson(
     findings,
@@ -977,8 +1100,14 @@ validateEcoCheckValidFixtures(findings);
 const summary = { red: 0, yellow: 0, info: 0 };
 for (const finding of findings) summary[finding.severity] += 1;
 const blockingReadyChecks = createBlockingReadyChecks(findings);
-const blockingFailures = findings.filter((finding) =>
-  ["red", "yellow"].includes(finding.severity),
+const consumerEvidenceChecks = createConsumerEvidenceChecks(findings);
+const consumerEvidenceFindings = findings.filter(
+  (finding) =>
+    isBlockingSeverity(finding) && isConsumerEvidenceFinding(finding),
+);
+const blockingFailures = findings.filter(
+  (finding) =>
+    isBlockingSeverity(finding) && !isConsumerEvidenceFinding(finding),
 );
 const externalGates = createExternalGates();
 
@@ -997,10 +1126,12 @@ const report = {
     graph_report:
       "E:/eco-execution-graph/reports/ontology-contract-report-only-validation.json",
     ecocheck_report:
-      "E:/EcoCheck/docs/validation/semantic-event-report-only.latest.json",
+      "E:/EcoCheck/docs/validation/semantic-event-report-only.latest.json or semantic-event-blocking.latest.json",
   },
   blocking_ready_checks: blockingReadyChecks,
+  consumer_evidence_checks: consumerEvidenceChecks,
   external_gates: externalGates,
+  consumer_evidence_findings: consumerEvidenceFindings,
   blocking_failures: isBlocking ? blockingFailures : [],
   findings,
 };
@@ -1026,6 +1157,10 @@ const lines = [
 for (const check of blockingReadyChecks) {
   lines.push(`- ${check.status} ${check.check_id}: ${check.evidence}`);
 }
+lines.push("", "## Consumer Evidence Checks", "");
+for (const check of consumerEvidenceChecks) {
+  lines.push(`- ${check.status} ${check.check_id}: ${check.evidence}`);
+}
 lines.push("", "## External Gates", "");
 for (const gate of externalGates) {
   lines.push(`- ${gate.status} ${gate.gate_id}: ${gate.reason}`);
@@ -1035,6 +1170,16 @@ if (blockingFailures.length === 0) {
   lines.push("- none");
 } else {
   for (const finding of blockingFailures) {
+    lines.push(
+      `- ${finding.severity} ${finding.check_id} ${finding.path}: ${finding.message}`,
+    );
+  }
+}
+lines.push("", "## Consumer Evidence Findings", "");
+if (consumerEvidenceFindings.length === 0) {
+  lines.push("- none");
+} else {
+  for (const finding of consumerEvidenceFindings) {
     lines.push(
       `- ${finding.severity} ${finding.check_id} ${finding.path}: ${finding.message}`,
     );

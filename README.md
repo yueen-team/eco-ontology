@@ -48,6 +48,7 @@ reports/            Local validation reports, ignored unless explicitly kept.
 - `contracts/release-manifest.v1.json`
 - `contracts/consumer-compatibility-matrix.v1.json`
 - `registries/*.v1.json`
+- `schemas/projections*.v1.schema.json`
 - `dist/projections/ecocheck/ontology-contracts.generated.json`
 - `dist/projections/graph/*.generated.json`
 - `dist/projections/kb/*.generated.json`

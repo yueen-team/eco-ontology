@@ -13,10 +13,21 @@ Reports:
 - `reports/schema-blocking-gate-validation.json`
 - `reports/schema-blocking-gate-validation.md`
 
+Report buckets:
+
+- `blocking_ready_checks`: closed-world checks suitable for ontology blocking.
+- `consumer_evidence_checks`: sibling Graph/EcoCheck report freshness and
+  expected-valid evidence status.
+- `consumer_evidence_findings`: stale, missing, owner-mismatched, or failed
+  consumer evidence that should be fixed in the owner lane.
+- `external_gates`: live provider, import, or human-review gates outside this
+  local validator.
+
 ## Blocking Failures
 
 The command must block CI when `blocking_failures` is not empty. Blocking
-failures include:
+failures are local closed-world contract failures owned by `eco-ontology`.
+They include:
 
 - JSON Schema compile failure under Draft-07/Ajv v6.
 - Duplicate enum values in any ontology schema.
@@ -26,12 +37,19 @@ failures include:
 - Invalid registry shape, duplicate registry ids, or missing ownership/status
   fields.
 - Generated projection drift or projection sha256 mismatch.
+- Generated projection artifact shape mismatch against the
+  `schemas/projections.*.v1.schema.json` family.
 - Invalid safe sample instance for `semantic_event.v2` or
   `profile_gap_confirmed.v1`.
 - Invalid `kb_product_manifest.v1` instance, missing KB output path, or
   mismatched KB output sha256.
 - Optional sibling EcoCheck expected-valid fixture failure when the fixture is
   present locally.
+
+Consumer-owned report freshness and external evidence findings do not enter
+`blocking_failures`. They are reported under `consumer_evidence_findings` or
+`external_gates` so owner repos can refresh evidence without turning live or
+stale sibling state into a global ontology blocker.
 
 ## Formal Schema Paths
 
@@ -41,6 +59,10 @@ failures include:
 - `schemas/ontology_registry.v1.schema.json`
 - `schemas/release_manifest.v1.schema.json`
 - `schemas/consumer_compatibility_matrix.v1.schema.json`
+- `schemas/projections.ecocheck.v1.schema.json`
+- `schemas/projections.registry.v1.schema.json`
+- `schemas/projections.schema_fragment.v1.schema.json`
+- `schemas/projections.manifest.v1.schema.json`
 
 ## Consumer Notes
 

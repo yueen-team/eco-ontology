@@ -23,6 +23,9 @@ The shared ontology connects three systems:
 - `legal_basis_ref`: structured legal or standard reference without full text.
 - `tier`: graph publication/privacy tier.
 - `review_status`: lifecycle state for candidate and approved graph facts.
+- `projection_interface.v1`: generated JSON projection artifacts under
+  `dist/projections/`, validated by `schemas/projections.*.v1.schema.json` and
+  pinned by release/compatibility manifest sha256 values.
 
 ## Governance Principles
 
@@ -38,4 +41,3 @@ The shared ontology connects three systems:
 - Whether `semantic-profile-lab` remains a separate upstream contract source or
   is partially mirrored into `eco-ontology`.
 - Which validator graduates from report-only to blocking first.
-- Which projection format is the first official release artifact.

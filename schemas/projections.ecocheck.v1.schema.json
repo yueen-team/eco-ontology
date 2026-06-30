@@ -1,0 +1,233 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/projections.ecocheck.v1",
+  "title": "EcoOntologyEcoCheckProjectionV1",
+  "description": "Draft formal schema for the generated EcoCheck projection artifact.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "generated_by",
+    "contracts",
+    "registries",
+    "blocking_ready_checks",
+    "report_only_checks"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "eco-ontology.projection.ecocheck.v1"
+    },
+    "generated_by": {
+      "$ref": "#/definitions/generated_by"
+    },
+    "contracts": {
+      "type": "object",
+      "required": ["semantic_event_v2", "profile_gap_confirmed_v1"],
+      "properties": {
+        "semantic_event_v2": {
+          "type": "object",
+          "required": ["schema_version", "schema_path"],
+          "properties": {
+            "schema_version": {
+              "const": "ecocheck.semantic_event.v2"
+            },
+            "schema_path": {
+              "const": "schemas/semantic_event.v2.schema.json"
+            }
+          },
+          "additionalProperties": false
+        },
+        "profile_gap_confirmed_v1": {
+          "type": "object",
+          "required": ["schema_version", "schema_path"],
+          "properties": {
+            "schema_version": {
+              "const": "ecocheck.profile_gap_confirmed.v1"
+            },
+            "schema_path": {
+              "const": "schemas/profile_gap_confirmed.v1.schema.json"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "registries": {
+      "type": "object",
+      "required": [
+        "risk_domain_ids",
+        "issue_type_ids",
+        "observed_signal_ids",
+        "entity_anchor_ids",
+        "legal_basis_ref_ids"
+      ],
+      "properties": {
+        "risk_domain_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/risk_domain_id"
+          }
+        },
+        "issue_type_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/issue_type_id"
+          }
+        },
+        "observed_signal_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/observed_signal_id"
+          }
+        },
+        "entity_anchor_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/entity_anchor_id"
+          }
+        },
+        "legal_basis_ref_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/legal_basis_ref_id"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "blocking_ready_checks": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "schema_compile",
+          "safe_fixture_validation",
+          "registry_id_uniqueness",
+          "release_manifest_hashes"
+        ]
+      }
+    },
+    "report_only_checks": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "real_cloudbase_smoke",
+          "real_graph_push_smoke",
+          "aggregate_eto_blind_review"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "generated_by": {
+      "type": "object",
+      "required": [
+        "generator",
+        "generator_version",
+        "ontology_version",
+        "source_sha256"
+      ],
+      "properties": {
+        "generator": {
+          "const": "scripts/generate-projections.mjs"
+        },
+        "generator_version": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "ontology_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+        },
+        "source_sha256": {
+          "$ref": "#/definitions/source_sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "source_sha256": {
+      "type": "object",
+      "required": [
+        "registries/entity_anchors.v1.json",
+        "registries/issue_types.v1.json",
+        "registries/legal_basis_ref.v1.json",
+        "registries/observed_signals.v1.json",
+        "registries/risk_domains.v1.json",
+        "schemas/kb_product_manifest.v1.schema.json",
+        "schemas/ontology_registry.v1.schema.json",
+        "schemas/profile_gap_confirmed.v1.schema.json",
+        "schemas/semantic_event.v2.schema.json"
+      ],
+      "properties": {
+        "registries/entity_anchors.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/issue_types.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/legal_basis_ref.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/observed_signals.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/risk_domains.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/kb_product_manifest.v1.schema.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/ontology_registry.v1.schema.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/profile_gap_confirmed.v1.schema.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/semantic_event.v2.schema.json": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "risk_domain_id": {
+      "type": "string",
+      "pattern": "^S(0[1-9]|1[0-3])$"
+    },
+    "issue_type_id": {
+      "type": "string",
+      "pattern": "^issue\\.[a-z0-9_]+$"
+    },
+    "observed_signal_id": {
+      "type": "string",
+      "pattern": "^signal\\.[a-z0-9_]+$"
+    },
+    "entity_anchor_id": {
+      "type": "string",
+      "pattern": "^anchor\\.[a-z0-9_]+$"
+    },
+    "legal_basis_ref_id": {
+      "type": "string",
+      "pattern": "^legal_ref\\.[a-z0-9_]+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

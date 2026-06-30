@@ -37,6 +37,30 @@
       "sha256": "23c8253f29efaa79b9372ebdcb5981b92ada507fd9aa1d3045c9f20bb31c30cb"
     },
     {
+      "description": "EcoCheck projection artifact shape.",
+      "kind": "schema",
+      "path": "schemas/projections.ecocheck.v1.schema.json",
+      "sha256": "5b5ded607115036a3ba01b89296df0701475d6b5335c4b7ce827200d174caf68"
+    },
+    {
+      "description": "Graph and KB registry projection artifact shape.",
+      "kind": "schema",
+      "path": "schemas/projections.registry.v1.schema.json",
+      "sha256": "f717b5812b4a5deb57690cef35930ece78cae3cb3bbaa1d7f1cc069a5ebdb06d"
+    },
+    {
+      "description": "Graph and KB schema fragment projection artifact shape.",
+      "kind": "schema",
+      "path": "schemas/projections.schema_fragment.v1.schema.json",
+      "sha256": "22f48373d881dfe060ca24e5d1ddc57dbac43ee167bbbeff7aa192b3e4624a2e"
+    },
+    {
+      "description": "Projection artifact manifest shape.",
+      "kind": "schema",
+      "path": "schemas/projections.manifest.v1.schema.json",
+      "sha256": "ad22c3736be74735bbb4f25b2ba385f5b833de86b569a18c09272bd67ed01767"
+    },
+    {
       "description": "S01-S13 environmental risk-domain registry.",
       "kind": "registry",
       "path": "registries/risk_domains.v1.json",
@@ -118,7 +142,13 @@
       "description": "Boundary and blocking cutover ADR for v0.1.0.",
       "kind": "documentation",
       "path": "docs/adr/0003-eco-ontology-v0-1-0-versioned-contract-package.md",
-      "sha256": "5ee1e86de8018add5c2aed646a4d0721226938b9932c596e7ab8ab4db89086c4"
+      "sha256": "872b492db53c74f17f9d6d07849e69e0585548d9bde57924cd7bc1498454c26f"
+    },
+    {
+      "description": "Projection artifact shape and validation bucket ADR.",
+      "kind": "documentation",
+      "path": "docs/adr/0005-projection-governance-middle-layer.md",
+      "sha256": "0bf1ca9ccbc3581233bc4f233bebb17104db67b10237c29b97c4945896451c21"
     }
   ],
   "consumer_snapshots": [
@@ -191,7 +221,11 @@
     "kb_product_manifest": "kb.product_manifest.v1",
     "ontology_registry": "eco-ontology.registry.v1",
     "profile_gap_confirmed": "ecocheck.profile_gap_confirmed.v1",
+    "projection_ecocheck": "eco-ontology.projections.ecocheck.v1",
     "projection_manifest": "eco-ontology.projection_manifest.v1",
+    "projection_manifest_shape": "eco-ontology.projections.manifest.v1",
+    "projection_registry": "eco-ontology.projections.registry.v1",
+    "projection_schema_fragment": "eco-ontology.projections.schema_fragment.v1",
     "release_manifest": "eco-ontology.release_manifest.v1",
     "semantic_event": "ecocheck.semantic_event.v2"
   },

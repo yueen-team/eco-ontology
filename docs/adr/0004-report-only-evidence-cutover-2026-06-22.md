@@ -53,6 +53,11 @@ default `pnpm verify:external` requires `GRAPH-RAG-REAL-SMOKE`, while
 external gates fail closed. EcoCheck's live synthetic graph smoke also now
 auto-marks synthetic reviews as `不入图` after POST.
 
+Update on 2026-06-30: ADR-0005 splits ontology blocking failures from consumer
+evidence freshness. Stale or missing sibling Graph/EcoCheck reports are
+reported as consumer evidence findings, not as global ontology
+`blocking_failures`.
+
 Keep these gates report-only or external:
 
 - `CLOUDBASE-WECOM-REAL-SMOKE`, because no real CloudBase storage diagnostic,

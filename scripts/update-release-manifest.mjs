@@ -40,6 +40,26 @@ const artifactDefinitions = [
     "Consumer compatibility matrix shape.",
   ],
   [
+    "schemas/projections.ecocheck.v1.schema.json",
+    "schema",
+    "EcoCheck projection artifact shape.",
+  ],
+  [
+    "schemas/projections.registry.v1.schema.json",
+    "schema",
+    "Graph and KB registry projection artifact shape.",
+  ],
+  [
+    "schemas/projections.schema_fragment.v1.schema.json",
+    "schema",
+    "Graph and KB schema fragment projection artifact shape.",
+  ],
+  [
+    "schemas/projections.manifest.v1.schema.json",
+    "schema",
+    "Projection artifact manifest shape.",
+  ],
+  [
     "registries/risk_domains.v1.json",
     "registry",
     "S01-S13 environmental risk-domain registry.",
@@ -104,6 +124,11 @@ const artifactDefinitions = [
     "docs/adr/0003-eco-ontology-v0-1-0-versioned-contract-package.md",
     "documentation",
     "Boundary and blocking cutover ADR for v0.1.0.",
+  ],
+  [
+    "docs/adr/0005-projection-governance-middle-layer.md",
+    "documentation",
+    "Projection artifact shape and validation bucket ADR.",
   ],
 ];
 
@@ -192,6 +217,10 @@ function buildManifest() {
       release_manifest: "eco-ontology.release_manifest.v1",
       consumer_compatibility_matrix:
         "eco-ontology.consumer_compatibility_matrix.v1",
+      projection_ecocheck: "eco-ontology.projections.ecocheck.v1",
+      projection_registry: "eco-ontology.projections.registry.v1",
+      projection_schema_fragment: "eco-ontology.projections.schema_fragment.v1",
+      projection_manifest_shape: "eco-ontology.projections.manifest.v1",
       projection_manifest: "eco-ontology.projection_manifest.v1",
     },
     artifacts,

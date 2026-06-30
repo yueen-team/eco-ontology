@@ -1,28 +1,29 @@
 # Project Docs Matrix
 
-| Area             | Required artifact  | Current path                       | Status  | Notes                                                                                                                    |
-| ---------------- | ------------------ | ---------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Project overview | README             | `README.md`                        | present | Includes scope and adoption path.                                                                                        |
-| Architecture     | Architecture guide | `ARCHITECTURE.md`                  | present | Defines ownership boundaries.                                                                                            |
-| Navigation       | Codemap            | `CODEMAP.md`                       | present | Lists commands and directories.                                                                                          |
-| Usage            | Task workflows     | `docs/USAGE.md`                    | present | Day-to-day commands, change workflow, and the two-tier governance boundary.                                              |
-| Agent protocol   | Agent guide        | `AGENTS.md`                        | present | Includes validation posture and safety rules.                                                                            |
-| Domain context   | Context doc        | `CONTEXT.md`                       | present | Captures ontology terms and governance principles.                                                                       |
-| ADR              | Decision records   | `docs/adr/`                        | present | ADR-0001 through ADR-0004 record repository boundary, cutover, v0.1.0 package, and evidence-based promotion decisions.   |
-| API contracts    | API docs           | `docs/api/README.md`               | present | Placeholder until schemas are published.                                                                                 |
-| BDD specs        | Behavior specs     | `specs/README.md`                  | present | No feature files yet.                                                                                                    |
-| Verification     | Unified verify     | `verify/verify.mjs`                | present | Exposed through `pnpm verify:all`.                                                                                       |
-| AFK protocol     | AFK config         | `verify/afk-test.config.json`      | present | Missing test layers are explicit `null`.                                                                                 |
-| Git hooks        | Hook scripts       | `.husky/`, `scripts/git-workflow/` | present | Based on `git-workflow-hooks`; refresh from upstream with `hooks:install --path .husky` after vendoring current scripts. |
-| LSP              | Editor guidance    | `docs/agents/lsp.md`               | present | Node, JSON, Markdown guidance.                                                                                           |
+| Area             | Required artifact  | Current path                       | Status  | Notes                                                                                                                                         |
+| ---------------- | ------------------ | ---------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Project overview | README             | `README.md`                        | present | Includes scope and adoption path.                                                                                                             |
+| Architecture     | Architecture guide | `ARCHITECTURE.md`                  | present | Defines ownership boundaries.                                                                                                                 |
+| Navigation       | Codemap            | `CODEMAP.md`                       | present | Lists commands and directories.                                                                                                               |
+| Usage            | Task workflows     | `docs/USAGE.md`                    | present | Day-to-day commands, change workflow, and the two-tier governance boundary.                                                                   |
+| Agent protocol   | Agent guide        | `AGENTS.md`                        | present | Includes validation posture and safety rules.                                                                                                 |
+| Domain context   | Context doc        | `CONTEXT.md`                       | present | Captures ontology terms and governance principles.                                                                                            |
+| ADR              | Decision records   | `docs/adr/`                        | present | ADR-0001 through ADR-0005 record repository boundary, cutover, v0.1.0 package, evidence-based promotion, and projection governance decisions. |
+| API contracts    | API docs           | `docs/api/README.md`               | present | Placeholder until schemas are published.                                                                                                      |
+| BDD specs        | Behavior specs     | `specs/README.md`                  | present | First active workflow: `specs/projection-governance-workflow.feature`.                                                                        |
+| Verification     | Unified verify     | `verify/verify.mjs`                | present | Exposed through `pnpm verify:all`.                                                                                                            |
+| AFK protocol     | AFK config         | `verify/afk-test.config.json`      | present | Missing test layers are explicit `null`.                                                                                                      |
+| Git hooks        | Hook scripts       | `.husky/`, `scripts/git-workflow/` | present | Based on `git-workflow-hooks`; refresh from upstream with `hooks:install --path .husky` after vendoring current scripts.                      |
+| LSP              | Editor guidance    | `docs/agents/lsp.md`               | present | Node, JSON, Markdown guidance.                                                                                                                |
 
 ## Adoption TODO
 
 - Keep v0.1.0 projection files regenerated by `pnpm projections:generate`.
 - Keep `contracts/release-manifest.v1.json` current through
   `pnpm release:manifest:update`.
-- Add synthetic BDD feature files once the first cross-repo projection workflow
-  needs executable acceptance language.
+- Keep `specs/projection-governance-workflow.feature` aligned with the
+  source registry/schema -> projection -> release manifest -> consumer matrix
+  -> `verify:all` governance path.
 - Keep real Tencent RAG, CloudBase/WeCom, government lineage import, and
   EcoCheck aggregate/ETO review as external or report-only evidence.
 - Refresh `docs/validation/adr-0003-evidence-snapshot-*.{md,json}` before any

@@ -67,3 +67,9 @@ used as a replacement for runtime sanitization.
 Consumers can pin `contracts/release-manifest.v0.json` and ignore v0.1.0
 projection files while this ADR is reverted or superseded. Projection artifacts
 are deterministic and can be regenerated from schemas and registries.
+
+## Follow-up
+
+ADR-0005 formalizes generated projection artifact shapes through the
+`schemas/projections.*.v1.schema.json` family and separates consumer evidence
+freshness from global ontology `blocking_failures`.

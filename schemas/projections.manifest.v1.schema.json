@@ -1,0 +1,222 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/projections.manifest.v1",
+  "title": "EcoOntologyProjectionManifestV1",
+  "description": "Draft formal schema for the generated projection manifest.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "ontology_version",
+    "generated_by",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "eco-ontology.projection_manifest.v1"
+    },
+    "ontology_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+    },
+    "generated_by": {
+      "$ref": "#/definitions/generated_by"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/projection_artifact"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "$ref": "#/definitions/ecocheck_projection_artifact"
+          }
+        },
+        {
+          "contains": {
+            "$ref": "#/definitions/graph_registry_projection_artifact"
+          }
+        },
+        {
+          "contains": {
+            "$ref": "#/definitions/graph_schema_fragment_projection_artifact"
+          }
+        },
+        {
+          "contains": {
+            "$ref": "#/definitions/kb_registry_projection_artifact"
+          }
+        },
+        {
+          "contains": {
+            "$ref": "#/definitions/kb_schema_fragment_projection_artifact"
+          }
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "projection_artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "enum": [
+            "dist/projections/ecocheck/ontology-contracts.generated.json",
+            "dist/projections/graph/ontology-registry.generated.json",
+            "dist/projections/graph/schema.fragment.generated.json",
+            "dist/projections/kb/ontology-registry.generated.json",
+            "dist/projections/kb/schema.fragment.generated.json"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ecocheck_projection_artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "const": "dist/projections/ecocheck/ontology-contracts.generated.json"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "graph_registry_projection_artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "const": "dist/projections/graph/ontology-registry.generated.json"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "graph_schema_fragment_projection_artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "const": "dist/projections/graph/schema.fragment.generated.json"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "kb_registry_projection_artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "const": "dist/projections/kb/ontology-registry.generated.json"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "kb_schema_fragment_projection_artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "const": "dist/projections/kb/schema.fragment.generated.json"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "generated_by": {
+      "type": "object",
+      "required": [
+        "generator",
+        "generator_version",
+        "ontology_version",
+        "source_sha256"
+      ],
+      "properties": {
+        "generator": {
+          "const": "scripts/generate-projections.mjs"
+        },
+        "generator_version": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "ontology_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+        },
+        "source_sha256": {
+          "$ref": "#/definitions/source_sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "source_sha256": {
+      "type": "object",
+      "required": [
+        "registries/entity_anchors.v1.json",
+        "registries/issue_types.v1.json",
+        "registries/legal_basis_ref.v1.json",
+        "registries/observed_signals.v1.json",
+        "registries/risk_domains.v1.json",
+        "schemas/kb_product_manifest.v1.schema.json",
+        "schemas/ontology_registry.v1.schema.json",
+        "schemas/profile_gap_confirmed.v1.schema.json",
+        "schemas/semantic_event.v2.schema.json"
+      ],
+      "properties": {
+        "registries/entity_anchors.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/issue_types.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/legal_basis_ref.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/observed_signals.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/risk_domains.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/kb_product_manifest.v1.schema.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/ontology_registry.v1.schema.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/profile_gap_confirmed.v1.schema.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/semantic_event.v2.schema.json": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

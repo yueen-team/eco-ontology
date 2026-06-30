@@ -1,0 +1,275 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/projections.schema_fragment.v1",
+  "title": "EcoOntologySchemaFragmentProjectionV1",
+  "description": "Draft formal schema for generated graph and KB schema fragment projection artifacts.",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/graph_schema_fragment_projection"
+    },
+    {
+      "$ref": "#/definitions/kb_schema_fragment_projection"
+    }
+  ],
+  "definitions": {
+    "graph_schema_fragment_projection": {
+      "type": "object",
+      "required": ["schema_version", "generated_by", "fragments"],
+      "properties": {
+        "schema_version": {
+          "const": "eco-ontology.projection.graph.schema_fragment.v1"
+        },
+        "generated_by": {
+          "$ref": "#/definitions/generated_by"
+        },
+        "fragments": {
+          "$ref": "#/definitions/graph_fragments"
+        }
+      },
+      "additionalProperties": false
+    },
+    "kb_schema_fragment_projection": {
+      "type": "object",
+      "required": ["schema_version", "generated_by", "fragments"],
+      "properties": {
+        "schema_version": {
+          "const": "eco-ontology.projection.kb.schema_fragment.v1"
+        },
+        "generated_by": {
+          "$ref": "#/definitions/generated_by"
+        },
+        "fragments": {
+          "$ref": "#/definitions/kb_fragments"
+        }
+      },
+      "additionalProperties": false
+    },
+    "graph_fragments": {
+      "type": "object",
+      "required": ["node_metadata", "intake_payloads"],
+      "properties": {
+        "node_metadata": {
+          "type": "object",
+          "required": [
+            "risk_domain",
+            "issue_type_ref",
+            "entity_anchor_type",
+            "legal_basis_ref_kind"
+          ],
+          "properties": {
+            "risk_domain": {
+              "$ref": "#/definitions/risk_domain_enum_fragment"
+            },
+            "issue_type_ref": {
+              "$ref": "#/definitions/issue_type_enum_fragment"
+            },
+            "entity_anchor_type": {
+              "$ref": "#/definitions/entity_anchor_enum_fragment"
+            },
+            "legal_basis_ref_kind": {
+              "$ref": "#/definitions/legal_basis_ref_enum_fragment"
+            }
+          },
+          "additionalProperties": false
+        },
+        "intake_payloads": {
+          "type": "object",
+          "required": ["semantic_event_schema", "profile_gap_schema"],
+          "properties": {
+            "semantic_event_schema": {
+              "const": "schemas/semantic_event.v2.schema.json"
+            },
+            "profile_gap_schema": {
+              "const": "schemas/profile_gap_confirmed.v1.schema.json"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "kb_fragments": {
+      "type": "object",
+      "required": [
+        "kb_product_manifest_schema",
+        "legal_basis_ref_kind",
+        "forbidden_payload_policy"
+      ],
+      "properties": {
+        "kb_product_manifest_schema": {
+          "const": "schemas/kb_product_manifest.v1.schema.json"
+        },
+        "legal_basis_ref_kind": {
+          "$ref": "#/definitions/legal_basis_ref_enum_fragment"
+        },
+        "forbidden_payload_policy": {
+          "type": "object",
+          "required": [
+            "contains_private_enterprise_data",
+            "contains_gps",
+            "contains_raw_attachments",
+            "contains_full_law_text",
+            "contains_secrets"
+          ],
+          "properties": {
+            "contains_private_enterprise_data": {
+              "const": false
+            },
+            "contains_gps": {
+              "const": false
+            },
+            "contains_raw_attachments": {
+              "const": false
+            },
+            "contains_full_law_text": {
+              "const": false
+            },
+            "contains_secrets": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "risk_domain_enum_fragment": {
+      "type": "object",
+      "required": ["enum"],
+      "properties": {
+        "enum": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^S(0[1-9]|1[0-3])$"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "issue_type_enum_fragment": {
+      "type": "object",
+      "required": ["enum"],
+      "properties": {
+        "enum": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^issue\\.[a-z0-9_]+$"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "entity_anchor_enum_fragment": {
+      "type": "object",
+      "required": ["enum"],
+      "properties": {
+        "enum": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^anchor\\.[a-z0-9_]+$"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "legal_basis_ref_enum_fragment": {
+      "type": "object",
+      "required": ["enum"],
+      "properties": {
+        "enum": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^legal_ref\\.[a-z0-9_]+$"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "generated_by": {
+      "type": "object",
+      "required": [
+        "generator",
+        "generator_version",
+        "ontology_version",
+        "source_sha256"
+      ],
+      "properties": {
+        "generator": {
+          "const": "scripts/generate-projections.mjs"
+        },
+        "generator_version": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "ontology_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+        },
+        "source_sha256": {
+          "$ref": "#/definitions/source_sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "source_sha256": {
+      "type": "object",
+      "required": [
+        "registries/entity_anchors.v1.json",
+        "registries/issue_types.v1.json",
+        "registries/legal_basis_ref.v1.json",
+        "registries/observed_signals.v1.json",
+        "registries/risk_domains.v1.json",
+        "schemas/kb_product_manifest.v1.schema.json",
+        "schemas/ontology_registry.v1.schema.json",
+        "schemas/profile_gap_confirmed.v1.schema.json",
+        "schemas/semantic_event.v2.schema.json"
+      ],
+      "properties": {
+        "registries/entity_anchors.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/issue_types.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/legal_basis_ref.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/observed_signals.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "registries/risk_domains.v1.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/kb_product_manifest.v1.schema.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/ontology_registry.v1.schema.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/profile_gap_confirmed.v1.schema.json": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schemas/semantic_event.v2.schema.json": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

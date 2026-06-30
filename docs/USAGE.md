@@ -76,9 +76,10 @@ Commit messages follow Conventional Commits (`feat:`, `fix:`, `docs:`, `build:`,
 ## Two-tier governance boundary (the core design)
 
 - **Closed-world == blocking.** Schema compile, enum uniqueness, registry shape,
-  release manifest shape/hash, projection hash, KB manifest path/hash, safe
-  synthetic samples, and EcoCheck expected-valid fixtures depend on no external
-  service. `pnpm validate:blocking` must stay green.
+  release manifest shape/hash, projection hash and projection artifact shape,
+  KB manifest path/hash, safe synthetic samples, and EcoCheck expected-valid
+  fixtures depend on no external service. `pnpm validate:blocking` must stay
+  green.
 - **Real-environment evidence == report-only / external.** Tencent RAG,
   CloudBase/WeCom, government lineage import, and EcoCheck human blind review are
   **not** promoted into eco-ontology global blocking. They are owned by the

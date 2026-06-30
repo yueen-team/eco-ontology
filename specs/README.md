@@ -5,11 +5,12 @@ business questions, and pending decisions.
 
 ## Current State
 
-No feature files are active yet. `pnpm bdd:export` creates
-`bdd/behavior-contracts.ndjson` as an empty contract export until the first
-feature file is added.
+`specs/projection-governance-workflow.feature` is the first active behavior
+contract. `pnpm bdd:export` creates `bdd/behavior-contracts.ndjson` with one
+placeholder NDJSON entry per feature file until the full gherkin-v39 exporter is
+connected.
 
-## First Candidate Specs
+## Candidate Specs
 
 - Report-only validation of graph node/edge/source exports.
 - EcoCheck `semantic_event.v2` outgoing payload validation.
