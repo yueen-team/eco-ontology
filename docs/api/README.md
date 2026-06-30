@@ -9,6 +9,9 @@ The API surface is contract-oriented:
 - Registries under `registries/`.
 - Generated projections under `dist/projections/`.
 - Release manifests that downstream systems can pin by version and sha256.
+- Declarative projection specs under `contracts/projection-spec.v1.json`.
+- Release bundle manifests under `dist/release-bundles/`.
+- Local adoption receipts and provenance sidecars under ignored `reports/`.
 
 ## First Contract Interfaces
 
@@ -21,6 +24,9 @@ The API surface is contract-oriented:
 - `release_manifest.v1`: v0.1.0 artifact/hash manifest.
 - `consumer_compatibility_matrix.v1`: three-consumer adoption matrix.
 - `projections.*.v1`: generated projection artifact shapes.
+- `projection_spec.v1`: declarative source-to-projection mapping.
+- `consumer_adoption_receipt.v1`: consumer-owned adoption evidence shape.
+- `projection_provenance.v1`: sidecar provenance for generated projections.
 
 ## Compatibility Rule
 
@@ -70,3 +76,16 @@ Checks:
   hashes, and projection hashes.
 - The projection manifest lists exactly the five generated consumer projection
   artifacts and records a sha256 for each.
+
+## High-Spec Evidence Interfaces
+
+- [`projection-spec.md`](projection-spec.md) documents
+  `contracts/projection-spec.v1.json`, the declarative mapping from source
+  registry/schema inputs to generated consumer artifacts.
+- [`consumer-adoption-receipts.md`](consumer-adoption-receipts.md) documents the
+  ignored local reports emitted by `pnpm adoption:receipts`.
+- [`release-bundle.md`](release-bundle.md) documents
+  `dist/release-bundles/eco-ontology-0.1.0.bundle-manifest.json`.
+- [`projection-provenance.md`](projection-provenance.md) documents
+  `reports/projection-provenance.json`, emitted by
+  `pnpm projection:provenance`.

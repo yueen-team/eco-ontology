@@ -1,0 +1,184 @@
+{
+  "artifacts": [
+    {
+      "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+      "sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457"
+    },
+    {
+      "path": "dist/projections/graph/ontology-registry.generated.json",
+      "sha256": "18846a7375b54b034c8512a5e71de6222fd8db086b2b031594ba87b0ad173479"
+    },
+    {
+      "path": "dist/projections/graph/schema.fragment.generated.json",
+      "sha256": "f2720412066da1d80ff3eeadcdb070863338f7053a01a23719b3fa714bb81ea6"
+    },
+    {
+      "path": "dist/projections/kb/ontology-registry.generated.json",
+      "sha256": "77312a8f0602092cae83d175d2fe91e388ab86721455bb37a543868f56c9878a"
+    },
+    {
+      "path": "dist/projections/kb/schema.fragment.generated.json",
+      "sha256": "99ac8d0ce129b0f06cd2c5189d30da500389a16ce5889746273df7e48550a5bc"
+    },
+    {
+      "path": "dist/projections/projection-manifest.v1.json",
+      "sha256": "f2a4b355b9f5cd65bf1698d893a3e97476a87522d14080e90b548f6df2bd4dba"
+    }
+  ],
+  "generated_at": "2026-06-30T00:00:00Z",
+  "generated_at_policy": {
+    "mode": "sidecar_evidence_timestamp",
+    "precision": "seconds",
+    "projection_hash_policy": "excluded_from_generated_projection_artifacts",
+    "timezone": "UTC"
+  },
+  "generator": {
+    "git": {
+      "branch": "codex/projection-high-spec-upgrade",
+      "commit": "b2118486c931fa10d93e31c2c4ac51171545e3b0",
+      "dirty_state": "clean"
+    },
+    "path": "scripts/generate-projections.mjs",
+    "version": "1"
+  },
+  "inputs": [
+    {
+      "path": "registries/entity_anchors.v1.json",
+      "required_by_projection": ["ecocheck", "graph", "kb", "manifest"],
+      "role": "registry",
+      "sha256": "d3c81a1ef9217514cb938f3eb6b6caf05abce1eaf9ef24c3b2a476c3b1975d3d"
+    },
+    {
+      "path": "registries/issue_types.v1.json",
+      "required_by_projection": ["ecocheck", "graph", "kb", "manifest"],
+      "role": "registry",
+      "sha256": "4603c6abfd2c29f5eae970ec039ec532174ce6ffae85d65a84c86810754654d1"
+    },
+    {
+      "path": "registries/legal_basis_ref.v1.json",
+      "required_by_projection": ["ecocheck", "graph", "kb", "manifest"],
+      "role": "registry",
+      "sha256": "3ba958736be66b9d9ed917dbf9144d22efccc63bcf90b5887c80e39f0e699457"
+    },
+    {
+      "path": "registries/observed_signals.v1.json",
+      "required_by_projection": ["ecocheck", "graph", "kb", "manifest"],
+      "role": "registry",
+      "sha256": "86fc1aa045c758df44d1675ff6f2a3e4d72040d94d57fd8454cd5c1b8b59590d"
+    },
+    {
+      "path": "registries/risk_domains.v1.json",
+      "required_by_projection": ["ecocheck", "graph", "manifest"],
+      "role": "registry",
+      "sha256": "766485ce94a36290d8a46800c700fa42b6383f503e175b06b0f1a1cc6e78bb0c"
+    },
+    {
+      "path": "schemas/kb_product_manifest.v1.schema.json",
+      "required_by_projection": ["kb", "manifest"],
+      "role": "schema",
+      "sha256": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3"
+    },
+    {
+      "path": "schemas/ontology_registry.v1.schema.json",
+      "required_by_projection": ["graph", "kb", "manifest"],
+      "role": "schema",
+      "sha256": "c0a97784d8f51243468e40f4268caa0f308bcf77e1491aded54a517044c0aba2"
+    },
+    {
+      "path": "schemas/profile_gap_confirmed.v1.schema.json",
+      "required_by_projection": ["ecocheck", "graph", "manifest"],
+      "role": "schema",
+      "sha256": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383"
+    },
+    {
+      "path": "schemas/semantic_event.v2.schema.json",
+      "required_by_projection": ["ecocheck", "graph", "manifest"],
+      "role": "schema",
+      "sha256": "d4d0bda9d608baa69970df1260446f00c9e26884c7d773d77a5ec847f5e4f737"
+    },
+    {
+      "path": "scripts/generate-projections.mjs",
+      "required_by_projection": ["ecocheck", "graph", "kb", "manifest"],
+      "role": "generator",
+      "sha256": "c1f197fd606d5797c605ea02fc3b5ca9c2214fb72780499577f60fb8c96376da"
+    },
+    {
+      "path": "package.json",
+      "role": "package_manifest",
+      "sha256": "821ea09d4172c4d7b77aff78c8b283f61c0b569d0f9b171d74b0b5cefad06fe6"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "role": "package_lock",
+      "sha256": "0c52c4975c1402f0865469581a3aab4105b6dfc1cad304b5d3d08d97fb1f97c0"
+    }
+  ],
+  "notes": [
+    "Example values illustrate the contract shape; release evidence should refresh commit and command output hashes from the actual run."
+  ],
+  "ontology_version": "0.1.0",
+  "projection_set": {
+    "manifest_path": "dist/projections/projection-manifest.v1.json",
+    "manifest_sha256": "f2a4b355b9f5cd65bf1698d893a3e97476a87522d14080e90b548f6df2bd4dba"
+  },
+  "runtime": {
+    "ajv": {
+      "source": "lockfile",
+      "version": "6.15.0"
+    },
+    "node": {
+      "source": "process.version",
+      "version": "22.23.0"
+    },
+    "pnpm": {
+      "source": "packageManager",
+      "version": "10.34.3"
+    },
+    "prettier": {
+      "source": "lockfile",
+      "version": "3.8.4"
+    }
+  },
+  "schema_version": "eco-ontology.projection_provenance.v1",
+  "verification": {
+    "commands": [
+      {
+        "command": "pnpm projections:check",
+        "cwd": ".",
+        "exit_code": 0,
+        "observed_at": "2026-06-30T00:00:00Z",
+        "output_sha256": "bc7db40c61d21b7217773f41e943ed6a232301cf256a1f6b45074ff926329efb"
+      },
+      {
+        "command": "pnpm release:manifest:check",
+        "cwd": ".",
+        "exit_code": 0,
+        "observed_at": "2026-06-30T00:00:00Z",
+        "output_sha256": "3dca9a3fa528d23f40ec8db01b83b5ac2f81de3084e3514bc2cc56d969d89d74"
+      },
+      {
+        "command": "pnpm validate:blocking",
+        "cwd": ".",
+        "exit_code": 0,
+        "observed_at": "2026-06-30T00:00:00Z",
+        "report_artifacts": [
+          {
+            "path": "reports/schema-blocking-gate-validation.json",
+            "sha256": "ef24aa0b78e42f9a0f6b17cd2ebd528f6c9f1d16549124d0c4ebb8d8dd9f6bcb"
+          },
+          {
+            "path": "reports/schema-blocking-gate-validation.md",
+            "sha256": "29c1c0f82095a9f18a3ecf64f4db2272be8f6a3c617b123ddf6ab3c9e3f00674"
+          }
+        ]
+      },
+      {
+        "command": "pnpm format:check",
+        "cwd": ".",
+        "exit_code": 0,
+        "observed_at": "2026-06-30T00:00:00Z",
+        "output_sha256": "9a02441473d97355c5d7496f5f9d2a8fcece2499d768d7d3fb25deec3f071e2c"
+      }
+    ]
+  }
+}

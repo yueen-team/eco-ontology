@@ -61,6 +61,24 @@
       "sha256": "ad22c3736be74735bbb4f25b2ba385f5b833de86b569a18c09272bd67ed01767"
     },
     {
+      "description": "Declarative projection generator contract shape.",
+      "kind": "schema",
+      "path": "schemas/projection_spec.v1.schema.json",
+      "sha256": "0d3a044229f37e82831d04ed5a0ba22b2e10ebfeef1675cd15c8803b7b8f9e4d"
+    },
+    {
+      "description": "Consumer adoption receipt evidence shape.",
+      "kind": "schema",
+      "path": "schemas/consumer_adoption_receipt.v1.schema.json",
+      "sha256": "1acd9146ff707cdfcd469417d9a81470d714d7eeaa9fb3f77551058e39dbd107"
+    },
+    {
+      "description": "Projection sidecar provenance evidence shape.",
+      "kind": "schema",
+      "path": "schemas/projection_provenance.v1.schema.json",
+      "sha256": "d7ff5943902f5669171c62db6bcd18b049e429a6932e47b8d92c1184dda2d3fb"
+    },
+    {
       "description": "S01-S13 environmental risk-domain registry.",
       "kind": "registry",
       "path": "registries/risk_domains.v1.json",
@@ -95,6 +113,12 @@
       "kind": "contract",
       "path": "contracts/consumer-compatibility-matrix.v1.json",
       "sha256": "2e699a7a4484403cf3468e0ae2ca969fc2b1dbfcdc9a03347af9e36ebc16e508"
+    },
+    {
+      "description": "Declarative source-to-projection specification for v0.1.0.",
+      "kind": "contract",
+      "path": "contracts/projection-spec.v1.json",
+      "sha256": "6a366864fbb2dc207955a0eb815f06529726bedc50fb89b899f101e5bd62c946"
     },
     {
       "description": "P3 baseline freeze retained as release input evidence.",
@@ -149,6 +173,42 @@
       "kind": "documentation",
       "path": "docs/adr/0005-projection-governance-middle-layer.md",
       "sha256": "0bf1ca9ccbc3581233bc4f233bebb17104db67b10237c29b97c4945896451c21"
+    },
+    {
+      "description": "Consumer adoption receipt interface.",
+      "kind": "documentation",
+      "path": "docs/api/consumer-adoption-receipts.md",
+      "sha256": "d46380fff9c4a4a380d01dff1e10d3a6eed210502b3b78d0bd8dbb88e1d692b0"
+    },
+    {
+      "description": "Declarative projection specification interface.",
+      "kind": "documentation",
+      "path": "docs/api/projection-spec.md",
+      "sha256": "53caa420bb40807ed4d0b2bc685570fdc9ff986c23d8d14657ccd681572173f1"
+    },
+    {
+      "description": "Release bundle manifest interface.",
+      "kind": "documentation",
+      "path": "docs/api/release-bundle.md",
+      "sha256": "6dbc7a92d2fdeb880e7c3c7b30d3f71a3b9c47740839148122a1a7110c194f14"
+    },
+    {
+      "description": "Projection provenance sidecar interface.",
+      "kind": "documentation",
+      "path": "docs/api/projection-provenance.md",
+      "sha256": "b766886f464fd7cf78883ebb2918651fb66bb9ecf70248d98cd16c230ce9ebb3"
+    },
+    {
+      "description": "Projection golden and negative fixture plan.",
+      "kind": "documentation",
+      "path": "docs/validation/projection-test-plan.md",
+      "sha256": "c00101b999dc3404f7e24b853c906ad63bd5b07afb8bbd4e5b111a4a077a7d7c"
+    },
+    {
+      "description": "Release bundle verification checklist.",
+      "kind": "documentation",
+      "path": "docs/validation/release-bundle-checklist.md",
+      "sha256": "a5d104da128b0b2d5402f1fba4a217b45a3e7515378c06e563fcc9be5abf2e6f"
     }
   ],
   "consumer_snapshots": [
@@ -217,6 +277,7 @@
     }
   ],
   "contracts": {
+    "consumer_adoption_receipt": "eco-ontology.consumer_adoption_receipt.v1",
     "consumer_compatibility_matrix": "eco-ontology.consumer_compatibility_matrix.v1",
     "kb_product_manifest": "kb.product_manifest.v1",
     "ontology_registry": "eco-ontology.registry.v1",
@@ -224,8 +285,10 @@
     "projection_ecocheck": "eco-ontology.projections.ecocheck.v1",
     "projection_manifest": "eco-ontology.projection_manifest.v1",
     "projection_manifest_shape": "eco-ontology.projections.manifest.v1",
+    "projection_provenance": "eco-ontology.projection_provenance.v1",
     "projection_registry": "eco-ontology.projections.registry.v1",
     "projection_schema_fragment": "eco-ontology.projections.schema_fragment.v1",
+    "projection_spec": "eco-ontology.projection_spec.v1",
     "release_manifest": "eco-ontology.release_manifest.v1",
     "semantic_event": "ecocheck.semantic_event.v2"
   },
@@ -249,6 +312,11 @@
       {
         "gate_id": "CROSS-002-PROJECTION-HASH",
         "reason": "Generated projection files are checked for deterministic drift.",
+        "status": "blocking"
+      },
+      {
+        "gate_id": "ECO-ONTO-PROJECTION-SPEC",
+        "reason": "Declarative projection spec validates against source schema/registry and generated artifact mappings.",
         "status": "blocking"
       },
       {

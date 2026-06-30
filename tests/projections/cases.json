@@ -1,0 +1,119 @@
+{
+  "schema_version": "eco-ontology.projection_tests.v1",
+  "suite": "projection-governance-golden-negative",
+  "status": "script_ready",
+  "golden": [
+    {
+      "case_id": "golden.projection_manifest.artifact_list",
+      "fixture": "tests/projections/golden/projection-manifest.expected.json",
+      "target_artifact": "dist/projections/projection-manifest.v1.json",
+      "schema": "schemas/projections.manifest.v1.schema.json",
+      "assertions": [
+        "schema_valid",
+        "artifact_list_exact",
+        "artifact_hashes_match_current_files"
+      ],
+      "expected_layer": "blocking_ready_checks",
+      "expected_check_id": "ECO-ONTO-PROJECTION-SHAPE"
+    },
+    {
+      "case_id": "golden.projection_shape.required_surfaces",
+      "fixture": "tests/projections/golden/projection-shape.expected.json",
+      "target_artifact": "dist/projections",
+      "schemas": [
+        "schemas/projections.ecocheck.v1.schema.json",
+        "schemas/projections.registry.v1.schema.json",
+        "schemas/projections.schema_fragment.v1.schema.json",
+        "schemas/projections.manifest.v1.schema.json"
+      ],
+      "assertions": [
+        "schema_valid",
+        "generated_by_present",
+        "source_sha256_complete",
+        "consumer_ownership_boundaries_present",
+        "privacy_flags_false"
+      ],
+      "expected_layer": "blocking_ready_checks",
+      "expected_check_id": "ECO-ONTO-PROJECTION-SHAPE"
+    }
+  ],
+  "negative": [
+    {
+      "case_id": "negative.hash_drift.projection_manifest_sha",
+      "fixture": "tests/projections/negative/hash-drift/projection-manifest.sha-drift.json",
+      "schema": "schemas/projections.manifest.v1.schema.json",
+      "target_artifact": "dist/projections/projection-manifest.v1.json",
+      "mutates": "$.artifacts[1].sha256",
+      "assertions": ["schema_valid", "hash_mismatch_detected"],
+      "expected_layer": "blocking_failures",
+      "expected_check_id": "CROSS-002-PROJECTION-HASH",
+      "expected_failure_class": "hash_drift"
+    },
+    {
+      "case_id": "negative.missing_required.ecocheck_generated_by",
+      "fixture": "tests/projections/negative/missing-required/ecocheck.missing-generated-by.json",
+      "schema": "schemas/projections.ecocheck.v1.schema.json",
+      "target_artifact": "dist/projections/ecocheck/ontology-contracts.generated.json",
+      "mutates": "$.generated_by",
+      "assertions": ["schema_invalid", "required_field_missing_detected"],
+      "expected_layer": "blocking_failures",
+      "expected_check_id": "ECO-ONTO-PROJECTION-SHAPE",
+      "expected_failure_class": "missing_required_fields"
+    },
+    {
+      "case_id": "negative.ownership.graph_claims_scoring_policy",
+      "fixture": "tests/projections/negative/ownership/graph-registry.consumer-ownership-overreach.json",
+      "schema": "schemas/projections.registry.v1.schema.json",
+      "target_artifact": "dist/projections/graph/ontology-registry.generated.json",
+      "mutates": "$.ownership_boundary.graph_owns[3]",
+      "assertions": ["schema_invalid", "consumer_ownership_overreach_detected"],
+      "expected_layer": "blocking_failures",
+      "expected_check_id": "ECO-ONTO-PROJECTION-SHAPE",
+      "expected_failure_class": "consumer_ownership_overreach"
+    },
+    {
+      "case_id": "negative.manifest.missing_kb_schema_fragment",
+      "fixture": "tests/projections/negative/manifest/projection-manifest.missing-kb-schema-fragment.json",
+      "schema": "schemas/projections.manifest.v1.schema.json",
+      "target_artifact": "dist/projections/projection-manifest.v1.json",
+      "mutates": "$.artifacts",
+      "assertions": ["schema_invalid", "manifest_artifact_list_detected"],
+      "expected_layer": "blocking_failures",
+      "expected_check_id": "ECO-ONTO-PROJECTION-SHAPE",
+      "expected_failure_class": "manifest_artifact_list"
+    },
+    {
+      "case_id": "negative.shape.kb_forbidden_full_law_text_flag",
+      "fixture": "tests/projections/negative/shape/kb-schema-fragment.forbidden-full-law-text.json",
+      "schema": "schemas/projections.schema_fragment.v1.schema.json",
+      "target_artifact": "dist/projections/kb/schema.fragment.generated.json",
+      "mutates": "$.fragments.forbidden_payload_policy.contains_full_law_text",
+      "assertions": ["schema_invalid", "projection_shape_violation_detected"],
+      "expected_layer": "blocking_failures",
+      "expected_check_id": "ECO-ONTO-PROJECTION-SHAPE",
+      "expected_failure_class": "projection_shape"
+    }
+  ],
+  "failure_classes": {
+    "projection_shape": {
+      "blocking_check_id": "ECO-ONTO-PROJECTION-SHAPE",
+      "owner": "eco-ontology"
+    },
+    "hash_drift": {
+      "blocking_check_id": "CROSS-002-PROJECTION-HASH",
+      "owner": "eco-ontology"
+    },
+    "missing_required_fields": {
+      "blocking_check_id": "ECO-ONTO-PROJECTION-SHAPE",
+      "owner": "eco-ontology"
+    },
+    "consumer_ownership_overreach": {
+      "blocking_check_id": "ECO-ONTO-PROJECTION-SHAPE",
+      "owner": "eco-ontology"
+    },
+    "manifest_artifact_list": {
+      "blocking_check_id": "ECO-ONTO-PROJECTION-SHAPE",
+      "owner": "eco-ontology"
+    }
+  }
+}

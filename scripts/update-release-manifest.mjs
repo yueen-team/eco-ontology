@@ -60,6 +60,21 @@ const artifactDefinitions = [
     "Projection artifact manifest shape.",
   ],
   [
+    "schemas/projection_spec.v1.schema.json",
+    "schema",
+    "Declarative projection generator contract shape.",
+  ],
+  [
+    "schemas/consumer_adoption_receipt.v1.schema.json",
+    "schema",
+    "Consumer adoption receipt evidence shape.",
+  ],
+  [
+    "schemas/projection_provenance.v1.schema.json",
+    "schema",
+    "Projection sidecar provenance evidence shape.",
+  ],
+  [
     "registries/risk_domains.v1.json",
     "registry",
     "S01-S13 environmental risk-domain registry.",
@@ -84,6 +99,11 @@ const artifactDefinitions = [
     "contracts/consumer-compatibility-matrix.v1.json",
     "contract",
     "Three-consumer compatibility matrix for v0.1.0.",
+  ],
+  [
+    "contracts/projection-spec.v1.json",
+    "contract",
+    "Declarative source-to-projection specification for v0.1.0.",
   ],
   [
     "contracts/p3-baseline.v0.json",
@@ -129,6 +149,36 @@ const artifactDefinitions = [
     "docs/adr/0005-projection-governance-middle-layer.md",
     "documentation",
     "Projection artifact shape and validation bucket ADR.",
+  ],
+  [
+    "docs/api/consumer-adoption-receipts.md",
+    "documentation",
+    "Consumer adoption receipt interface.",
+  ],
+  [
+    "docs/api/projection-spec.md",
+    "documentation",
+    "Declarative projection specification interface.",
+  ],
+  [
+    "docs/api/release-bundle.md",
+    "documentation",
+    "Release bundle manifest interface.",
+  ],
+  [
+    "docs/api/projection-provenance.md",
+    "documentation",
+    "Projection provenance sidecar interface.",
+  ],
+  [
+    "docs/validation/projection-test-plan.md",
+    "documentation",
+    "Projection golden and negative fixture plan.",
+  ],
+  [
+    "docs/validation/release-bundle-checklist.md",
+    "documentation",
+    "Release bundle verification checklist.",
   ],
 ];
 
@@ -222,6 +272,9 @@ function buildManifest() {
       projection_schema_fragment: "eco-ontology.projections.schema_fragment.v1",
       projection_manifest_shape: "eco-ontology.projections.manifest.v1",
       projection_manifest: "eco-ontology.projection_manifest.v1",
+      projection_spec: "eco-ontology.projection_spec.v1",
+      consumer_adoption_receipt: "eco-ontology.consumer_adoption_receipt.v1",
+      projection_provenance: "eco-ontology.projection_provenance.v1",
     },
     artifacts,
     consumer_snapshots: consumerSnapshots,
@@ -259,6 +312,12 @@ function buildManifest() {
           status: "blocking",
           reason:
             "Generated projection files are checked for deterministic drift.",
+        },
+        {
+          gate_id: "ECO-ONTO-PROJECTION-SPEC",
+          status: "blocking",
+          reason:
+            "Declarative projection spec validates against source schema/registry and generated artifact mappings.",
         },
         {
           gate_id: "KB-MANIFEST-PATH-SHA",

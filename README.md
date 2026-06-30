@@ -40,6 +40,8 @@ schemas/            JSON Schemas and generated schema projections.
 dist/projections/   Deterministic generated consumer projections.
 docs/adr/           Architecture decision records.
 docs/validation/    Report-only validation plan and checklists.
+dist/release-bundles/
+                    Deterministic release bundle manifests.
 reports/            Local validation reports, ignored unless explicitly kept.
 ```
 
@@ -49,9 +51,14 @@ reports/            Local validation reports, ignored unless explicitly kept.
 - `contracts/consumer-compatibility-matrix.v1.json`
 - `registries/*.v1.json`
 - `schemas/projections*.v1.schema.json`
+- `schemas/projection_spec.v1.schema.json`
+- `schemas/consumer_adoption_receipt.v1.schema.json`
+- `schemas/projection_provenance.v1.schema.json`
+- `contracts/projection-spec.v1.json`
 - `dist/projections/ecocheck/ontology-contracts.generated.json`
 - `dist/projections/graph/*.generated.json`
 - `dist/projections/kb/*.generated.json`
+- `dist/release-bundles/eco-ontology-0.1.0.bundle-manifest.json`
 
 ## Common commands
 
@@ -60,6 +67,10 @@ pnpm projections:generate
 pnpm projections:check
 pnpm release:manifest:update
 pnpm release:manifest:check
+pnpm release:bundle:update
+pnpm projections:fixtures
+pnpm adoption:receipts
+pnpm projection:provenance
 pnpm verify:all
 ```
 

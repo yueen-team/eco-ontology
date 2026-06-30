@@ -13,6 +13,8 @@
 - `registries/`: shared ontology registries.
 - `schemas/`: JSON Schema source files.
 - `dist/projections/`: generated consumer projection artifacts.
+- `dist/release-bundles/`: deterministic release bundle manifests.
+- `tests/projections/`: projection golden and negative fixtures.
 - `specs/`: BDD behavior specs and pending domain decisions.
 - `verify/`: verification entrypoints and AFK test configuration.
 - `scripts/git-workflow/`: reusable Git workflow hook scripts.
@@ -22,7 +24,11 @@
 ```powershell
 pnpm install
 pnpm projections:generate
+pnpm projections:fixtures
 pnpm release:manifest:update
+pnpm release:bundle:update
+pnpm adoption:receipts
+pnpm projection:provenance
 pnpm verify:all
 pnpm check
 pnpm bdd:export

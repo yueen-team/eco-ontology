@@ -1,0 +1,367 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/consumer_adoption_receipt.v1",
+  "title": "EcoOntologyConsumerAdoptionReceiptV1",
+  "description": "Consumer-owned receipt for a pinned ontology projection adoption run.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "consumer_repo",
+    "consumer_commit",
+    "ontology_version",
+    "projection_artifacts",
+    "validation",
+    "checked_at",
+    "status",
+    "summary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "eco-ontology.consumer_adoption_receipt.v1"
+    },
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "consumer_repo": {
+      "enum": ["EcoCheck", "eco-execution-graph", "eco-semantic-knowledge-base"]
+    },
+    "consumer_commit": {
+      "$ref": "#/definitions/git_sha"
+    },
+    "consumer_branch": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ontology_version": {
+      "$ref": "#/definitions/semver"
+    },
+    "projection_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/projection_artifact"
+      }
+    },
+    "validation": {
+      "$ref": "#/definitions/validation"
+    },
+    "checked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "$ref": "#/definitions/receipt_status"
+    },
+    "summary": {
+      "$ref": "#/definitions/summary"
+    },
+    "blocking_checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/check_result"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/evidence_item"
+      }
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "definitions": {
+    "git_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "projection_artifact": {
+      "type": "object",
+      "required": ["path", "sha256", "schema_version"],
+      "properties": {
+        "path": {
+          "enum": [
+            "dist/projections/ecocheck/ontology-contracts.generated.json",
+            "dist/projections/graph/ontology-registry.generated.json",
+            "dist/projections/graph/schema.fragment.generated.json",
+            "dist/projections/kb/ontology-registry.generated.json",
+            "dist/projections/kb/schema.fragment.generated.json"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "schema_version": {
+          "enum": [
+            "eco-ontology.projection.ecocheck.v1",
+            "eco-ontology.projection.graph.registry.v1",
+            "eco-ontology.projection.graph.schema_fragment.v1",
+            "eco-ontology.projection.kb.registry.v1",
+            "eco-ontology.projection.kb.schema_fragment.v1"
+          ]
+        },
+        "kind": {
+          "enum": ["json", "schema-fragment"]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "path": {
+                "const": "dist/projections/ecocheck/ontology-contracts.generated.json"
+              }
+            },
+            "required": ["path"]
+          },
+          "then": {
+            "properties": {
+              "schema_version": {
+                "const": "eco-ontology.projection.ecocheck.v1"
+              },
+              "kind": {
+                "const": "json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "path": {
+                "const": "dist/projections/graph/ontology-registry.generated.json"
+              }
+            },
+            "required": ["path"]
+          },
+          "then": {
+            "properties": {
+              "schema_version": {
+                "const": "eco-ontology.projection.graph.registry.v1"
+              },
+              "kind": {
+                "const": "json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "path": {
+                "const": "dist/projections/graph/schema.fragment.generated.json"
+              }
+            },
+            "required": ["path"]
+          },
+          "then": {
+            "properties": {
+              "schema_version": {
+                "const": "eco-ontology.projection.graph.schema_fragment.v1"
+              },
+              "kind": {
+                "const": "schema-fragment"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "path": {
+                "const": "dist/projections/kb/ontology-registry.generated.json"
+              }
+            },
+            "required": ["path"]
+          },
+          "then": {
+            "properties": {
+              "schema_version": {
+                "const": "eco-ontology.projection.kb.registry.v1"
+              },
+              "kind": {
+                "const": "json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "path": {
+                "const": "dist/projections/kb/schema.fragment.generated.json"
+              }
+            },
+            "required": ["path"]
+          },
+          "then": {
+            "properties": {
+              "schema_version": {
+                "const": "eco-ontology.projection.kb.schema_fragment.v1"
+              },
+              "kind": {
+                "const": "schema-fragment"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "required": ["command", "mode", "status"],
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cwd": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": ["report-only", "blocking", "mixed"]
+        },
+        "status": {
+          "enum": ["pass", "fail", "not_run"]
+        },
+        "report_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "report_sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "receipt_status": {
+      "type": "object",
+      "required": ["blocking", "evidence"],
+      "properties": {
+        "blocking": {
+          "enum": ["pass", "fail", "not_run", "not_applicable"]
+        },
+        "evidence": {
+          "enum": [
+            "current",
+            "partial",
+            "stale",
+            "missing",
+            "external_required",
+            "not_applicable"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": ["result", "blocking_failures", "evidence_findings"],
+      "properties": {
+        "result": {
+          "enum": ["accepted", "accepted_with_gaps", "blocked"]
+        },
+        "blocking_failures": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evidence_findings": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "external_gates": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "check_result": {
+      "type": "object",
+      "required": ["check_id", "status"],
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Z0-9][A-Z0-9_.:-]*$"
+        },
+        "status": {
+          "enum": ["pass", "fail", "not_run", "not_applicable"]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence_item": {
+      "type": "object",
+      "required": ["evidence_id", "status", "kind"],
+      "properties": {
+        "evidence_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+        },
+        "kind": {
+          "enum": [
+            "validation_report",
+            "projection_hash",
+            "safe_fixture",
+            "external_gate",
+            "human_review",
+            "owner_boundary"
+          ]
+        },
+        "status": {
+          "enum": [
+            "current",
+            "partial",
+            "stale",
+            "missing",
+            "external_required",
+            "accepted_gap",
+            "not_applicable"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "checked_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

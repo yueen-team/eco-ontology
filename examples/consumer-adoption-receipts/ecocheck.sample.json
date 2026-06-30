@@ -1,0 +1,63 @@
+{
+  "schema_version": "eco-ontology.consumer_adoption_receipt.v1",
+  "receipt_id": "EcoCheck:0.1.0:semantic-event-blocking",
+  "consumer_repo": "EcoCheck",
+  "consumer_commit": "d46681e4ae55662bef331affbd010e1b65067526",
+  "consumer_branch": "codex/projection-governance",
+  "ontology_version": "0.1.0",
+  "projection_artifacts": [
+    {
+      "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+      "sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457",
+      "schema_version": "eco-ontology.projection.ecocheck.v1",
+      "kind": "json"
+    }
+  ],
+  "validation": {
+    "command": "pnpm semantic:event:validate:blocking",
+    "cwd": "E:/EcoCheck",
+    "mode": "blocking",
+    "status": "pass",
+    "report_path": "docs/validation/semantic-event-blocking.latest.json"
+  },
+  "checked_at": "2026-06-30T07:35:46.076Z",
+  "status": {
+    "blocking": "pass",
+    "evidence": "current"
+  },
+  "summary": {
+    "result": "accepted",
+    "blocking_failures": 0,
+    "evidence_findings": 0,
+    "external_gates": 2,
+    "message": "Synthetic expected-valid semantic_event.v2 and profile_gap_confirmed.v1 fixtures pass the EcoCheck blocking lane against the pinned EcoCheck projection."
+  },
+  "blocking_checks": [
+    {
+      "check_id": "ECOCHECK-SCHEMA-COMPILE",
+      "status": "pass",
+      "message": "EcoCheck compiles semantic_event.v2 and profile_gap_confirmed.v1 with its Ajv v6-compatible lane."
+    },
+    {
+      "check_id": "ECOCHECK-PROJECTION-HASH",
+      "status": "pass",
+      "message": "The consumed EcoCheck projection hash matches the v0.1.0 release hash."
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EcoCheck.semantic-event-blocking-report",
+      "kind": "validation_report",
+      "status": "current",
+      "path": "docs/validation/semantic-event-blocking.latest.json",
+      "checked_at": "2026-06-30T07:35:46.076Z"
+    },
+    {
+      "evidence_id": "EcoCheck.aggregate-eto-blind-review",
+      "kind": "human_review",
+      "status": "external_required",
+      "message": "Aggregate ETO blind-review evidence remains owned by EcoCheck and is not stored in eco-ontology."
+    }
+  ],
+  "notes": "EcoCheck keeps field workflows, human review facts, and scoring policy. The receipt pins only ontology schema and projection adoption evidence."
+}

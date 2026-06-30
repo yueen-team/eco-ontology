@@ -1,0 +1,99 @@
+{
+  "schema_version": "eco-ontology.projection_shape_expectations.v1",
+  "artifacts": [
+    {
+      "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+      "schema": "schemas/projections.ecocheck.v1.schema.json",
+      "expected_schema_version": "eco-ontology.projection.ecocheck.v1",
+      "required_top_level": [
+        "schema_version",
+        "generated_by",
+        "contracts",
+        "registries",
+        "blocking_ready_checks",
+        "report_only_checks"
+      ],
+      "expected_sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457"
+    },
+    {
+      "path": "dist/projections/graph/ontology-registry.generated.json",
+      "schema": "schemas/projections.registry.v1.schema.json",
+      "expected_schema_version": "eco-ontology.projection.graph.registry.v1",
+      "required_top_level": [
+        "schema_version",
+        "generated_by",
+        "registries",
+        "ownership_boundary"
+      ],
+      "ownership_boundary": {
+        "graph_owns": ["assembly", "tiering", "review", "exports"],
+        "ontology_owns": ["shared_ids", "schema_refs", "release_hashes"]
+      },
+      "expected_sha256": "18846a7375b54b034c8512a5e71de6222fd8db086b2b031594ba87b0ad173479"
+    },
+    {
+      "path": "dist/projections/graph/schema.fragment.generated.json",
+      "schema": "schemas/projections.schema_fragment.v1.schema.json",
+      "expected_schema_version": "eco-ontology.projection.graph.schema_fragment.v1",
+      "required_top_level": ["schema_version", "generated_by", "fragments"],
+      "required_fragments": ["node_metadata", "intake_payloads"],
+      "expected_sha256": "f2720412066da1d80ff3eeadcdb070863338f7053a01a23719b3fa714bb81ea6"
+    },
+    {
+      "path": "dist/projections/kb/ontology-registry.generated.json",
+      "schema": "schemas/projections.registry.v1.schema.json",
+      "expected_schema_version": "eco-ontology.projection.kb.registry.v1",
+      "required_top_level": [
+        "schema_version",
+        "generated_by",
+        "registries",
+        "ownership_boundary"
+      ],
+      "ownership_boundary": {
+        "kb_owns": ["approved_atoms", "source_manifests", "knowledge_products"],
+        "ontology_owns": [
+          "reference_shapes",
+          "manifest_schema",
+          "projection_hashes"
+        ]
+      },
+      "expected_sha256": "77312a8f0602092cae83d175d2fe91e388ab86721455bb37a543868f56c9878a"
+    },
+    {
+      "path": "dist/projections/kb/schema.fragment.generated.json",
+      "schema": "schemas/projections.schema_fragment.v1.schema.json",
+      "expected_schema_version": "eco-ontology.projection.kb.schema_fragment.v1",
+      "required_top_level": ["schema_version", "generated_by", "fragments"],
+      "required_fragments": [
+        "kb_product_manifest_schema",
+        "legal_basis_ref_kind",
+        "forbidden_payload_policy"
+      ],
+      "forbidden_payload_policy": {
+        "contains_private_enterprise_data": false,
+        "contains_gps": false,
+        "contains_raw_attachments": false,
+        "contains_full_law_text": false,
+        "contains_secrets": false
+      },
+      "expected_sha256": "99ac8d0ce129b0f06cd2c5189d30da500389a16ce5889746273df7e48550a5bc"
+    }
+  ],
+  "generated_by_required": [
+    "generator",
+    "generator_version",
+    "ontology_version",
+    "source_sha256"
+  ],
+  "source_sha256_required": [
+    "registries/entity_anchors.v1.json",
+    "registries/issue_types.v1.json",
+    "registries/legal_basis_ref.v1.json",
+    "registries/observed_signals.v1.json",
+    "registries/risk_domains.v1.json",
+    "schemas/kb_product_manifest.v1.schema.json",
+    "schemas/ontology_registry.v1.schema.json",
+    "schemas/profile_gap_confirmed.v1.schema.json",
+    "schemas/semantic_event.v2.schema.json"
+  ]
+}

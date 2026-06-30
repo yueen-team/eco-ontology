@@ -1,0 +1,353 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/projection_provenance.v1",
+  "title": "EcoOntologyProjectionProvenanceV1",
+  "description": "Sidecar provenance evidence for generated projection artifacts.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "ontology_version",
+    "projection_set",
+    "generated_at",
+    "generated_at_policy",
+    "generator",
+    "runtime",
+    "inputs",
+    "artifacts",
+    "verification"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "eco-ontology.projection_provenance.v1"
+    },
+    "ontology_version": {
+      "$ref": "#/definitions/semver"
+    },
+    "projection_set": {
+      "type": "object",
+      "required": ["manifest_path", "manifest_sha256"],
+      "properties": {
+        "manifest_path": {
+          "const": "dist/projections/projection-manifest.v1.json"
+        },
+        "manifest_sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "generated_at": {
+      "$ref": "#/definitions/utc_second_timestamp"
+    },
+    "generated_at_policy": {
+      "$ref": "#/definitions/generated_at_policy"
+    },
+    "generator": {
+      "$ref": "#/definitions/generator"
+    },
+    "runtime": {
+      "$ref": "#/definitions/runtime"
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 9,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/input_file"
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/artifact"
+      }
+    },
+    "verification": {
+      "$ref": "#/definitions/verification"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "definitions": {
+    "generator": {
+      "type": "object",
+      "required": ["path", "version", "git"],
+      "properties": {
+        "path": {
+          "const": "scripts/generate-projections.mjs"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "git": {
+          "$ref": "#/definitions/git_state"
+        }
+      },
+      "additionalProperties": false
+    },
+    "git_state": {
+      "type": "object",
+      "required": ["commit", "dirty_state"],
+      "properties": {
+        "commit": {
+          "$ref": "#/definitions/git_commit"
+        },
+        "branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dirty_state": {
+          "enum": ["clean", "dirty", "unknown"]
+        },
+        "dirty_files": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/repo_path"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "dirty_state": {
+                "const": "dirty"
+              }
+            },
+            "required": ["dirty_state"]
+          },
+          "then": {
+            "required": ["dirty_files"],
+            "properties": {
+              "dirty_files": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["node", "pnpm", "ajv", "prettier"],
+      "properties": {
+        "node": {
+          "$ref": "#/definitions/runtime_version"
+        },
+        "pnpm": {
+          "$ref": "#/definitions/runtime_version"
+        },
+        "ajv": {
+          "$ref": "#/definitions/runtime_version"
+        },
+        "prettier": {
+          "$ref": "#/definitions/runtime_version"
+        }
+      },
+      "additionalProperties": false
+    },
+    "runtime_version": {
+      "type": "object",
+      "required": ["version"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+        },
+        "source": {
+          "enum": [
+            "process.version",
+            "packageManager",
+            "package.json",
+            "lockfile",
+            "command"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "generated_at_policy": {
+      "type": "object",
+      "required": ["mode", "timezone", "precision", "projection_hash_policy"],
+      "properties": {
+        "mode": {
+          "const": "sidecar_evidence_timestamp"
+        },
+        "timezone": {
+          "const": "UTC"
+        },
+        "precision": {
+          "const": "seconds"
+        },
+        "projection_hash_policy": {
+          "const": "excluded_from_generated_projection_artifacts"
+        }
+      },
+      "additionalProperties": false
+    },
+    "input_file": {
+      "type": "object",
+      "required": ["path", "role", "sha256"],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/repo_path"
+        },
+        "role": {
+          "enum": [
+            "registry",
+            "schema",
+            "generator",
+            "package_manifest",
+            "package_lock"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "required_by_projection": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["ecocheck", "graph", "kb", "manifest"]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "enum": [
+            "dist/projections/ecocheck/ontology-contracts.generated.json",
+            "dist/projections/graph/ontology-registry.generated.json",
+            "dist/projections/graph/schema.fragment.generated.json",
+            "dist/projections/kb/ontology-registry.generated.json",
+            "dist/projections/kb/schema.fragment.generated.json",
+            "dist/projections/projection-manifest.v1.json"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "verification": {
+      "type": "object",
+      "required": ["commands"],
+      "properties": {
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/verification_command"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "verification_command": {
+      "type": "object",
+      "required": ["command", "cwd", "exit_code", "observed_at"],
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cwd": {
+          "const": "."
+        },
+        "exit_code": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "observed_at": {
+          "$ref": "#/definitions/utc_second_timestamp"
+        },
+        "output_sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "report_artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/report_artifact"
+          }
+        },
+        "runtime": {
+          "$ref": "#/definitions/runtime"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["output_sha256"]
+        },
+        {
+          "required": ["report_artifacts"]
+        }
+      ],
+      "additionalProperties": false
+    },
+    "report_artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/repo_path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "repo_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._/-]+$",
+      "not": {
+        "pattern": "(^/|\\.\\.|\\\\)"
+      }
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+    },
+    "utc_second_timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "git_commit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

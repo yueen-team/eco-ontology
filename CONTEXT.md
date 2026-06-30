@@ -26,6 +26,12 @@ The shared ontology connects three systems:
 - `projection_interface.v1`: generated JSON projection artifacts under
   `dist/projections/`, validated by `schemas/projections.*.v1.schema.json` and
   pinned by release/compatibility manifest sha256 values.
+- `projection_spec.v1`: declarative source registry/schema to consumer
+  projection artifact mapping.
+- `consumer_adoption_receipt.v1`: ignored local evidence that a consumer report
+  accepted, missed, or stale-read the pinned ontology projections.
+- `projection_provenance.v1`: ignored local sidecar evidence for generator
+  inputs, artifact hashes, git state, runtime, and verification commands.
 
 ## Governance Principles
 

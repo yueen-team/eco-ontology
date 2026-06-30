@@ -1,0 +1,310 @@
+{
+  "schema_version": "eco-ontology.release_bundle_manifest.v1",
+  "ontology_version": "0.1.0",
+  "bundle_id": "eco-ontology@0.1.0+b211848",
+  "package_kind": "release-bundle",
+  "created_at": "2026-06-30T00:00:00Z",
+  "source": {
+    "repo": "yueen-team/eco-ontology",
+    "branch": "codex/projection-high-spec-upgrade",
+    "commit": "b2118486c931fa10d93e31c2c4ac51171545e3b0",
+    "release_manifest": {
+      "path": "contracts/release-manifest.v1.json",
+      "sha256": "d47256e0a32516217cb6f408d417a88dd1f4e5792b091f8a9a0256a5732a2149"
+    },
+    "projection_manifest": {
+      "path": "dist/projections/projection-manifest.v1.json",
+      "sha256": "f2a4b355b9f5cd65bf1698d893a3e97476a87522d14080e90b548f6df2bd4dba"
+    },
+    "generator": {
+      "generator": "scripts/generate-projections.mjs",
+      "generator_version": "1",
+      "ontology_version": "0.1.0",
+      "source_sha256": {
+        "registries/entity_anchors.v1.json": "d3c81a1ef9217514cb938f3eb6b6caf05abce1eaf9ef24c3b2a476c3b1975d3d",
+        "registries/issue_types.v1.json": "4603c6abfd2c29f5eae970ec039ec532174ce6ffae85d65a84c86810754654d1",
+        "registries/legal_basis_ref.v1.json": "3ba958736be66b9d9ed917dbf9144d22efccc63bcf90b5887c80e39f0e699457",
+        "registries/observed_signals.v1.json": "86fc1aa045c758df44d1675ff6f2a3e4d72040d94d57fd8454cd5c1b8b59590d",
+        "registries/risk_domains.v1.json": "766485ce94a36290d8a46800c700fa42b6383f503e175b06b0f1a1cc6e78bb0c",
+        "schemas/kb_product_manifest.v1.schema.json": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3",
+        "schemas/ontology_registry.v1.schema.json": "c0a97784d8f51243468e40f4268caa0f308bcf77e1491aded54a517044c0aba2",
+        "schemas/profile_gap_confirmed.v1.schema.json": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383",
+        "schemas/semantic_event.v2.schema.json": "d4d0bda9d608baa69970df1260446f00c9e26884c7d773d77a5ec847f5e4f737"
+      }
+    },
+    "validation": {
+      "commands": [
+        "pnpm projections:check",
+        "pnpm release:manifest:check",
+        "pnpm validate:blocking",
+        "pnpm validate:report-only",
+        "pnpm format:check"
+      ],
+      "reports": [
+        "reports/schema-blocking-gate-validation.json",
+        "reports/report-only-validation.json"
+      ]
+    }
+  },
+  "files": [
+    {
+      "path": "contracts/release-manifest.v1.json",
+      "kind": "release-manifest",
+      "sha256": "d47256e0a32516217cb6f408d417a88dd1f4e5792b091f8a9a0256a5732a2149",
+      "required": true,
+      "description": "Canonical artifact, gate, rollback, and consumer snapshot manifest."
+    },
+    {
+      "path": "contracts/consumer-compatibility-matrix.v1.json",
+      "kind": "compatibility-matrix",
+      "sha256": "2e699a7a4484403cf3468e0ae2ca969fc2b1dbfcdc9a03347af9e36ebc16e508",
+      "required": true,
+      "description": "Three-consumer compatibility and projection pin matrix."
+    },
+    {
+      "path": "schemas/semantic_event.v2.schema.json",
+      "kind": "schema",
+      "sha256": "d4d0bda9d608baa69970df1260446f00c9e26884c7d773d77a5ec847f5e4f737",
+      "required": true,
+      "description": "EcoCheck field fact candidate payload contract."
+    },
+    {
+      "path": "schemas/profile_gap_confirmed.v1.schema.json",
+      "kind": "schema",
+      "sha256": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383",
+      "required": true,
+      "description": "EcoCheck company-profile gap confirmation contract."
+    },
+    {
+      "path": "schemas/kb_product_manifest.v1.schema.json",
+      "kind": "schema",
+      "sha256": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3",
+      "required": true,
+      "description": "KB graph package product manifest contract."
+    },
+    {
+      "path": "schemas/ontology_registry.v1.schema.json",
+      "kind": "schema",
+      "sha256": "c0a97784d8f51243468e40f4268caa0f308bcf77e1491aded54a517044c0aba2",
+      "required": true,
+      "description": "Shared ontology registry shape."
+    },
+    {
+      "path": "schemas/release_manifest.v1.schema.json",
+      "kind": "schema",
+      "sha256": "b615edc74b7723be6ded5dba0a92e3fcaac6827c58d130527268e146a3cb60c1",
+      "required": true,
+      "description": "Ontology v0.1.0 release manifest shape."
+    },
+    {
+      "path": "schemas/consumer_compatibility_matrix.v1.schema.json",
+      "kind": "schema",
+      "sha256": "23c8253f29efaa79b9372ebdcb5981b92ada507fd9aa1d3045c9f20bb31c30cb",
+      "required": true,
+      "description": "Consumer compatibility matrix shape."
+    },
+    {
+      "path": "schemas/projections.ecocheck.v1.schema.json",
+      "kind": "schema",
+      "sha256": "5b5ded607115036a3ba01b89296df0701475d6b5335c4b7ce827200d174caf68",
+      "required": true,
+      "description": "EcoCheck projection artifact shape."
+    },
+    {
+      "path": "schemas/projections.registry.v1.schema.json",
+      "kind": "schema",
+      "sha256": "f717b5812b4a5deb57690cef35930ece78cae3cb3bbaa1d7f1cc069a5ebdb06d",
+      "required": true,
+      "description": "Graph and KB registry projection artifact shape."
+    },
+    {
+      "path": "schemas/projections.schema_fragment.v1.schema.json",
+      "kind": "schema",
+      "sha256": "22f48373d881dfe060ca24e5d1ddc57dbac43ee167bbbeff7aa192b3e4624a2e",
+      "required": true,
+      "description": "Graph and KB schema fragment projection artifact shape."
+    },
+    {
+      "path": "schemas/projections.manifest.v1.schema.json",
+      "kind": "schema",
+      "sha256": "ad22c3736be74735bbb4f25b2ba385f5b833de86b569a18c09272bd67ed01767",
+      "required": true,
+      "description": "Projection artifact manifest shape."
+    },
+    {
+      "path": "dist/projections/projection-manifest.v1.json",
+      "kind": "projection-manifest",
+      "sha256": "f2a4b355b9f5cd65bf1698d893a3e97476a87522d14080e90b548f6df2bd4dba",
+      "required": true,
+      "description": "Projection artifact manifest."
+    },
+    {
+      "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+      "kind": "projection",
+      "sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457",
+      "required": true,
+      "description": "EcoCheck JSON projection."
+    },
+    {
+      "path": "dist/projections/graph/ontology-registry.generated.json",
+      "kind": "projection",
+      "sha256": "18846a7375b54b034c8512a5e71de6222fd8db086b2b031594ba87b0ad173479",
+      "required": true,
+      "description": "Graph registry projection."
+    },
+    {
+      "path": "dist/projections/graph/schema.fragment.generated.json",
+      "kind": "projection",
+      "sha256": "f2720412066da1d80ff3eeadcdb070863338f7053a01a23719b3fa714bb81ea6",
+      "required": true,
+      "description": "Graph schema fragment projection."
+    },
+    {
+      "path": "dist/projections/kb/ontology-registry.generated.json",
+      "kind": "projection",
+      "sha256": "77312a8f0602092cae83d175d2fe91e388ab86721455bb37a543868f56c9878a",
+      "required": true,
+      "description": "KB registry projection."
+    },
+    {
+      "path": "dist/projections/kb/schema.fragment.generated.json",
+      "kind": "projection",
+      "sha256": "99ac8d0ce129b0f06cd2c5189d30da500389a16ce5889746273df7e48550a5bc",
+      "required": true,
+      "description": "KB schema fragment projection."
+    },
+    {
+      "path": "docs/adr/0003-eco-ontology-v0-1-0-versioned-contract-package.md",
+      "kind": "governance-doc",
+      "sha256": "872b492db53c74f17f9d6d07849e69e0585548d9bde57924cd7bc1498454c26f",
+      "required": true,
+      "description": "Boundary and blocking cutover ADR for v0.1.0."
+    },
+    {
+      "path": "docs/adr/0005-projection-governance-middle-layer.md",
+      "kind": "governance-doc",
+      "sha256": "0bf1ca9ccbc3581233bc4f233bebb17104db67b10237c29b97c4945896451c21",
+      "required": true,
+      "description": "Projection artifact shape and validation bucket ADR."
+    },
+    {
+      "path": "docs/api/release-bundle.md",
+      "kind": "governance-doc",
+      "sha256": "6dbc7a92d2fdeb880e7c3c7b30d3f71a3b9c47740839148122a1a7110c194f14",
+      "required": true,
+      "description": "Release bundle interface, manifest shape, and consumer pin workflow."
+    },
+    {
+      "path": "docs/validation/release-bundle-checklist.md",
+      "kind": "governance-doc",
+      "sha256": "a5d104da128b0b2d5402f1fba4a217b45a3e7515378c06e563fcc9be5abf2e6f",
+      "required": true,
+      "description": "Release bundle producer and consumer validation checklist."
+    }
+  ],
+  "consumers": [
+    {
+      "repo": "EcoCheck",
+      "owner": "EcoCheck application engineering",
+      "expected_path": "E:/EcoCheck",
+      "validation_mode": "mixed",
+      "contracts": [
+        "ecocheck.semantic_event.v2",
+        "ecocheck.profile_gap_confirmed.v1",
+        "eco-ontology.registry.v1"
+      ],
+      "projection_pins": [
+        {
+          "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+          "sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457"
+        }
+      ],
+      "pin_record": {
+        "release_manifest_sha256": "d47256e0a32516217cb6f408d417a88dd1f4e5792b091f8a9a0256a5732a2149",
+        "source_commit": "b2118486c931fa10d93e31c2c4ac51171545e3b0"
+      },
+      "owner_validation_command": "EcoCheck-owned schema fixture and graph push validation"
+    },
+    {
+      "repo": "eco-execution-graph",
+      "owner": "ETO graph platform engineering",
+      "expected_path": "E:/eco-execution-graph",
+      "validation_mode": "mixed",
+      "contracts": [
+        "ecocheck.semantic_event.v2",
+        "ecocheck.profile_gap_confirmed.v1",
+        "kb.product_manifest.v1",
+        "eco-ontology.registry.v1"
+      ],
+      "projection_pins": [
+        {
+          "path": "dist/projections/graph/ontology-registry.generated.json",
+          "sha256": "18846a7375b54b034c8512a5e71de6222fd8db086b2b031594ba87b0ad173479"
+        },
+        {
+          "path": "dist/projections/graph/schema.fragment.generated.json",
+          "sha256": "f2720412066da1d80ff3eeadcdb070863338f7053a01a23719b3fa714bb81ea6"
+        }
+      ],
+      "pin_record": {
+        "release_manifest_sha256": "d47256e0a32516217cb6f408d417a88dd1f4e5792b091f8a9a0256a5732a2149",
+        "source_commit": "b2118486c931fa10d93e31c2c4ac51171545e3b0"
+      },
+      "owner_validation_command": "pnpm ontology:validate:report-only"
+    },
+    {
+      "repo": "eco-semantic-knowledge-base",
+      "owner": "Knowledge base engineering",
+      "expected_path": "E:/eco-semantic-knowledge-base",
+      "validation_mode": "mixed",
+      "contracts": [
+        "kb.product_manifest.v1",
+        "eco-ontology.registry.v1",
+        "baseline_dataset_contract"
+      ],
+      "projection_pins": [
+        {
+          "path": "dist/projections/kb/ontology-registry.generated.json",
+          "sha256": "77312a8f0602092cae83d175d2fe91e388ab86721455bb37a543868f56c9878a"
+        },
+        {
+          "path": "dist/projections/kb/schema.fragment.generated.json",
+          "sha256": "99ac8d0ce129b0f06cd2c5189d30da500389a16ce5889746273df7e48550a5bc"
+        }
+      ],
+      "pin_record": {
+        "release_manifest_sha256": "d47256e0a32516217cb6f408d417a88dd1f4e5792b091f8a9a0256a5732a2149",
+        "source_commit": "b2118486c931fa10d93e31c2c4ac51171545e3b0"
+      },
+      "owner_validation_command": "KB-owned product manifest and package evidence validation"
+    }
+  ],
+  "gates": {
+    "blocking": [
+      "ECO-ONTO-SCHEMA-COMPILE",
+      "ECO-ONTO-REGISTRY-SHAPE",
+      "ECO-ONTO-RELEASE-MANIFEST-SHAPE",
+      "CROSS-002-PROJECTION-HASH",
+      "KB-MANIFEST-PATH-SHA"
+    ],
+    "consumer_evidence": "reported outside blocking_failures",
+    "external_gates": [
+      "TENCENT-RAG-REAL-SMOKE",
+      "CLOUDBASE-WECOM-REAL-SMOKE",
+      "GOVERNMENT-LINEAGE-REAL-IMPORT",
+      "ECOCHECK-AGGREGATE-ETO-BLIND-REVIEW"
+    ]
+  },
+  "forbidden_payload_policy": {
+    "contains_private_enterprise_data": false,
+    "contains_gps": false,
+    "contains_raw_attachments": false,
+    "contains_full_law_text": false,
+    "contains_secrets": false,
+    "contains_private_review_content": false
+  },
+  "rollback": {
+    "previous_manifest": "contracts/release-manifest.v0.json",
+    "rule": "Consumers may keep the previous pinned release manifest and projection hashes until a fixed bundle is published."
+  }
+}

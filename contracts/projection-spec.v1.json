@@ -1,0 +1,504 @@
+{
+  "schema_version": "eco-ontology.projection_spec.v1",
+  "ontology_version": "0.1.0",
+  "derived_from": {
+    "generator": "scripts/generate-projections.mjs",
+    "generator_version": "1",
+    "projection_manifest": "dist/projections/projection-manifest.v1.json",
+    "inference_basis": [
+      "scripts/generate-projections.mjs",
+      "dist/projections/projection-manifest.v1.json",
+      "contracts/consumer-compatibility-matrix.v1.json",
+      "schemas/projections.*.v1.schema.json"
+    ]
+  },
+  "source_registries": [
+    {
+      "registry_id": "risk_domains.v1",
+      "path": "registries/risk_domains.v1.json",
+      "sha256": "766485ce94a36290d8a46800c700fa42b6383f503e175b06b0f1a1cc6e78bb0c",
+      "owner": "eco-ontology",
+      "projection_modes": [
+        {
+          "artifact_path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+          "field_set": "ids"
+        },
+        {
+          "artifact_path": "dist/projections/graph/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/graph/schema.fragment.generated.json",
+          "field_set": "enum_fragment"
+        },
+        {
+          "artifact_path": "dist/projections/projection-manifest.v1.json",
+          "field_set": "manifest_hash_source"
+        }
+      ]
+    },
+    {
+      "registry_id": "issue_types.v1",
+      "path": "registries/issue_types.v1.json",
+      "sha256": "4603c6abfd2c29f5eae970ec039ec532174ce6ffae85d65a84c86810754654d1",
+      "owner": "eco-ontology",
+      "projection_modes": [
+        {
+          "artifact_path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+          "field_set": "ids"
+        },
+        {
+          "artifact_path": "dist/projections/graph/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/kb/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/graph/schema.fragment.generated.json",
+          "field_set": "enum_fragment"
+        },
+        {
+          "artifact_path": "dist/projections/projection-manifest.v1.json",
+          "field_set": "manifest_hash_source"
+        }
+      ]
+    },
+    {
+      "registry_id": "observed_signals.v1",
+      "path": "registries/observed_signals.v1.json",
+      "sha256": "86fc1aa045c758df44d1675ff6f2a3e4d72040d94d57fd8454cd5c1b8b59590d",
+      "owner": "eco-ontology",
+      "projection_modes": [
+        {
+          "artifact_path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+          "field_set": "ids"
+        },
+        {
+          "artifact_path": "dist/projections/graph/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/kb/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/projection-manifest.v1.json",
+          "field_set": "manifest_hash_source"
+        }
+      ]
+    },
+    {
+      "registry_id": "entity_anchors.v1",
+      "path": "registries/entity_anchors.v1.json",
+      "sha256": "d3c81a1ef9217514cb938f3eb6b6caf05abce1eaf9ef24c3b2a476c3b1975d3d",
+      "owner": "eco-ontology",
+      "projection_modes": [
+        {
+          "artifact_path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+          "field_set": "ids"
+        },
+        {
+          "artifact_path": "dist/projections/graph/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/kb/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/graph/schema.fragment.generated.json",
+          "field_set": "enum_fragment"
+        },
+        {
+          "artifact_path": "dist/projections/projection-manifest.v1.json",
+          "field_set": "manifest_hash_source"
+        }
+      ]
+    },
+    {
+      "registry_id": "legal_basis_ref.v1",
+      "path": "registries/legal_basis_ref.v1.json",
+      "sha256": "3ba958736be66b9d9ed917dbf9144d22efccc63bcf90b5887c80e39f0e699457",
+      "owner": "eco-ontology",
+      "projection_modes": [
+        {
+          "artifact_path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+          "field_set": "ids"
+        },
+        {
+          "artifact_path": "dist/projections/graph/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/kb/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/graph/schema.fragment.generated.json",
+          "field_set": "enum_fragment"
+        },
+        {
+          "artifact_path": "dist/projections/kb/schema.fragment.generated.json",
+          "field_set": "enum_fragment"
+        },
+        {
+          "artifact_path": "dist/projections/projection-manifest.v1.json",
+          "field_set": "manifest_hash_source"
+        }
+      ]
+    }
+  ],
+  "source_schemas": [
+    {
+      "schema_key": "semantic_event_v2",
+      "schema_version": "ecocheck.semantic_event.v2",
+      "path": "schemas/semantic_event.v2.schema.json",
+      "sha256": "d4d0bda9d608baa69970df1260446f00c9e26884c7d773d77a5ec847f5e4f737",
+      "owner": "eco-ontology",
+      "projection_modes": [
+        {
+          "artifact_path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+          "field_set": "schema_reference"
+        },
+        {
+          "artifact_path": "dist/projections/graph/schema.fragment.generated.json",
+          "field_set": "schema_reference"
+        },
+        {
+          "artifact_path": "dist/projections/projection-manifest.v1.json",
+          "field_set": "manifest_hash_source"
+        }
+      ]
+    },
+    {
+      "schema_key": "profile_gap_confirmed_v1",
+      "schema_version": "ecocheck.profile_gap_confirmed.v1",
+      "path": "schemas/profile_gap_confirmed.v1.schema.json",
+      "sha256": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383",
+      "owner": "eco-ontology",
+      "projection_modes": [
+        {
+          "artifact_path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+          "field_set": "schema_reference"
+        },
+        {
+          "artifact_path": "dist/projections/graph/schema.fragment.generated.json",
+          "field_set": "schema_reference"
+        },
+        {
+          "artifact_path": "dist/projections/projection-manifest.v1.json",
+          "field_set": "manifest_hash_source"
+        }
+      ]
+    },
+    {
+      "schema_key": "kb_product_manifest_v1",
+      "schema_version": "kb.product_manifest.v1",
+      "path": "schemas/kb_product_manifest.v1.schema.json",
+      "sha256": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3",
+      "owner": "eco-ontology",
+      "projection_modes": [
+        {
+          "artifact_path": "dist/projections/kb/schema.fragment.generated.json",
+          "field_set": "schema_reference"
+        },
+        {
+          "artifact_path": "dist/projections/projection-manifest.v1.json",
+          "field_set": "manifest_hash_source"
+        }
+      ]
+    },
+    {
+      "schema_key": "ontology_registry_v1",
+      "schema_version": "eco-ontology.registry.v1",
+      "path": "schemas/ontology_registry.v1.schema.json",
+      "sha256": "c0a97784d8f51243468e40f4268caa0f308bcf77e1491aded54a517044c0aba2",
+      "owner": "eco-ontology",
+      "projection_modes": [
+        {
+          "artifact_path": "dist/projections/graph/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/kb/ontology-registry.generated.json",
+          "field_set": "slim_registry_entries"
+        },
+        {
+          "artifact_path": "dist/projections/projection-manifest.v1.json",
+          "field_set": "manifest_hash_source"
+        }
+      ]
+    }
+  ],
+  "consumer_artifacts": [
+    {
+      "consumer": "EcoCheck",
+      "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+      "kind": "contract-id-projection",
+      "schema_version": "eco-ontology.projection.ecocheck.v1",
+      "sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457",
+      "source_inputs": [
+        "schemas/semantic_event.v2.schema.json",
+        "schemas/profile_gap_confirmed.v1.schema.json",
+        "registries/risk_domains.v1.json",
+        "registries/issue_types.v1.json",
+        "registries/observed_signals.v1.json",
+        "registries/entity_anchors.v1.json",
+        "registries/legal_basis_ref.v1.json"
+      ],
+      "contract_surface": [
+        "semantic_event_v2 schema path",
+        "profile_gap_confirmed_v1 schema path",
+        "registry id arrays",
+        "blocking-ready and report-only check ids"
+      ]
+    },
+    {
+      "consumer": "eco-execution-graph",
+      "path": "dist/projections/graph/ontology-registry.generated.json",
+      "kind": "registry-projection",
+      "schema_version": "eco-ontology.projection.graph.registry.v1",
+      "sha256": "18846a7375b54b034c8512a5e71de6222fd8db086b2b031594ba87b0ad173479",
+      "source_inputs": [
+        "registries/risk_domains.v1.json",
+        "registries/issue_types.v1.json",
+        "registries/observed_signals.v1.json",
+        "registries/entity_anchors.v1.json",
+        "registries/legal_basis_ref.v1.json",
+        "schemas/ontology_registry.v1.schema.json"
+      ],
+      "contract_surface": ["slim registry entries", "graph ownership boundary"]
+    },
+    {
+      "consumer": "eco-execution-graph",
+      "path": "dist/projections/graph/schema.fragment.generated.json",
+      "kind": "schema-fragment",
+      "schema_version": "eco-ontology.projection.graph.schema_fragment.v1",
+      "sha256": "f2720412066da1d80ff3eeadcdb070863338f7053a01a23719b3fa714bb81ea6",
+      "source_inputs": [
+        "schemas/semantic_event.v2.schema.json",
+        "schemas/profile_gap_confirmed.v1.schema.json",
+        "registries/risk_domains.v1.json",
+        "registries/issue_types.v1.json",
+        "registries/entity_anchors.v1.json",
+        "registries/legal_basis_ref.v1.json"
+      ],
+      "contract_surface": [
+        "node metadata enum fragments",
+        "intake payload schema refs"
+      ]
+    },
+    {
+      "consumer": "eco-semantic-knowledge-base",
+      "path": "dist/projections/kb/ontology-registry.generated.json",
+      "kind": "registry-projection",
+      "schema_version": "eco-ontology.projection.kb.registry.v1",
+      "sha256": "77312a8f0602092cae83d175d2fe91e388ab86721455bb37a543868f56c9878a",
+      "source_inputs": [
+        "registries/issue_types.v1.json",
+        "registries/observed_signals.v1.json",
+        "registries/entity_anchors.v1.json",
+        "registries/legal_basis_ref.v1.json",
+        "schemas/ontology_registry.v1.schema.json"
+      ],
+      "contract_surface": ["slim registry entries", "KB ownership boundary"]
+    },
+    {
+      "consumer": "eco-semantic-knowledge-base",
+      "path": "dist/projections/kb/schema.fragment.generated.json",
+      "kind": "schema-fragment",
+      "schema_version": "eco-ontology.projection.kb.schema_fragment.v1",
+      "sha256": "99ac8d0ce129b0f06cd2c5189d30da500389a16ce5889746273df7e48550a5bc",
+      "source_inputs": [
+        "schemas/kb_product_manifest.v1.schema.json",
+        "registries/legal_basis_ref.v1.json"
+      ],
+      "contract_surface": [
+        "kb_product_manifest schema ref",
+        "legal basis reference enum",
+        "forbidden payload policy"
+      ]
+    }
+  ],
+  "artifact_schema_mappings": [
+    {
+      "artifact_path": "dist/projections/ecocheck/ontology-contracts.generated.json",
+      "schema_path": "schemas/projections.ecocheck.v1.schema.json",
+      "validation_scope": "consumer_artifact"
+    },
+    {
+      "artifact_path": "dist/projections/graph/ontology-registry.generated.json",
+      "schema_path": "schemas/projections.registry.v1.schema.json",
+      "validation_scope": "consumer_artifact"
+    },
+    {
+      "artifact_path": "dist/projections/graph/schema.fragment.generated.json",
+      "schema_path": "schemas/projections.schema_fragment.v1.schema.json",
+      "validation_scope": "consumer_artifact"
+    },
+    {
+      "artifact_path": "dist/projections/kb/ontology-registry.generated.json",
+      "schema_path": "schemas/projections.registry.v1.schema.json",
+      "validation_scope": "consumer_artifact"
+    },
+    {
+      "artifact_path": "dist/projections/kb/schema.fragment.generated.json",
+      "schema_path": "schemas/projections.schema_fragment.v1.schema.json",
+      "validation_scope": "consumer_artifact"
+    },
+    {
+      "artifact_path": "dist/projections/projection-manifest.v1.json",
+      "schema_path": "schemas/projections.manifest.v1.schema.json",
+      "validation_scope": "projection_manifest"
+    }
+  ],
+  "ownership_terms": [
+    {
+      "owner": "eco-ontology",
+      "owns": [
+        "shared registry ids",
+        "source schema references",
+        "projection artifact schemas",
+        "release hashes",
+        "projection hashes"
+      ],
+      "does_not_own": [
+        "EcoCheck scoring semantics",
+        "field workflow state",
+        "consumer runtime evidence",
+        "approved KB atom content",
+        "graph topology and export policy"
+      ]
+    },
+    {
+      "owner": "EcoCheck",
+      "owns": [
+        "field workflows",
+        "human review facts",
+        "scoring policy",
+        "expected-valid fixture evidence"
+      ],
+      "does_not_own": [
+        "shared ontology registry versioning",
+        "projection artifact schemas",
+        "graph assembly and export policy"
+      ]
+    },
+    {
+      "owner": "eco-execution-graph",
+      "owns": [
+        "assembly",
+        "tiering",
+        "review",
+        "exports",
+        "graph report-only evidence"
+      ],
+      "does_not_own": [
+        "EcoCheck scoring semantics",
+        "approved KB atom content",
+        "shared registry id versioning"
+      ]
+    },
+    {
+      "owner": "eco-semantic-knowledge-base",
+      "owns": [
+        "approved atoms",
+        "source manifests",
+        "knowledge products",
+        "government lineage import evidence"
+      ],
+      "does_not_own": [
+        "EcoCheck scoring semantics",
+        "graph assembly and tiering",
+        "ontology release hashes"
+      ]
+    }
+  ],
+  "checks": {
+    "blocking_ready": [
+      {
+        "check_id": "ECO-ONTO-SCHEMA-COMPILE",
+        "owner": "eco-ontology",
+        "applies_to": ["schemas/*.schema.json"],
+        "reason": "All ontology JSON Schemas must declare Draft-07 and compile with Ajv v6."
+      },
+      {
+        "check_id": "ECO-ONTO-REGISTRY-SHAPE",
+        "owner": "eco-ontology",
+        "applies_to": ["registries/*.v1.json"],
+        "reason": "Registry files validate against ontology_registry.v1 and keep unique ids."
+      },
+      {
+        "check_id": "ECO-ONTO-PROJECTION-SHAPE",
+        "owner": "eco-ontology",
+        "applies_to": ["dist/projections/*.json"],
+        "reason": "Generated projection artifacts validate against their projections.*.v1 schemas."
+      },
+      {
+        "check_id": "CROSS-002-PROJECTION-HASH",
+        "owner": "eco-ontology",
+        "applies_to": [
+          "contracts/consumer-compatibility-matrix.v1.json",
+          "dist/projections/*.json"
+        ],
+        "reason": "Consumer projection artifacts exist and match pinned sha256 values."
+      },
+      {
+        "check_id": "ONTOLOGY-SAFE-SAMPLES",
+        "owner": "eco-ontology",
+        "applies_to": [
+          "schemas/semantic_event.v2.schema.json",
+          "schemas/profile_gap_confirmed.v1.schema.json"
+        ],
+        "reason": "Synthetic safe samples validate without reading private enterprise data."
+      }
+    ],
+    "consumer_evidence": [
+      {
+        "check_id": "GRAPH-REPORT-ONLY-CLEAN",
+        "owner": "eco-execution-graph",
+        "applies_to": [
+          "E:/eco-execution-graph/reports/ontology-contract-report-only-validation.json"
+        ],
+        "reason": "Graph evidence freshness and summary status stay in the graph owner lane."
+      },
+      {
+        "check_id": "ECOCHECK-VALID-FIXTURES",
+        "owner": "EcoCheck",
+        "applies_to": [
+          "E:/EcoCheck/docs/validation/semantic-event-report-only.latest.json",
+          "E:/EcoCheck/docs/validation/semantic-event-blocking.latest.json"
+        ],
+        "reason": "EcoCheck fixture evidence belongs to EcoCheck and must not silently change scoring semantics."
+      }
+    ],
+    "external_gates": [
+      {
+        "check_id": "TENCENT-RAG-REAL-SMOKE",
+        "owner": "eco-semantic-knowledge-base",
+        "applies_to": ["live Tencent RAG environment"],
+        "reason": "Live RAG retrieval requires external credentials and remains outside the local ontology gate."
+      },
+      {
+        "check_id": "CLOUDBASE-SCAN-REAL-SMOKE",
+        "owner": "EcoCheck",
+        "applies_to": ["live CloudBase and WeCom scan environment"],
+        "reason": "Live CloudBase storage and scan evidence remains outside this repository."
+      },
+      {
+        "check_id": "GOVERNMENT-LINEAGE-REAL-IMPORT",
+        "owner": "eco-semantic-knowledge-base",
+        "applies_to": ["real government lineage import"],
+        "reason": "Real lineage import evidence is owned by the KB lane."
+      },
+      {
+        "check_id": "ECOCHECK-AGGREGATE-ETO-BLIND-REVIEW",
+        "owner": "EcoCheck",
+        "applies_to": ["real aggregate and ETO blind review"],
+        "reason": "Human review evidence is EcoCheck-owned and cannot be manufactured by ontology validation."
+      }
+    ]
+  }
+}

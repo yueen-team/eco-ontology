@@ -1,0 +1,709 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/projection_spec.v1",
+  "title": "EcoOntologyProjectionSpecV1",
+  "description": "Declarative specification for the v0.1.0 projection generator interface inferred from scripts/generate-projections.mjs and dist/projections.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "ontology_version",
+    "derived_from",
+    "source_registries",
+    "source_schemas",
+    "consumer_artifacts",
+    "artifact_schema_mappings",
+    "ownership_terms",
+    "checks"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "eco-ontology.projection_spec.v1"
+    },
+    "ontology_version": {
+      "$ref": "#/definitions/semver"
+    },
+    "derived_from": {
+      "$ref": "#/definitions/derived_from"
+    },
+    "source_registries": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/source_registry"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "registries/risk_domains.v1.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "registries/issue_types.v1.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "registries/observed_signals.v1.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "registries/entity_anchors.v1.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "registries/legal_basis_ref.v1.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "source_schemas": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/source_schema"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "schemas/semantic_event.v2.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "schemas/profile_gap_confirmed.v1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "schemas/kb_product_manifest.v1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "schemas/ontology_registry.v1.schema.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "consumer_artifacts": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/consumer_artifact"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "dist/projections/ecocheck/ontology-contracts.generated.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "dist/projections/graph/ontology-registry.generated.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "dist/projections/graph/schema.fragment.generated.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "dist/projections/kb/ontology-registry.generated.json"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "required": ["path"],
+            "properties": {
+              "path": {
+                "const": "dist/projections/kb/schema.fragment.generated.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "artifact_schema_mappings": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/artifact_schema_mapping"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "$ref": "#/definitions/ecocheck_artifact_mapping"
+          }
+        },
+        {
+          "contains": {
+            "$ref": "#/definitions/graph_registry_artifact_mapping"
+          }
+        },
+        {
+          "contains": {
+            "$ref": "#/definitions/graph_schema_fragment_artifact_mapping"
+          }
+        },
+        {
+          "contains": {
+            "$ref": "#/definitions/kb_registry_artifact_mapping"
+          }
+        },
+        {
+          "contains": {
+            "$ref": "#/definitions/kb_schema_fragment_artifact_mapping"
+          }
+        },
+        {
+          "contains": {
+            "$ref": "#/definitions/projection_manifest_artifact_mapping"
+          }
+        }
+      ]
+    },
+    "ownership_terms": {
+      "$ref": "#/definitions/ownership_terms"
+    },
+    "checks": {
+      "$ref": "#/definitions/checks"
+    }
+  },
+  "definitions": {
+    "semver": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "projection_artifact_path": {
+      "enum": [
+        "dist/projections/ecocheck/ontology-contracts.generated.json",
+        "dist/projections/graph/ontology-registry.generated.json",
+        "dist/projections/graph/schema.fragment.generated.json",
+        "dist/projections/kb/ontology-registry.generated.json",
+        "dist/projections/kb/schema.fragment.generated.json",
+        "dist/projections/projection-manifest.v1.json"
+      ]
+    },
+    "source_registry_path": {
+      "enum": [
+        "registries/risk_domains.v1.json",
+        "registries/issue_types.v1.json",
+        "registries/observed_signals.v1.json",
+        "registries/entity_anchors.v1.json",
+        "registries/legal_basis_ref.v1.json"
+      ]
+    },
+    "source_schema_path": {
+      "enum": [
+        "schemas/semantic_event.v2.schema.json",
+        "schemas/profile_gap_confirmed.v1.schema.json",
+        "schemas/kb_product_manifest.v1.schema.json",
+        "schemas/ontology_registry.v1.schema.json"
+      ]
+    },
+    "projection_schema_path": {
+      "enum": [
+        "schemas/projections.ecocheck.v1.schema.json",
+        "schemas/projections.registry.v1.schema.json",
+        "schemas/projections.schema_fragment.v1.schema.json",
+        "schemas/projections.manifest.v1.schema.json"
+      ]
+    },
+    "owner": {
+      "enum": [
+        "eco-ontology",
+        "EcoCheck",
+        "eco-execution-graph",
+        "eco-semantic-knowledge-base"
+      ]
+    },
+    "consumer": {
+      "enum": ["EcoCheck", "eco-execution-graph", "eco-semantic-knowledge-base"]
+    },
+    "derived_from": {
+      "type": "object",
+      "required": [
+        "generator",
+        "generator_version",
+        "projection_manifest",
+        "inference_basis"
+      ],
+      "properties": {
+        "generator": {
+          "const": "scripts/generate-projections.mjs"
+        },
+        "generator_version": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "projection_manifest": {
+          "const": "dist/projections/projection-manifest.v1.json"
+        },
+        "inference_basis": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "scripts/generate-projections.mjs",
+              "dist/projections/projection-manifest.v1.json",
+              "contracts/consumer-compatibility-matrix.v1.json",
+              "schemas/projections.*.v1.schema.json"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "projection_mode": {
+      "type": "object",
+      "required": ["artifact_path", "field_set"],
+      "properties": {
+        "artifact_path": {
+          "$ref": "#/definitions/projection_artifact_path"
+        },
+        "field_set": {
+          "enum": [
+            "ids",
+            "slim_registry_entries",
+            "schema_reference",
+            "enum_fragment",
+            "privacy_policy",
+            "manifest_hash_source"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "source_registry": {
+      "type": "object",
+      "required": [
+        "registry_id",
+        "path",
+        "sha256",
+        "owner",
+        "projection_modes"
+      ],
+      "properties": {
+        "registry_id": {
+          "enum": [
+            "risk_domains.v1",
+            "issue_types.v1",
+            "observed_signals.v1",
+            "entity_anchors.v1",
+            "legal_basis_ref.v1"
+          ]
+        },
+        "path": {
+          "$ref": "#/definitions/source_registry_path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "owner": {
+          "$ref": "#/definitions/owner"
+        },
+        "projection_modes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/projection_mode"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "source_schema": {
+      "type": "object",
+      "required": [
+        "schema_key",
+        "schema_version",
+        "path",
+        "sha256",
+        "owner",
+        "projection_modes"
+      ],
+      "properties": {
+        "schema_key": {
+          "enum": [
+            "semantic_event_v2",
+            "profile_gap_confirmed_v1",
+            "kb_product_manifest_v1",
+            "ontology_registry_v1"
+          ]
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "$ref": "#/definitions/source_schema_path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "owner": {
+          "$ref": "#/definitions/owner"
+        },
+        "projection_modes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/projection_mode"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "consumer_artifact": {
+      "type": "object",
+      "required": [
+        "consumer",
+        "path",
+        "kind",
+        "schema_version",
+        "sha256",
+        "source_inputs",
+        "contract_surface"
+      ],
+      "properties": {
+        "consumer": {
+          "$ref": "#/definitions/consumer"
+        },
+        "path": {
+          "$ref": "#/definitions/projection_artifact_path"
+        },
+        "kind": {
+          "enum": [
+            "contract-id-projection",
+            "registry-projection",
+            "schema-fragment"
+          ]
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "source_inputs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/source_registry_path"
+              },
+              {
+                "$ref": "#/definitions/source_schema_path"
+              }
+            ]
+          }
+        },
+        "contract_surface": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact_schema_mapping": {
+      "type": "object",
+      "required": ["artifact_path", "schema_path", "validation_scope"],
+      "properties": {
+        "artifact_path": {
+          "$ref": "#/definitions/projection_artifact_path"
+        },
+        "schema_path": {
+          "$ref": "#/definitions/projection_schema_path"
+        },
+        "validation_scope": {
+          "enum": ["consumer_artifact", "projection_manifest"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ecocheck_artifact_mapping": {
+      "type": "object",
+      "required": ["artifact_path", "schema_path", "validation_scope"],
+      "properties": {
+        "artifact_path": {
+          "const": "dist/projections/ecocheck/ontology-contracts.generated.json"
+        },
+        "schema_path": {
+          "const": "schemas/projections.ecocheck.v1.schema.json"
+        },
+        "validation_scope": {
+          "const": "consumer_artifact"
+        }
+      },
+      "additionalProperties": false
+    },
+    "graph_registry_artifact_mapping": {
+      "type": "object",
+      "required": ["artifact_path", "schema_path", "validation_scope"],
+      "properties": {
+        "artifact_path": {
+          "const": "dist/projections/graph/ontology-registry.generated.json"
+        },
+        "schema_path": {
+          "const": "schemas/projections.registry.v1.schema.json"
+        },
+        "validation_scope": {
+          "const": "consumer_artifact"
+        }
+      },
+      "additionalProperties": false
+    },
+    "graph_schema_fragment_artifact_mapping": {
+      "type": "object",
+      "required": ["artifact_path", "schema_path", "validation_scope"],
+      "properties": {
+        "artifact_path": {
+          "const": "dist/projections/graph/schema.fragment.generated.json"
+        },
+        "schema_path": {
+          "const": "schemas/projections.schema_fragment.v1.schema.json"
+        },
+        "validation_scope": {
+          "const": "consumer_artifact"
+        }
+      },
+      "additionalProperties": false
+    },
+    "kb_registry_artifact_mapping": {
+      "type": "object",
+      "required": ["artifact_path", "schema_path", "validation_scope"],
+      "properties": {
+        "artifact_path": {
+          "const": "dist/projections/kb/ontology-registry.generated.json"
+        },
+        "schema_path": {
+          "const": "schemas/projections.registry.v1.schema.json"
+        },
+        "validation_scope": {
+          "const": "consumer_artifact"
+        }
+      },
+      "additionalProperties": false
+    },
+    "kb_schema_fragment_artifact_mapping": {
+      "type": "object",
+      "required": ["artifact_path", "schema_path", "validation_scope"],
+      "properties": {
+        "artifact_path": {
+          "const": "dist/projections/kb/schema.fragment.generated.json"
+        },
+        "schema_path": {
+          "const": "schemas/projections.schema_fragment.v1.schema.json"
+        },
+        "validation_scope": {
+          "const": "consumer_artifact"
+        }
+      },
+      "additionalProperties": false
+    },
+    "projection_manifest_artifact_mapping": {
+      "type": "object",
+      "required": ["artifact_path", "schema_path", "validation_scope"],
+      "properties": {
+        "artifact_path": {
+          "const": "dist/projections/projection-manifest.v1.json"
+        },
+        "schema_path": {
+          "const": "schemas/projections.manifest.v1.schema.json"
+        },
+        "validation_scope": {
+          "const": "projection_manifest"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ownership_term": {
+      "type": "object",
+      "required": ["owner", "owns", "does_not_own"],
+      "properties": {
+        "owner": {
+          "$ref": "#/definitions/owner"
+        },
+        "owns": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "does_not_own": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "ownership_terms": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/ownership_term"
+      }
+    },
+    "check": {
+      "type": "object",
+      "required": ["check_id", "owner", "applies_to", "reason"],
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "#/definitions/owner"
+        },
+        "applies_to": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "object",
+      "required": ["blocking_ready", "consumer_evidence", "external_gates"],
+      "properties": {
+        "blocking_ready": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/check"
+          }
+        },
+        "consumer_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/check"
+          }
+        },
+        "external_gates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/check"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

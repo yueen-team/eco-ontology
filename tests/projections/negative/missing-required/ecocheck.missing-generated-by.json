@@ -1,0 +1,31 @@
+{
+  "blocking_ready_checks": [
+    "schema_compile",
+    "safe_fixture_validation",
+    "registry_id_uniqueness",
+    "release_manifest_hashes"
+  ],
+  "contracts": {
+    "profile_gap_confirmed_v1": {
+      "schema_path": "schemas/profile_gap_confirmed.v1.schema.json",
+      "schema_version": "ecocheck.profile_gap_confirmed.v1"
+    },
+    "semantic_event_v2": {
+      "schema_path": "schemas/semantic_event.v2.schema.json",
+      "schema_version": "ecocheck.semantic_event.v2"
+    }
+  },
+  "registries": {
+    "entity_anchor_ids": ["anchor.enterprise"],
+    "issue_type_ids": ["issue.missing_permit_or_approval"],
+    "legal_basis_ref_ids": ["legal_ref.law"],
+    "observed_signal_ids": ["signal.photo_point_present"],
+    "risk_domain_ids": ["S01"]
+  },
+  "report_only_checks": [
+    "real_cloudbase_smoke",
+    "real_graph_push_smoke",
+    "aggregate_eto_blind_review"
+  ],
+  "schema_version": "eco-ontology.projection.ecocheck.v1"
+}

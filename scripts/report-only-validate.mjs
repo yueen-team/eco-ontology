@@ -45,6 +45,12 @@ const checks = [
     schema: "schemas/consumer_compatibility_matrix.v1.schema.json",
   },
   {
+    id: "PROJECTION-SPEC",
+    owner: "eco-ontology",
+    artifact: "contracts/projection-spec.v1.json",
+    schema: "schemas/projection_spec.v1.schema.json",
+  },
+  {
     id: "ECOCHECK-001",
     owner: "EcoCheck",
     artifact: "schemas/semantic_event.v2.schema.json",
@@ -107,6 +113,18 @@ const schemaFiles = [
   {
     id: "SCHEMA-PROJECTIONS-MANIFEST",
     path: "schemas/projections.manifest.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-PROJECTION-SPEC",
+    path: "schemas/projection_spec.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-CONSUMER-ADOPTION-RECEIPT",
+    path: "schemas/consumer_adoption_receipt.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-PROJECTION-PROVENANCE",
+    path: "schemas/projection_provenance.v1.schema.json",
   },
 ];
 
@@ -988,6 +1006,14 @@ function createBlockingReadyChecks(findings) {
         : "ready",
       evidence:
         "Generated projection artifacts validate against projections.*.v1 schemas and remain deterministic by hash.",
+    },
+    {
+      check_id: "ECO-ONTO-PROJECTION-SPEC",
+      status: hasBlockingFinding(findings, "PROJECTION-SPEC")
+        ? "not_ready"
+        : "ready",
+      evidence:
+        "Declarative projection spec validates the source registry/schema to consumer artifact mapping.",
     },
     {
       check_id: "KB-MANIFEST-PATH-SHA",

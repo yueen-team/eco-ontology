@@ -42,8 +42,13 @@ Run from the repo root in PowerShell (package manager is pnpm).
 | ------------------------------------------- | ----------------------------------- |
 | Regenerate consumer projections after edit  | `pnpm projections:generate`         |
 | Check projections are up to date (no write) | `pnpm projections:check`            |
+| Run projection golden/negative fixtures     | `pnpm projections:fixtures`         |
 | Update the release manifest (hash/version)  | `pnpm release:manifest:update`      |
 | Check the manifest is consistent            | `pnpm release:manifest:check`       |
+| Update the release bundle manifest          | `pnpm release:bundle:update`        |
+| Check the release bundle manifest           | `pnpm release:bundle:check`         |
+| Write local consumer adoption receipts      | `pnpm adoption:receipts`            |
+| Write projection provenance sidecar         | `pnpm projection:provenance`        |
 | Bootstrap self-check                        | `pnpm check`                        |
 | Report-only validation (full picture)       | `pnpm validate:report-only`         |
 | Blocking validation (closed-world gate)     | `pnpm validate:blocking`            |
@@ -52,9 +57,11 @@ Run from the repo root in PowerShell (package manager is pnpm).
 | Export BDD contracts                        | `pnpm bdd:export`                   |
 | Ship local main to remote                   | `pnpm main:ship`                    |
 
-`verify:all` runs `projections:check && release:manifest:check && check &&
-validate:report-only && validate:blocking && format:check`. `main:ship` runs it
-again before pushing.
+`verify:all` runs `projections:check && projections:fixtures &&
+release:manifest:check && release:bundle:check && check &&
+adoption:receipts && validate:report-only && validate:blocking &&
+projection:provenance && format:check`. `main:ship` runs it again before
+pushing.
 
 ## Changing a contract (standard workflow)
 
@@ -63,10 +70,11 @@ again before pushing.
 #    registries/issue_types.v1.json
 pnpm projections:generate        # 2. regenerate downstream projections
 pnpm release:manifest:update     # 3. refresh the release manifest hashes
-pnpm verify:all                  # 4. all gates green
+pnpm release:bundle:update       # 4. refresh the bundle manifest
+pnpm verify:all                  # 5. all gates green
 git add -A
-git commit -m "feat: ..."        # 5. commit (husky + commitlint run)
-pnpm main:ship                   # 6. after human review, push main
+git commit -m "feat: ..."        # 6. commit (husky + commitlint run)
+pnpm main:ship                   # 7. after human review, push main
 ```
 
 Commit messages follow Conventional Commits (`feat:`, `fix:`, `docs:`, `build:`,

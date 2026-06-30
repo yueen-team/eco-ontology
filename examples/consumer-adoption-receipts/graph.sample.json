@@ -1,0 +1,69 @@
+{
+  "schema_version": "eco-ontology.consumer_adoption_receipt.v1",
+  "receipt_id": "eco-execution-graph:0.1.0:ontology-contract-blocking",
+  "consumer_repo": "eco-execution-graph",
+  "consumer_commit": "57bbe65d3e366e739305d7fcc0cf550fe3cdc911",
+  "consumer_branch": "codex/projection-governance",
+  "ontology_version": "0.1.0",
+  "projection_artifacts": [
+    {
+      "path": "dist/projections/graph/ontology-registry.generated.json",
+      "sha256": "18846a7375b54b034c8512a5e71de6222fd8db086b2b031594ba87b0ad173479",
+      "schema_version": "eco-ontology.projection.graph.registry.v1",
+      "kind": "json"
+    },
+    {
+      "path": "dist/projections/graph/schema.fragment.generated.json",
+      "sha256": "f2720412066da1d80ff3eeadcdb070863338f7053a01a23719b3fa714bb81ea6",
+      "schema_version": "eco-ontology.projection.graph.schema_fragment.v1",
+      "kind": "schema-fragment"
+    }
+  ],
+  "validation": {
+    "command": "pnpm ontology:validate:blocking",
+    "cwd": "E:/eco-execution-graph",
+    "mode": "blocking",
+    "status": "pass",
+    "report_path": "reports/ontology-contract-blocking-validation.json"
+  },
+  "checked_at": "2026-06-30T07:50:08.134Z",
+  "status": {
+    "blocking": "pass",
+    "evidence": "current"
+  },
+  "summary": {
+    "result": "accepted",
+    "blocking_failures": 0,
+    "evidence_findings": 0,
+    "external_gates": 1,
+    "message": "Graph validates the pinned registry and schema-fragment projections while retaining graph assembly, tiering, review, and export ownership."
+  },
+  "blocking_checks": [
+    {
+      "check_id": "GRAPH-ONTOLOGY-PROJECTION-HASH",
+      "status": "pass",
+      "message": "Graph projection artifact hashes match the v0.1.0 release hashes."
+    },
+    {
+      "check_id": "GRAPH-SCHEMA-BLOCKING",
+      "status": "pass",
+      "message": "Graph closed-world schema checks pass in the owner repository."
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "Graph.ontology-contract-blocking-report",
+      "kind": "validation_report",
+      "status": "current",
+      "path": "reports/ontology-contract-blocking-validation.json",
+      "checked_at": "2026-06-30T07:50:08.134Z"
+    },
+    {
+      "evidence_id": "Graph.rag-real-smoke",
+      "kind": "external_gate",
+      "status": "external_required",
+      "message": "Live Tencent RAG smoke evidence remains outside the eco-ontology local schema gate."
+    }
+  ],
+  "notes": "eco-execution-graph keeps topology, tiering, review, and exports. The receipt pins only ontology ids, schema refs, and projection hashes."
+}
