@@ -22,7 +22,7 @@
       "description": "Shared ontology registry shape.",
       "kind": "schema",
       "path": "schemas/ontology_registry.v1.schema.json",
-      "sha256": "0fc8acd05ca67c7d210d52b135da2283f1e6f2e80c598c4fe4bad7e7c1e03076"
+      "sha256": "61a821cb6ce0eb488808772a11a4d210af25afbb01a3288174310f7f3ea5eb2f"
     },
     {
       "description": "Ontology v0.1.0 release manifest shape.",
@@ -40,13 +40,13 @@
       "description": "EcoCheck projection artifact shape.",
       "kind": "schema",
       "path": "schemas/projections.ecocheck.v1.schema.json",
-      "sha256": "5a9ca005fdd857e26fc7c4fb1c36baf6509a664782557f99f03b37469e87b541"
+      "sha256": "cea2969ae592185218ea403d42599f8db35047bd021dc1437ff3f5bf595a8993"
     },
     {
       "description": "Graph and KB registry projection artifact shape.",
       "kind": "schema",
       "path": "schemas/projections.registry.v1.schema.json",
-      "sha256": "50e153b249a48377790d759fc8d4f79b05a83eb721388c5eef79607b8003ffb8"
+      "sha256": "d028611829c3729f629d31734950cbf0a952daea99c68f4f4e9e29e482d2e1ee"
     },
     {
       "description": "Graph and KB schema fragment projection artifact shape.",
@@ -82,7 +82,7 @@
       "description": "Legal-instrument lifecycle registry shape (citation metadata only).",
       "kind": "schema",
       "path": "schemas/legal_instrument.v1.schema.json",
-      "sha256": "5b856a765678bf76463f1f0a3d3093736d205cc78c8072d54bf37818c8496886"
+      "sha256": "8873c9ff2d2127ac999a099ec16b1d064fe3069f31db675004e02d6186f90f47"
     },
     {
       "description": "Risk-domain x issue-type x legal-basis crosswalk registry shape.",
@@ -142,13 +142,13 @@
       "description": "Three-consumer compatibility matrix for v0.1.0.",
       "kind": "contract",
       "path": "contracts/consumer-compatibility-matrix.v1.json",
-      "sha256": "b72b1333955e470b0f00ec9ce1eccba120c7c8acbe159beb7a3f55c735ed3b86"
+      "sha256": "d071116f4c2b59acc5f40582357eeaa834466c3cd0dff18914552e70005f84f8"
     },
     {
       "description": "Declarative source-to-projection specification for v0.1.0.",
       "kind": "contract",
       "path": "contracts/projection-spec.v1.json",
-      "sha256": "f79b28686de63544cc368dd6a404a0c16019f62bbde8be51120f1baa41037270"
+      "sha256": "f0395c699e485bdd0f1ce7ae2017eb1bb263c4908797f14743969ead29bee3ba"
     },
     {
       "description": "P3 baseline freeze retained as release input evidence.",
@@ -160,37 +160,37 @@
       "description": "EcoCheck JSON projection.",
       "kind": "projection",
       "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
-      "sha256": "573360948464ce1c3097c30f30c0a400219b22e4a47d3e63b1db8eae5a3bda96"
+      "sha256": "863971af7c3aff3ce35e03955c17c7f7a7d51f5f30e1eac467aa8f76d3699f5a"
     },
     {
       "description": "Graph registry projection.",
       "kind": "projection",
       "path": "dist/projections/graph/ontology-registry.generated.json",
-      "sha256": "3a775cfa43fdf8af64333c5dd1986bb6c9ff167eb209f17e6862ecfe59803102"
+      "sha256": "3beeebacd280df275d0b69ea99468d2ea7e2474eb7a4ff010ef4278671766099"
     },
     {
       "description": "Graph schema fragment projection.",
       "kind": "projection",
       "path": "dist/projections/graph/schema.fragment.generated.json",
-      "sha256": "1444b262ff5991aac2e1082c87451541955550fcf20e0e0ff2a4a29711d1ad90"
+      "sha256": "46210460fa48ad6af76ea7d4bb5dc5dc4a1460ac0f36b61be59c1c6811c6a6f4"
     },
     {
       "description": "KB registry projection.",
       "kind": "projection",
       "path": "dist/projections/kb/ontology-registry.generated.json",
-      "sha256": "3af54e4a939f98153b85d96761790a8abb01e78685068e629d9dd3d27b18005a"
+      "sha256": "a687b13218bf04936fb08399f057e14d7f0a67152f5416c36e41ecc0b9f88b21"
     },
     {
       "description": "KB schema fragment projection.",
       "kind": "projection",
       "path": "dist/projections/kb/schema.fragment.generated.json",
-      "sha256": "44c406c25bb8d83d7891932817e7c708bda91631533f0a37ac160f6095b033f2"
+      "sha256": "0d61d99a529cf31eb4106c0bbae09b98f0956e35d7891ed37a4ef61270d5d567"
     },
     {
       "description": "Projection artifact manifest.",
       "kind": "projection",
       "path": "dist/projections/projection-manifest.v1.json",
-      "sha256": "0d1af29d319d8c08d2385bef7e540fe0c3381f5ab3a84a7eebbdcb07e57e1506"
+      "sha256": "36486a761adc81fc216a3714ca7439360e7e506f73d437f22e501837fd5da833"
     },
     {
       "description": "Boundary and blocking cutover ADR for v0.1.0.",
@@ -284,7 +284,7 @@
       "projection_artifacts": [
         {
           "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
-          "sha256": "573360948464ce1c3097c30f30c0a400219b22e4a47d3e63b1db8eae5a3bda96"
+          "sha256": "863971af7c3aff3ce35e03955c17c7f7a7d51f5f30e1eac467aa8f76d3699f5a"
         }
       ],
       "repo": "EcoCheck",
@@ -303,11 +303,11 @@
       "projection_artifacts": [
         {
           "path": "dist/projections/graph/ontology-registry.generated.json",
-          "sha256": "3a775cfa43fdf8af64333c5dd1986bb6c9ff167eb209f17e6862ecfe59803102"
+          "sha256": "3beeebacd280df275d0b69ea99468d2ea7e2474eb7a4ff010ef4278671766099"
         },
         {
           "path": "dist/projections/graph/schema.fragment.generated.json",
-          "sha256": "1444b262ff5991aac2e1082c87451541955550fcf20e0e0ff2a4a29711d1ad90"
+          "sha256": "46210460fa48ad6af76ea7d4bb5dc5dc4a1460ac0f36b61be59c1c6811c6a6f4"
         }
       ],
       "repo": "eco-execution-graph",
@@ -325,11 +325,11 @@
       "projection_artifacts": [
         {
           "path": "dist/projections/kb/ontology-registry.generated.json",
-          "sha256": "3af54e4a939f98153b85d96761790a8abb01e78685068e629d9dd3d27b18005a"
+          "sha256": "a687b13218bf04936fb08399f057e14d7f0a67152f5416c36e41ecc0b9f88b21"
         },
         {
           "path": "dist/projections/kb/schema.fragment.generated.json",
-          "sha256": "44c406c25bb8d83d7891932817e7c708bda91631533f0a37ac160f6095b033f2"
+          "sha256": "0d61d99a529cf31eb4106c0bbae09b98f0956e35d7891ed37a4ef61270d5d567"
         }
       ],
       "repo": "eco-semantic-knowledge-base",

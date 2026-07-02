@@ -10,7 +10,7 @@
       "registries/observed_signals.v1.json": "7513983195632a96983cce58a79abfb746cb42bea07b35d346af3b572b10e2af",
       "registries/risk_domains.v1.json": "289481405660f4e275f200d86b6b25575d470693ac9e73ba4926010d4938297b",
       "schemas/kb_product_manifest.v1.schema.json": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3",
-      "schemas/ontology_registry.v1.schema.json": "0fc8acd05ca67c7d210d52b135da2283f1e6f2e80c598c4fe4bad7e7c1e03076",
+      "schemas/ontology_registry.v1.schema.json": "61a821cb6ce0eb488808772a11a4d210af25afbb01a3288174310f7f3ea5eb2f",
       "schemas/profile_gap_confirmed.v1.schema.json": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383",
       "schemas/semantic_event.v2.schema.json": "e7f324b22fb0c51bc2c32b8c7857f60d6024d1737a8935d4905209c142c5994c"
     }

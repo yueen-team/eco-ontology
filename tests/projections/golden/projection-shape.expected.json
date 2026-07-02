@@ -13,7 +13,7 @@
         "blocking_ready_checks",
         "report_only_checks"
       ],
-      "expected_sha256": "573360948464ce1c3097c30f30c0a400219b22e4a47d3e63b1db8eae5a3bda96"
+      "expected_sha256": "863971af7c3aff3ce35e03955c17c7f7a7d51f5f30e1eac467aa8f76d3699f5a"
     },
     {
       "path": "dist/projections/graph/ontology-registry.generated.json",
@@ -29,7 +29,7 @@
         "graph_owns": ["assembly", "tiering", "review", "exports"],
         "ontology_owns": ["shared_ids", "schema_refs", "release_hashes"]
       },
-      "expected_sha256": "3a775cfa43fdf8af64333c5dd1986bb6c9ff167eb209f17e6862ecfe59803102"
+      "expected_sha256": "3beeebacd280df275d0b69ea99468d2ea7e2474eb7a4ff010ef4278671766099"
     },
     {
       "path": "dist/projections/graph/schema.fragment.generated.json",
@@ -37,7 +37,7 @@
       "expected_schema_version": "eco-ontology.projection.graph.schema_fragment.v1",
       "required_top_level": ["schema_version", "generated_by", "fragments"],
       "required_fragments": ["node_metadata", "intake_payloads"],
-      "expected_sha256": "1444b262ff5991aac2e1082c87451541955550fcf20e0e0ff2a4a29711d1ad90"
+      "expected_sha256": "46210460fa48ad6af76ea7d4bb5dc5dc4a1460ac0f36b61be59c1c6811c6a6f4"
     },
     {
       "path": "dist/projections/kb/ontology-registry.generated.json",
@@ -57,7 +57,7 @@
           "projection_hashes"
         ]
       },
-      "expected_sha256": "3af54e4a939f98153b85d96761790a8abb01e78685068e629d9dd3d27b18005a"
+      "expected_sha256": "a687b13218bf04936fb08399f057e14d7f0a67152f5416c36e41ecc0b9f88b21"
     },
     {
       "path": "dist/projections/kb/schema.fragment.generated.json",
@@ -76,7 +76,7 @@
         "contains_full_law_text": false,
         "contains_secrets": false
       },
-      "expected_sha256": "44c406c25bb8d83d7891932817e7c708bda91631533f0a37ac160f6095b033f2"
+      "expected_sha256": "0d61d99a529cf31eb4106c0bbae09b98f0956e35d7891ed37a4ef61270d5d567"
     }
   ],
   "generated_by_required": [

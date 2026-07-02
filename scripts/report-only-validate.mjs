@@ -1226,20 +1226,29 @@ function createBlockingReadyChecks(findings) {
 }
 
 function createConsumerEvidenceChecks(findings) {
+  // In closed-world-only mode the sibling evidence validators are not run, so
+  // their absence of findings must not be reported as a positive "current"
+  // status. Mark them "skipped" instead, mirroring the KB-001 info skip.
+  const graphStatus = closedWorldOnly
+    ? "skipped"
+    : hasBlockingFinding(findings, "GRAPH-REPORT-ONLY")
+      ? "stale_or_missing"
+      : "current";
+  const ecocheckStatus = closedWorldOnly
+    ? "skipped"
+    : hasBlockingFinding(findings, "ECOCHECK-VALID-FIXTURES")
+      ? "stale_or_missing"
+      : "current";
   return [
     {
       check_id: "GRAPH-REPORT-ONLY-CLEAN",
-      status: hasBlockingFinding(findings, "GRAPH-REPORT-ONLY")
-        ? "stale_or_missing"
-        : "current",
+      status: graphStatus,
       evidence:
         "eco-execution-graph report-only validation summary is red=0 yellow=0 info=0 when current.",
     },
     {
       check_id: "ECOCHECK-VALID-FIXTURES",
-      status: hasBlockingFinding(findings, "ECOCHECK-VALID-FIXTURES")
-        ? "stale_or_missing"
-        : "current",
+      status: ecocheckStatus,
       evidence:
         "EcoCheck expected-valid semantic_event.v2 and profile_gap_confirmed.v1 fixtures pass schema, local payload, and graph-request report layers.",
     },
@@ -1317,6 +1326,19 @@ if (!closedWorldOnly) {
   validateLegacyP3KbManifestFreeze(findings);
   validateGraphReport(findings);
   validateEcoCheckValidFixtures(findings);
+} else {
+  addInfo(
+    findings,
+    { id: "GRAPH-REPORT-ONLY", owner: "eco-execution-graph" },
+    "reports/ontology-contract-report-only-validation.json",
+    "Closed-world-only mode: graph consumer evidence not evaluated (external lane).",
+  );
+  addInfo(
+    findings,
+    { id: "ECOCHECK-VALID-FIXTURES", owner: "EcoCheck" },
+    "docs/validation/semantic-event-*.latest.json",
+    "Closed-world-only mode: EcoCheck consumer evidence not evaluated (external lane).",
+  );
 }
 
 const summary = { red: 0, yellow: 0, info: 0 };
