@@ -22,7 +22,7 @@
       "description": "Shared ontology registry shape.",
       "kind": "schema",
       "path": "schemas/ontology_registry.v1.schema.json",
-      "sha256": "1e02c7c290d8c0a378bf4b7ab677f5e0da28c15d5c53d0133a87cd7f9e06918c"
+      "sha256": "0fc8acd05ca67c7d210d52b135da2283f1e6f2e80c598c4fe4bad7e7c1e03076"
     },
     {
       "description": "Ontology v0.1.0 release manifest shape.",
@@ -91,6 +91,12 @@
       "sha256": "d9fc6d6e471cdb47a06849fb7f0b0b8c83b2e388ecb408e9da245e8f721c1a22"
     },
     {
+      "description": "Quantitative signal payload shape (limit/measured/exceedance), values consumer-side.",
+      "kind": "schema",
+      "path": "schemas/quantitative_signal.v1.schema.json",
+      "sha256": "d8dc8b274dee8ea0c47e598fcc6ccb700d1575c8436eb7b227e9d77fcfc9c6dc"
+    },
+    {
       "description": "S01-S13 environmental risk-domain registry.",
       "kind": "registry",
       "path": "registries/risk_domains.v1.json",
@@ -106,13 +112,13 @@
       "description": "Shared observed-signal registry.",
       "kind": "registry",
       "path": "registries/observed_signals.v1.json",
-      "sha256": "a5efbc5414d55865d4a1e64cd7c4b71e3b5acb68c07a565f8e7ef8b9c81c6e46"
+      "sha256": "7513983195632a96983cce58a79abfb746cb42bea07b35d346af3b572b10e2af"
     },
     {
       "description": "Shared entity-anchor registry.",
       "kind": "registry",
       "path": "registries/entity_anchors.v1.json",
-      "sha256": "9a946491c0b8474311f5c7bfa1df0d9e569a0cb443c56a376402289e500e643e"
+      "sha256": "470226b92978a5b08da41e1e645f406322ce58de9b33574bff120f7ec40ecd0e"
     },
     {
       "description": "Legal-basis reference class registry without full legal text.",
@@ -136,13 +142,13 @@
       "description": "Three-consumer compatibility matrix for v0.1.0.",
       "kind": "contract",
       "path": "contracts/consumer-compatibility-matrix.v1.json",
-      "sha256": "17e91d02d66e0286c46ed3085ca0ca001c34ddd7ec88a92a057b9bb1a087387d"
+      "sha256": "b72b1333955e470b0f00ec9ce1eccba120c7c8acbe159beb7a3f55c735ed3b86"
     },
     {
       "description": "Declarative source-to-projection specification for v0.1.0.",
       "kind": "contract",
       "path": "contracts/projection-spec.v1.json",
-      "sha256": "f7030b57b9e02e49d090caf1c1f64b0cb636d1ade85b6f1e89e36df83d82e443"
+      "sha256": "f79b28686de63544cc368dd6a404a0c16019f62bbde8be51120f1baa41037270"
     },
     {
       "description": "P3 baseline freeze retained as release input evidence.",
@@ -154,37 +160,37 @@
       "description": "EcoCheck JSON projection.",
       "kind": "projection",
       "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
-      "sha256": "91f479e412ae38f4b6e1b5ab7cfd2147833aaa9a204fa7e0d5b8fabcac1b8005"
+      "sha256": "573360948464ce1c3097c30f30c0a400219b22e4a47d3e63b1db8eae5a3bda96"
     },
     {
       "description": "Graph registry projection.",
       "kind": "projection",
       "path": "dist/projections/graph/ontology-registry.generated.json",
-      "sha256": "b13a2557b1cbc38019495df3822b52c268049928d66c087905fa245927817c1f"
+      "sha256": "3a775cfa43fdf8af64333c5dd1986bb6c9ff167eb209f17e6862ecfe59803102"
     },
     {
       "description": "Graph schema fragment projection.",
       "kind": "projection",
       "path": "dist/projections/graph/schema.fragment.generated.json",
-      "sha256": "fbc8420ae1b92da70058c947639afb3f8f2ef6a8d1cb7cff4cbce38dd3eac262"
+      "sha256": "1444b262ff5991aac2e1082c87451541955550fcf20e0e0ff2a4a29711d1ad90"
     },
     {
       "description": "KB registry projection.",
       "kind": "projection",
       "path": "dist/projections/kb/ontology-registry.generated.json",
-      "sha256": "2cdfc04b7fc7f99191edd2d405b2c4ccd40afdd0fcc5ab5e7c94393c47643122"
+      "sha256": "3af54e4a939f98153b85d96761790a8abb01e78685068e629d9dd3d27b18005a"
     },
     {
       "description": "KB schema fragment projection.",
       "kind": "projection",
       "path": "dist/projections/kb/schema.fragment.generated.json",
-      "sha256": "0e2b403704b87b51410964132291f7fa1018dc44c771ad3727f3963660169f7c"
+      "sha256": "44c406c25bb8d83d7891932817e7c708bda91631533f0a37ac160f6095b033f2"
     },
     {
       "description": "Projection artifact manifest.",
       "kind": "projection",
       "path": "dist/projections/projection-manifest.v1.json",
-      "sha256": "9905ddbdf59868402083b523fc2061373a397523784ce9905e962856878d6ccc"
+      "sha256": "0d1af29d319d8c08d2385bef7e540fe0c3381f5ab3a84a7eebbdcb07e57e1506"
     },
     {
       "description": "Boundary and blocking cutover ADR for v0.1.0.",
@@ -221,6 +227,12 @@
       "kind": "documentation",
       "path": "docs/validation/release-signing-and-ledger.md",
       "sha256": "721ff5e5d282efd1073269a77940214e6d61cb333b3ad97a00fe8cb6f5afb70c"
+    },
+    {
+      "description": "Registry lifecycle fields, quantitative signal shape, granularity carriers, and version coexistence ADR.",
+      "kind": "documentation",
+      "path": "docs/adr/0009-registry-lifecycle-and-granularity-carriers.md",
+      "sha256": "8d9044102201cf28a56db1d3a51e47416fd2e877b9ee9fe898498689909af8d7"
     },
     {
       "description": "Consumer adoption receipt interface.",
@@ -272,7 +284,7 @@
       "projection_artifacts": [
         {
           "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
-          "sha256": "91f479e412ae38f4b6e1b5ab7cfd2147833aaa9a204fa7e0d5b8fabcac1b8005"
+          "sha256": "573360948464ce1c3097c30f30c0a400219b22e4a47d3e63b1db8eae5a3bda96"
         }
       ],
       "repo": "EcoCheck",
@@ -291,11 +303,11 @@
       "projection_artifacts": [
         {
           "path": "dist/projections/graph/ontology-registry.generated.json",
-          "sha256": "b13a2557b1cbc38019495df3822b52c268049928d66c087905fa245927817c1f"
+          "sha256": "3a775cfa43fdf8af64333c5dd1986bb6c9ff167eb209f17e6862ecfe59803102"
         },
         {
           "path": "dist/projections/graph/schema.fragment.generated.json",
-          "sha256": "fbc8420ae1b92da70058c947639afb3f8f2ef6a8d1cb7cff4cbce38dd3eac262"
+          "sha256": "1444b262ff5991aac2e1082c87451541955550fcf20e0e0ff2a4a29711d1ad90"
         }
       ],
       "repo": "eco-execution-graph",
@@ -313,11 +325,11 @@
       "projection_artifacts": [
         {
           "path": "dist/projections/kb/ontology-registry.generated.json",
-          "sha256": "2cdfc04b7fc7f99191edd2d405b2c4ccd40afdd0fcc5ab5e7c94393c47643122"
+          "sha256": "3af54e4a939f98153b85d96761790a8abb01e78685068e629d9dd3d27b18005a"
         },
         {
           "path": "dist/projections/kb/schema.fragment.generated.json",
-          "sha256": "0e2b403704b87b51410964132291f7fa1018dc44c771ad3727f3963660169f7c"
+          "sha256": "44c406c25bb8d83d7891932817e7c708bda91631533f0a37ac160f6095b033f2"
         }
       ],
       "repo": "eco-semantic-knowledge-base",

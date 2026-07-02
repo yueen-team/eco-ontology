@@ -4,13 +4,13 @@
     "generator_version": "1",
     "ontology_version": "0.1.0",
     "source_sha256": {
-      "registries/entity_anchors.v1.json": "9a946491c0b8474311f5c7bfa1df0d9e569a0cb443c56a376402289e500e643e",
+      "registries/entity_anchors.v1.json": "470226b92978a5b08da41e1e645f406322ce58de9b33574bff120f7ec40ecd0e",
       "registries/issue_types.v1.json": "a7942f83fcba1743c0a217a51fc63c85512762392a7d6890ea85aa31288e7a61",
       "registries/legal_basis_ref.v1.json": "708122b14a033f1a78745bec146589952eb29e99aa7c4e0a37e859752acfcd51",
-      "registries/observed_signals.v1.json": "a5efbc5414d55865d4a1e64cd7c4b71e3b5acb68c07a565f8e7ef8b9c81c6e46",
+      "registries/observed_signals.v1.json": "7513983195632a96983cce58a79abfb746cb42bea07b35d346af3b572b10e2af",
       "registries/risk_domains.v1.json": "289481405660f4e275f200d86b6b25575d470693ac9e73ba4926010d4938297b",
       "schemas/kb_product_manifest.v1.schema.json": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3",
-      "schemas/ontology_registry.v1.schema.json": "1e02c7c290d8c0a378bf4b7ab677f5e0da28c15d5c53d0133a87cd7f9e06918c",
+      "schemas/ontology_registry.v1.schema.json": "0fc8acd05ca67c7d210d52b135da2283f1e6f2e80c598c4fe4bad7e7c1e03076",
       "schemas/profile_gap_confirmed.v1.schema.json": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383",
       "schemas/semantic_event.v2.schema.json": "e7f324b22fb0c51bc2c32b8c7857f60d6024d1737a8935d4905209c142c5994c"
     }
@@ -131,6 +131,49 @@
         "display_name_zh": "法律依据",
         "id": "anchor.legal_basis",
         "owner": "eco-semantic-knowledge-base",
+        "status": "active"
+      },
+      {
+        "aliases": [
+          "在线监测设备",
+          "自动监测设备",
+          "监测仪器",
+          "监控设备",
+          "自动监控设施"
+        ],
+        "deprecated": false,
+        "description": "An online or manual environmental monitoring device or instrument class.",
+        "display_name": "Monitoring device",
+        "display_name_zh": "监测设备",
+        "id": "anchor.monitoring_device",
+        "owner": "eco-execution-graph",
+        "status": "active"
+      },
+      {
+        "aliases": [
+          "排放口",
+          "排口",
+          "废水排放口",
+          "废气排放口",
+          "DA排气口",
+          "DW排水口"
+        ],
+        "deprecated": false,
+        "description": "A coded discharge or emission outlet class (e.g. DA exhaust / DW wastewater outlet code), distinct from the general emission-point class.",
+        "display_name": "Discharge outlet",
+        "display_name_zh": "排污口",
+        "id": "anchor.discharge_outlet",
+        "owner": "eco-execution-graph",
+        "status": "active"
+      },
+      {
+        "aliases": ["排污许可", "许可证", "排污证", "环保许可", "排污许可编号"],
+        "deprecated": false,
+        "description": "An environmental permit or approval instance class, referenced by a non-private identifier.",
+        "display_name": "Permit",
+        "display_name_zh": "排污许可证",
+        "id": "anchor.permit",
+        "owner": "EcoCheck",
         "status": "active"
       }
     ],
@@ -448,6 +491,16 @@
         "display_name": "Rectification evidence present",
         "display_name_zh": "整改证据存在",
         "id": "signal.rectification_evidence_present",
+        "owner": "EcoCheck",
+        "status": "active"
+      },
+      {
+        "aliases": ["超标", "超标排放", "超标倍数", "监测超标", "限值超标"],
+        "deprecated": false,
+        "description": "A sanitized quantitative signal (limit / measured-value / exceedance-multiple, as references or summaries) indicates a standard limit was exceeded. Payload shape is defined by quantitative_signal.v1; raw enterprise values stay consumer-side.",
+        "display_name": "Quantitative exceedance present",
+        "display_name_zh": "定量超标信号存在",
+        "id": "signal.quantitative_exceedance_present",
         "owner": "EcoCheck",
         "status": "active"
       }

@@ -6,6 +6,7 @@ import Ajv from "ajv";
 import {
   checkLegalInstruments,
   checkCrosswalk,
+  checkRegistryLifecycle,
 } from "./lib/grounding-integrity.mjs";
 
 const root = process.cwd();
@@ -142,6 +143,10 @@ const schemaFiles = [
   {
     id: "SCHEMA-CROSSWALK",
     path: "schemas/crosswalk.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-QUANTITATIVE-SIGNAL",
+    path: "schemas/quantitative_signal.v1.schema.json",
   },
 ];
 
@@ -409,6 +414,15 @@ function validateRegistryFiles(findings) {
           "Deprecated entries must use status=deprecated.",
         );
       }
+    }
+    for (const f of checkRegistryLifecycle(registry)) {
+      addFinding(
+        findings,
+        f.severity,
+        check,
+        `${registryPath}:${f.path}`,
+        f.message,
+      );
     }
   }
 }
@@ -788,6 +802,22 @@ function validateKnownSchemaSamples(findings) {
         eso_decision: "PRESENT",
         site_verification: "ESO_CONFIRMED_APPLICABLE",
         knowledge_approval_basis: "synthetic approval basis",
+      },
+    },
+    {
+      check: { id: "QUANTITATIVE-SIGNAL-SAMPLE", owner: "eco-ontology" },
+      schema: "schemas/quantitative_signal.v1.schema.json",
+      artifact: {
+        schema_version: "eco-ontology.quantitative_signal.v1",
+        pollutant_ref: "COD",
+        risk_domain: "S02",
+        limit: {
+          value: 100,
+          unit: "mg/L",
+          basis_ref: "li.std.gb8978_1996",
+        },
+        measured: { value: 250, unit: "mg/L", sample_ref: "synthetic-sample" },
+        exceedance_multiple: 1.5,
       },
     },
   ];
@@ -1185,11 +1215,12 @@ function createBlockingReadyChecks(findings) {
       check_id: "ONTOLOGY-SAFE-SAMPLES",
       status:
         hasBlockingFinding(findings, "SEMANTIC-EVENT-SAMPLE") ||
-        hasBlockingFinding(findings, "PROFILE-GAP-SAMPLE")
+        hasBlockingFinding(findings, "PROFILE-GAP-SAMPLE") ||
+        hasBlockingFinding(findings, "QUANTITATIVE-SIGNAL-SAMPLE")
           ? "not_ready"
           : "ready",
       evidence:
-        "Synthetic safe semantic_event.v2 and profile_gap_confirmed.v1 instances validate without reading private data.",
+        "Synthetic safe semantic_event.v2, profile_gap_confirmed.v1, and quantitative_signal.v1 instances validate without reading private data.",
     },
   ];
 }

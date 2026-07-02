@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/quantitative_signal.v1",
+  "title": "EcoOntologyQuantitativeSignalV1",
+  "description": "Payload shape for a sanitized quantitative environmental signal (limit / measured value / exceedance multiple). The ontology owns the SHAPE only; real measured enterprise values live consumer-side and are never stored here. additionalProperties:false is the structural red line: raw attachments, GPS, secrets, and full report text cannot appear.",
+  "type": "object",
+  "required": ["schema_version", "pollutant_ref", "limit", "measured"],
+  "properties": {
+    "schema_version": { "const": "eco-ontology.quantitative_signal.v1" },
+    "pollutant_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120,
+      "description": "Pollutant code or reference id, e.g. COD / SO2 / a KB pollutant ref. Not a raw value."
+    },
+    "risk_domain": {
+      "type": "string",
+      "pattern": "^S(0[1-9]|1[0-3])$",
+      "description": "Optional S01-S13 grounding for the signal."
+    },
+    "limit": {
+      "type": "object",
+      "required": ["value", "unit", "basis_ref"],
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Public standard limit value."
+        },
+        "unit": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "basis_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Legal instrument or standard reference the limit derives from, e.g. li.std.gb8978_1996."
+        }
+      },
+      "additionalProperties": false
+    },
+    "measured": {
+      "type": "object",
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Consumer-provided measured value; the ontology stores only synthetic samples, never real enterprise measurements."
+        },
+        "unit": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "sample_ref": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Reference to the monitoring sample, never raw report text or attachment."
+        }
+      },
+      "additionalProperties": false
+    },
+    "exceedance_multiple": {
+      "type": "number",
+      "minimum": 0,
+      "description": "超标倍数: derived ratio summary of measured against limit."
+    }
+  },
+  "additionalProperties": false
+}

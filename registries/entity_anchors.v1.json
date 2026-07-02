@@ -158,6 +158,67 @@
         "reviewed_at": "2026-07-02",
         "status": "seed"
       }
+    },
+    {
+      "id": "anchor.monitoring_device",
+      "display_name": "Monitoring device",
+      "display_name_zh": "监测设备",
+      "description": "An online or manual environmental monitoring device or instrument class.",
+      "owner": "eco-execution-graph",
+      "status": "active",
+      "deprecated": false,
+      "aliases": [
+        "在线监测设备",
+        "自动监测设备",
+        "监测仪器",
+        "监控设备",
+        "自动监控设施"
+      ],
+      "tags": ["entity_anchor"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
+    },
+    {
+      "id": "anchor.discharge_outlet",
+      "display_name": "Discharge outlet",
+      "display_name_zh": "排污口",
+      "description": "A coded discharge or emission outlet class (e.g. DA exhaust / DW wastewater outlet code), distinct from the general emission-point class.",
+      "owner": "eco-execution-graph",
+      "status": "active",
+      "deprecated": false,
+      "aliases": [
+        "排放口",
+        "排口",
+        "废水排放口",
+        "废气排放口",
+        "DA排气口",
+        "DW排水口"
+      ],
+      "tags": ["entity_anchor"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
+    },
+    {
+      "id": "anchor.permit",
+      "display_name": "Permit",
+      "display_name_zh": "排污许可证",
+      "description": "An environmental permit or approval instance class, referenced by a non-private identifier.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "aliases": ["排污许可", "许可证", "排污证", "环保许可", "排污许可编号"],
+      "tags": ["entity_anchor"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     }
   ]
 }

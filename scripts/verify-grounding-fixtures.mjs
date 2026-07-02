@@ -4,6 +4,7 @@ import process from "node:process";
 import {
   checkLegalInstruments,
   checkCrosswalk,
+  checkRegistryLifecycle,
 } from "./lib/grounding-integrity.mjs";
 
 const root = process.cwd();
@@ -66,6 +67,25 @@ for (const c of cases.crosswalk_negative) {
   assertExpected(c.case_id, findings, c.expect);
 }
 
+// Positive: every real base registry must be lifecycle-clean.
+for (const path of [cases.positive.risk_domains, cases.positive.issue_types]) {
+  const findings = checkRegistryLifecycle(readJson(path));
+  if (findings.some((f) => f.severity === "red")) {
+    fail(
+      `${path} has registry lifecycle findings: ${JSON.stringify(findings)}`,
+    );
+  }
+}
+
+for (const c of cases.registry_lifecycle_negative || []) {
+  const fixture = readJson(c.fixture);
+  assertExpected(c.case_id, checkRegistryLifecycle(fixture), c.expect);
+}
+
+const negativeCount =
+  cases.legal_instrument_negative.length +
+  cases.crosswalk_negative.length +
+  (cases.registry_lifecycle_negative || []).length;
 console.log(
-  `grounding fixtures OK: positive 2 registries clean, ${cases.legal_instrument_negative.length + cases.crosswalk_negative.length} negative cases detected`,
+  `grounding fixtures OK: positive registries clean, ${negativeCount} negative cases detected`,
 );

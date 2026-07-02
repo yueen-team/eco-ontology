@@ -9,6 +9,48 @@ function finding(severity, path, message) {
   return { severity, path, message };
 }
 
+// Registry entry lifecycle: superseded_by must resolve within the same registry,
+// must not be self-referential, and a deprecated entry should declare either a
+// superseded_by replacement or a sunset_after date (soft, so archival entries are
+// allowed but flagged for review).
+export function checkRegistryLifecycle(registry) {
+  const findings = [];
+  const entries = registry?.entries || [];
+  const ids = new Set(entries.map((e) => e.id));
+  for (const [i, e] of entries.entries()) {
+    const at = `$.entries[${i}](${e.id || "?"})`;
+    if (e.superseded_by) {
+      if (e.superseded_by === e.id) {
+        findings.push(
+          finding(
+            "red",
+            `${at}.superseded_by`,
+            "superseded_by must not be self-referential.",
+          ),
+        );
+      } else if (!ids.has(e.superseded_by)) {
+        findings.push(
+          finding(
+            "red",
+            `${at}.superseded_by`,
+            `superseded_by references unknown id ${e.superseded_by} in the same registry.`,
+          ),
+        );
+      }
+    }
+    if (e.status === "deprecated" && !e.superseded_by && !e.sunset_after) {
+      findings.push(
+        finding(
+          "yellow",
+          `${at}.status`,
+          "Deprecated entry should declare a superseded_by replacement or a sunset_after date.",
+        ),
+      );
+    }
+  }
+  return findings;
+}
+
 export function checkLegalInstruments(registry) {
   const findings = [];
   const entries = registry?.entries || [];

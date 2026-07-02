@@ -166,6 +166,22 @@
         "reviewed_at": "2026-07-02",
         "status": "seed"
       }
+    },
+    {
+      "id": "signal.quantitative_exceedance_present",
+      "display_name": "Quantitative exceedance present",
+      "display_name_zh": "定量超标信号存在",
+      "description": "A sanitized quantitative signal (limit / measured-value / exceedance-multiple, as references or summaries) indicates a standard limit was exceeded. Payload shape is defined by quantitative_signal.v1; raw enterprise values stay consumer-side.",
+      "owner": "EcoCheck",
+      "status": "active",
+      "deprecated": false,
+      "aliases": ["超标", "超标排放", "超标倍数", "监测超标", "限值超标"],
+      "tags": ["observed_signal", "monitoring"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     }
   ]
 }

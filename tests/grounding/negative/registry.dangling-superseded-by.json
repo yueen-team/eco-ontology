@@ -1,0 +1,18 @@
+{
+  "schema_version": "eco-ontology.registry.v1",
+  "registry_id": "issue_types.v1",
+  "ontology_version": "0.1.0",
+  "owner": "eco-ontology",
+  "description": "Negative fixture: superseded_by references an id absent from the same registry.",
+  "entries": [
+    {
+      "id": "issue.example_old",
+      "display_name": "Example deprecated",
+      "description": "A deprecated entry pointing at a missing replacement.",
+      "owner": "eco-ontology",
+      "status": "deprecated",
+      "deprecated": true,
+      "superseded_by": "issue.does_not_exist"
+    }
+  ]
+}

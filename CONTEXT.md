@@ -33,6 +33,10 @@ The shared ontology connects three systems:
 - `crosswalk`: an auditable `risk_domain × issue_type × legal_basis` mapping
   with a controlled `confidence` (`mandatory | presumptive | indicative`),
   grounding relationships fixed and versioned at the source.
+- `superseded_by` / `sunset_after`: registry-entry lifecycle fields giving a
+  deprecated entry a machine-readable replacement id and/or sunset date.
+- `quantitative_signal`: payload shape for limit/measured/exceedance signals;
+  the ontology owns the shape only, real measured values stay consumer-side.
 - `tier`: graph publication/privacy tier.
 - `review_status`: lifecycle state for candidate and approved graph facts.
 - `projection_interface.v1`: generated JSON projection artifacts under

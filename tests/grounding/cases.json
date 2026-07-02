@@ -30,5 +30,12 @@
       "fixture": "tests/grounding/negative/crosswalk.repealed-basis.json",
       "expect": "grounded on a repealed"
     }
+  ],
+  "registry_lifecycle_negative": [
+    {
+      "case_id": "reg.dangling_superseded_by",
+      "fixture": "tests/grounding/negative/registry.dangling-superseded-by.json",
+      "expect": "superseded_by references unknown id"
+    }
   ]
 }

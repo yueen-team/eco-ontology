@@ -85,6 +85,11 @@ const artifactDefinitions = [
     "Risk-domain x issue-type x legal-basis crosswalk registry shape.",
   ],
   [
+    "schemas/quantitative_signal.v1.schema.json",
+    "schema",
+    "Quantitative signal payload shape (limit/measured/exceedance), values consumer-side.",
+  ],
+  [
     "registries/risk_domains.v1.json",
     "registry",
     "S01-S13 environmental risk-domain registry.",
@@ -189,6 +194,11 @@ const artifactDefinitions = [
     "docs/validation/release-signing-and-ledger.md",
     "documentation",
     "Release signing, evidence snapshot, and governance ledger procedure.",
+  ],
+  [
+    "docs/adr/0009-registry-lifecycle-and-granularity-carriers.md",
+    "documentation",
+    "Registry lifecycle fields, quantitative signal shape, granularity carriers, and version coexistence ADR.",
   ],
   [
     "docs/api/consumer-adoption-receipts.md",

@@ -10,7 +10,7 @@
   "artifacts": [
     {
       "path": "contracts/consumer-compatibility-matrix.v1.json",
-      "sha256": "17e91d02d66e0286c46ed3085ca0ca001c34ddd7ec88a92a057b9bb1a087387d"
+      "sha256": "b72b1333955e470b0f00ec9ce1eccba120c7c8acbe159beb7a3f55c735ed3b86"
     },
     {
       "path": "contracts/p3-baseline.v0.json",
@@ -18,31 +18,31 @@
     },
     {
       "path": "contracts/projection-spec.v1.json",
-      "sha256": "f7030b57b9e02e49d090caf1c1f64b0cb636d1ade85b6f1e89e36df83d82e443"
+      "sha256": "f79b28686de63544cc368dd6a404a0c16019f62bbde8be51120f1baa41037270"
     },
     {
       "path": "contracts/release-manifest.v1.json",
-      "sha256": "81551743fd50be474a749a528abe1850560926759ece95058934791f0c6d17b8"
+      "sha256": "60579b6db86bb27bce54ac1606a33d2ec5e1973f56a1334a9e4f4d4939fb1c2b"
     },
     {
       "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
-      "sha256": "91f479e412ae38f4b6e1b5ab7cfd2147833aaa9a204fa7e0d5b8fabcac1b8005"
+      "sha256": "573360948464ce1c3097c30f30c0a400219b22e4a47d3e63b1db8eae5a3bda96"
     },
     {
       "path": "dist/projections/graph/ontology-registry.generated.json",
-      "sha256": "b13a2557b1cbc38019495df3822b52c268049928d66c087905fa245927817c1f"
+      "sha256": "3a775cfa43fdf8af64333c5dd1986bb6c9ff167eb209f17e6862ecfe59803102"
     },
     {
       "path": "dist/projections/graph/schema.fragment.generated.json",
-      "sha256": "fbc8420ae1b92da70058c947639afb3f8f2ef6a8d1cb7cff4cbce38dd3eac262"
+      "sha256": "1444b262ff5991aac2e1082c87451541955550fcf20e0e0ff2a4a29711d1ad90"
     },
     {
       "path": "dist/projections/kb/ontology-registry.generated.json",
-      "sha256": "2cdfc04b7fc7f99191edd2d405b2c4ccd40afdd0fcc5ab5e7c94393c47643122"
+      "sha256": "3af54e4a939f98153b85d96761790a8abb01e78685068e629d9dd3d27b18005a"
     },
     {
       "path": "dist/projections/kb/schema.fragment.generated.json",
-      "sha256": "0e2b403704b87b51410964132291f7fa1018dc44c771ad3727f3963660169f7c"
+      "sha256": "44c406c25bb8d83d7891932817e7c708bda91631533f0a37ac160f6095b033f2"
     },
     {
       "path": "docs/adr/0003-eco-ontology-v0-1-0-versioned-contract-package.md",
@@ -63,6 +63,10 @@
     {
       "path": "docs/adr/0008-governance-ledger-and-server-side-ci.md",
       "sha256": "ab5bf64da936a929e7ab3a6884526156e50ed80c62fd781193d1fc9601a01a42"
+    },
+    {
+      "path": "docs/adr/0009-registry-lifecycle-and-granularity-carriers.md",
+      "sha256": "8d9044102201cf28a56db1d3a51e47416fd2e877b9ee9fe898498689909af8d7"
     },
     {
       "path": "docs/api/consumer-adoption-receipts.md",
@@ -102,7 +106,7 @@
     },
     {
       "path": "registries/entity_anchors.v1.json",
-      "sha256": "9a946491c0b8474311f5c7bfa1df0d9e569a0cb443c56a376402289e500e643e"
+      "sha256": "470226b92978a5b08da41e1e645f406322ce58de9b33574bff120f7ec40ecd0e"
     },
     {
       "path": "registries/issue_types.v1.json",
@@ -118,7 +122,7 @@
     },
     {
       "path": "registries/observed_signals.v1.json",
-      "sha256": "a5efbc5414d55865d4a1e64cd7c4b71e3b5acb68c07a565f8e7ef8b9c81c6e46"
+      "sha256": "7513983195632a96983cce58a79abfb746cb42bea07b35d346af3b572b10e2af"
     },
     {
       "path": "registries/risk_domains.v1.json",
@@ -146,7 +150,7 @@
     },
     {
       "path": "schemas/ontology_registry.v1.schema.json",
-      "sha256": "1e02c7c290d8c0a378bf4b7ab677f5e0da28c15d5c53d0133a87cd7f9e06918c"
+      "sha256": "0fc8acd05ca67c7d210d52b135da2283f1e6f2e80c598c4fe4bad7e7c1e03076"
     },
     {
       "path": "schemas/profile_gap_confirmed.v1.schema.json",
@@ -177,6 +181,10 @@
       "sha256": "22f48373d881dfe060ca24e5d1ddc57dbac43ee167bbbeff7aa192b3e4624a2e"
     },
     {
+      "path": "schemas/quantitative_signal.v1.schema.json",
+      "sha256": "d8dc8b274dee8ea0c47e598fcc6ccb700d1575c8436eb7b227e9d77fcfc9c6dc"
+    },
+    {
       "path": "schemas/release_manifest.v1.schema.json",
       "sha256": "b615edc74b7723be6ded5dba0a92e3fcaac6827c58d130527268e146a3cb60c1"
     },
@@ -190,11 +198,11 @@
     },
     {
       "path": "tests/projections/golden/projection-manifest.expected.json",
-      "sha256": "40d86a7ffe081cec28034db1a3e7e7bd272da988ac9d27e2320cf339fba8437f"
+      "sha256": "959ff12a7c6df68537667142d4f3e2bc1f79e65b196c35a78b0abb0ea86aa946"
     },
     {
       "path": "tests/projections/golden/projection-shape.expected.json",
-      "sha256": "4dad4e064de3e5ef7c7f5eb7ac5bc32a22b381167772ace9176e320a4578614b"
+      "sha256": "d81cb836dc958e1038358021bde7e6f4508d79433a42e36958967821902c3b96"
     },
     {
       "path": "tests/projections/negative/hash-drift/projection-manifest.sha-drift.json",

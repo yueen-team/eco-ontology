@@ -68,7 +68,7 @@
     {
       "registry_id": "observed_signals.v1",
       "path": "registries/observed_signals.v1.json",
-      "sha256": "a5efbc5414d55865d4a1e64cd7c4b71e3b5acb68c07a565f8e7ef8b9c81c6e46",
+      "sha256": "7513983195632a96983cce58a79abfb746cb42bea07b35d346af3b572b10e2af",
       "owner": "eco-ontology",
       "projection_modes": [
         {
@@ -92,7 +92,7 @@
     {
       "registry_id": "entity_anchors.v1",
       "path": "registries/entity_anchors.v1.json",
-      "sha256": "9a946491c0b8474311f5c7bfa1df0d9e569a0cb443c56a376402289e500e643e",
+      "sha256": "470226b92978a5b08da41e1e645f406322ce58de9b33574bff120f7ec40ecd0e",
       "owner": "eco-ontology",
       "projection_modes": [
         {
@@ -214,7 +214,7 @@
       "schema_key": "ontology_registry_v1",
       "schema_version": "eco-ontology.registry.v1",
       "path": "schemas/ontology_registry.v1.schema.json",
-      "sha256": "1e02c7c290d8c0a378bf4b7ab677f5e0da28c15d5c53d0133a87cd7f9e06918c",
+      "sha256": "0fc8acd05ca67c7d210d52b135da2283f1e6f2e80c598c4fe4bad7e7c1e03076",
       "owner": "eco-ontology",
       "projection_modes": [
         {
@@ -238,7 +238,7 @@
       "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
       "kind": "contract-id-projection",
       "schema_version": "eco-ontology.projection.ecocheck.v1",
-      "sha256": "91f479e412ae38f4b6e1b5ab7cfd2147833aaa9a204fa7e0d5b8fabcac1b8005",
+      "sha256": "573360948464ce1c3097c30f30c0a400219b22e4a47d3e63b1db8eae5a3bda96",
       "source_inputs": [
         "schemas/semantic_event.v2.schema.json",
         "schemas/profile_gap_confirmed.v1.schema.json",
@@ -260,7 +260,7 @@
       "path": "dist/projections/graph/ontology-registry.generated.json",
       "kind": "registry-projection",
       "schema_version": "eco-ontology.projection.graph.registry.v1",
-      "sha256": "b13a2557b1cbc38019495df3822b52c268049928d66c087905fa245927817c1f",
+      "sha256": "3a775cfa43fdf8af64333c5dd1986bb6c9ff167eb209f17e6862ecfe59803102",
       "source_inputs": [
         "registries/risk_domains.v1.json",
         "registries/issue_types.v1.json",
@@ -276,7 +276,7 @@
       "path": "dist/projections/graph/schema.fragment.generated.json",
       "kind": "schema-fragment",
       "schema_version": "eco-ontology.projection.graph.schema_fragment.v1",
-      "sha256": "fbc8420ae1b92da70058c947639afb3f8f2ef6a8d1cb7cff4cbce38dd3eac262",
+      "sha256": "1444b262ff5991aac2e1082c87451541955550fcf20e0e0ff2a4a29711d1ad90",
       "source_inputs": [
         "schemas/semantic_event.v2.schema.json",
         "schemas/profile_gap_confirmed.v1.schema.json",
@@ -295,7 +295,7 @@
       "path": "dist/projections/kb/ontology-registry.generated.json",
       "kind": "registry-projection",
       "schema_version": "eco-ontology.projection.kb.registry.v1",
-      "sha256": "2cdfc04b7fc7f99191edd2d405b2c4ccd40afdd0fcc5ab5e7c94393c47643122",
+      "sha256": "3af54e4a939f98153b85d96761790a8abb01e78685068e629d9dd3d27b18005a",
       "source_inputs": [
         "registries/issue_types.v1.json",
         "registries/observed_signals.v1.json",
@@ -310,7 +310,7 @@
       "path": "dist/projections/kb/schema.fragment.generated.json",
       "kind": "schema-fragment",
       "schema_version": "eco-ontology.projection.kb.schema_fragment.v1",
-      "sha256": "0e2b403704b87b51410964132291f7fa1018dc44c771ad3727f3963660169f7c",
+      "sha256": "44c406c25bb8d83d7891932817e7c708bda91631533f0a37ac160f6095b033f2",
       "source_inputs": [
         "schemas/kb_product_manifest.v1.schema.json",
         "registries/legal_basis_ref.v1.json"
