@@ -8,52 +8,102 @@
     {
       "id": "legal_ref.law",
       "display_name": "Law reference",
+      "display_name_zh": "法律引用",
       "description": "A law-level reference identified by a stable external or KB-managed id.",
       "owner": "eco-semantic-knowledge-base",
       "status": "active",
       "deprecated": false,
+      "aliases": ["法律条文引用", "法律级引用", "法律级依据"],
       "tags": ["legal_basis_ref"],
-      "metadata": { "legal_basis_status_required": true }
+      "metadata": {
+        "legal_basis_status_required": true
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "legal_ref.regulation",
       "display_name": "Regulation reference",
+      "display_name_zh": "行政法规引用",
       "description": "A regulation-level reference identified without storing full text.",
       "owner": "eco-semantic-knowledge-base",
       "status": "active",
       "deprecated": false,
+      "aliases": ["法规引用", "行政法规依据", "法规依据", "部门规章引用"],
       "tags": ["legal_basis_ref"],
-      "metadata": { "legal_basis_status_required": true }
+      "metadata": {
+        "legal_basis_status_required": true
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "legal_ref.standard",
       "display_name": "Standard reference",
+      "display_name_zh": "标准引用",
       "description": "A technical standard reference identified without storing full text.",
       "owner": "eco-semantic-knowledge-base",
       "status": "active",
       "deprecated": false,
+      "aliases": ["技术标准引用", "标准依据", "环保标准引用", "排放标准引用"],
       "tags": ["legal_basis_ref"],
-      "metadata": { "legal_basis_status_required": true }
+      "metadata": {
+        "legal_basis_status_required": true
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "legal_ref.clause",
       "display_name": "Clause reference",
+      "display_name_zh": "条款引用",
       "description": "A clause or article reference keyed by identifier, number, or lineage id only.",
       "owner": "eco-semantic-knowledge-base",
       "status": "active",
       "deprecated": false,
+      "aliases": ["条文引用", "法条引用", "具体条款引用", "章节条款引用"],
       "tags": ["legal_basis_ref"],
-      "metadata": { "legal_basis_status_required": true }
+      "metadata": {
+        "legal_basis_status_required": true
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "legal_ref.local_policy",
       "display_name": "Local policy reference",
+      "display_name_zh": "地方政策引用",
       "description": "A local environmental policy or management requirement reference without full text.",
       "owner": "eco-semantic-knowledge-base",
       "status": "active",
       "deprecated": false,
+      "aliases": [
+        "地方环保政策",
+        "地方管理要求",
+        "地方规范性文件",
+        "地方政策依据"
+      ],
       "tags": ["legal_basis_ref"],
-      "metadata": { "legal_basis_status_required": true }
+      "metadata": {
+        "legal_basis_status_required": true
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     }
   ]
 }

@@ -431,6 +431,49 @@ function validateProjectionArtifacts(findings) {
   }
 }
 
+function validateSemanticEventBinding(findings) {
+  const check = {
+    id: "ECO-ONTO-SEMANTIC-EVENT-BINDING",
+    owner: "eco-ontology",
+  };
+  const registry = tryReadJson(
+    findings,
+    check,
+    "registries/risk_domains.v1.json",
+  );
+  const schema = tryReadJson(
+    findings,
+    check,
+    "schemas/semantic_event.v2.schema.json",
+  );
+  if (!registry || !schema) return;
+  const registryIds = (registry.entries || []).map((entry) => entry.id).sort();
+  const dimension =
+    schema.properties?.environmental_risk_category?.properties?.dimension;
+  const dimensionEnum = Array.isArray(dimension?.enum)
+    ? [...dimension.enum].sort()
+    : null;
+  if (!dimensionEnum) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      "schemas/semantic_event.v2.schema.json:$.properties.environmental_risk_category.properties.dimension.enum",
+      "semantic_event.v2 dimension must bind risk_domain ids with an enum; a free-form dimension re-opens the grounding gap.",
+    );
+    return;
+  }
+  if (JSON.stringify(dimensionEnum) !== JSON.stringify(registryIds)) {
+    addFinding(
+      findings,
+      "red",
+      check,
+      "schemas/semantic_event.v2.schema.json:$.properties.environmental_risk_category.properties.dimension.enum",
+      `semantic_event.v2 dimension enum drifted from risk_domains.v1 ids. schema=[${dimensionEnum.join(",")}] registry=[${registryIds.join(",")}]`,
+    );
+  }
+}
+
 function validateCompatibility(findings, check, matrix) {
   const consumers = matrix.consumers || [];
   for (const repo of [
@@ -980,6 +1023,14 @@ function createBlockingReadyChecks(findings) {
         "Registry files validate against ontology_registry.v1, include ownership/status fields, and have unique ids.",
     },
     {
+      check_id: "ECO-ONTO-SEMANTIC-EVENT-BINDING",
+      status: hasBlockingFinding(findings, "ECO-ONTO-SEMANTIC-EVENT-BINDING")
+        ? "not_ready"
+        : "ready",
+      evidence:
+        "semantic_event.v2 environmental_risk_category.dimension enum is bound to and matches the risk_domains.v1 registry ids.",
+    },
+    {
       check_id: "ECO-ONTO-RELEASE-MANIFEST-SHAPE",
       status: hasBlockingFinding(findings, "ECO-ONTO-001")
         ? "not_ready"
@@ -1095,6 +1146,7 @@ function createExternalGates() {
 const findings = [];
 validateSchemaFiles(findings);
 validateRegistryFiles(findings);
+validateSemanticEventBinding(findings);
 validateProjectionArtifacts(findings);
 for (const check of checks) {
   const artifact = tryReadJson(

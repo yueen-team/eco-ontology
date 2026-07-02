@@ -4,15 +4,15 @@
     "generator_version": "1",
     "ontology_version": "0.1.0",
     "source_sha256": {
-      "registries/entity_anchors.v1.json": "d3c81a1ef9217514cb938f3eb6b6caf05abce1eaf9ef24c3b2a476c3b1975d3d",
-      "registries/issue_types.v1.json": "4603c6abfd2c29f5eae970ec039ec532174ce6ffae85d65a84c86810754654d1",
-      "registries/legal_basis_ref.v1.json": "3ba958736be66b9d9ed917dbf9144d22efccc63bcf90b5887c80e39f0e699457",
-      "registries/observed_signals.v1.json": "86fc1aa045c758df44d1675ff6f2a3e4d72040d94d57fd8454cd5c1b8b59590d",
-      "registries/risk_domains.v1.json": "766485ce94a36290d8a46800c700fa42b6383f503e175b06b0f1a1cc6e78bb0c",
+      "registries/entity_anchors.v1.json": "9a946491c0b8474311f5c7bfa1df0d9e569a0cb443c56a376402289e500e643e",
+      "registries/issue_types.v1.json": "a7942f83fcba1743c0a217a51fc63c85512762392a7d6890ea85aa31288e7a61",
+      "registries/legal_basis_ref.v1.json": "708122b14a033f1a78745bec146589952eb29e99aa7c4e0a37e859752acfcd51",
+      "registries/observed_signals.v1.json": "a5efbc5414d55865d4a1e64cd7c4b71e3b5acb68c07a565f8e7ef8b9c81c6e46",
+      "registries/risk_domains.v1.json": "289481405660f4e275f200d86b6b25575d470693ac9e73ba4926010d4938297b",
       "schemas/kb_product_manifest.v1.schema.json": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3",
-      "schemas/ontology_registry.v1.schema.json": "c0a97784d8f51243468e40f4268caa0f308bcf77e1491aded54a517044c0aba2",
+      "schemas/ontology_registry.v1.schema.json": "1e02c7c290d8c0a378bf4b7ab677f5e0da28c15d5c53d0133a87cd7f9e06918c",
       "schemas/profile_gap_confirmed.v1.schema.json": "1a1a3901fb22b8121d7b88b3c9d75633598275a2559b62c77146bae1d756f383",
-      "schemas/semantic_event.v2.schema.json": "d4d0bda9d608baa69970df1260446f00c9e26884c7d773d77a5ec847f5e4f737"
+      "schemas/semantic_event.v2.schema.json": "e7f324b22fb0c51bc2c32b8c7857f60d6024d1737a8935d4905209c142c5994c"
     }
   },
   "ownership_boundary": {
@@ -26,57 +26,113 @@
   "registries": {
     "entity_anchors": [
       {
+        "aliases": [
+          "排污单位",
+          "排污企业",
+          "生产经营单位",
+          "监管企业",
+          "受监管企业",
+          "企业"
+        ],
         "deprecated": false,
         "description": "A regulated enterprise reference represented by a non-private identifier in consumer systems.",
         "display_name": "Enterprise",
+        "display_name_zh": "企业主体",
         "id": "anchor.enterprise",
         "owner": "EcoCheck",
         "status": "active"
       },
       {
+        "aliases": [
+          "生产设施",
+          "污染治理设施",
+          "污染防治设施",
+          "治污设施",
+          "环保设施",
+          "装置"
+        ],
         "deprecated": false,
         "description": "A pollution-control or production facility relevant to an environmental review.",
         "display_name": "Facility",
+        "display_name_zh": "设施",
         "id": "anchor.facility",
         "owner": "eco-execution-graph",
         "status": "active"
       },
       {
+        "aliases": [
+          "排污口",
+          "排放源",
+          "排气筒",
+          "废气排放口",
+          "废水排放口",
+          "噪声源"
+        ],
         "deprecated": false,
         "description": "A wastewater, exhaust, noise, or other emission/discharge point class.",
         "display_name": "Emission point",
+        "display_name_zh": "排放口",
         "id": "anchor.emission_point",
         "owner": "eco-execution-graph",
         "status": "active"
       },
       {
+        "aliases": [
+          "固废贮存场所",
+          "危废暂存间",
+          "危险废物贮存设施",
+          "固体废物堆场",
+          "危废暂存库",
+          "贮存场所"
+        ],
         "deprecated": false,
         "description": "A solid-waste or hazardous-waste storage area class.",
         "display_name": "Waste storage area",
+        "display_name_zh": "废物贮存场所",
         "id": "anchor.waste_storage_area",
         "owner": "eco-execution-graph",
         "status": "active"
       },
       {
+        "aliases": [
+          "原辅材料",
+          "污染物",
+          "危险化学品",
+          "化学物质",
+          "原料",
+          "辅料",
+          "废物"
+        ],
         "deprecated": false,
         "description": "A pollutant, raw material, auxiliary material, waste, or chemical class.",
         "display_name": "Material or substance",
+        "display_name_zh": "物料与物质",
         "id": "anchor.material_or_substance",
         "owner": "eco-semantic-knowledge-base",
         "status": "active"
       },
       {
+        "aliases": ["文档", "资料", "台账", "档案", "环保资料"],
         "deprecated": false,
         "description": "A permit, ledger, monitoring report, emergency plan, or other document class without raw text.",
         "display_name": "Document",
+        "display_name_zh": "文件",
         "id": "anchor.document",
         "owner": "EcoCheck",
         "status": "active"
       },
       {
+        "aliases": [
+          "法规依据",
+          "合规依据",
+          "法律法规依据",
+          "标准规范",
+          "政策依据"
+        ],
         "deprecated": false,
         "description": "A law, standard, clause, or policy reference identifier without full text.",
         "display_name": "Legal basis",
+        "display_name_zh": "法律依据",
         "id": "anchor.legal_basis",
         "owner": "eco-semantic-knowledge-base",
         "status": "active"
@@ -84,65 +140,138 @@
     ],
     "issue_types": [
       {
+        "aliases": [
+          "环保手续不全",
+          "证照缺失",
+          "无证排污",
+          "未批先建",
+          "排污许可证缺失",
+          "环评审批缺失",
+          "环保备案缺失",
+          "手续不全"
+        ],
         "deprecated": false,
         "description": "A required environmental permit, approval, filing, or applicability decision is absent or incomplete.",
         "display_name": "Missing permit or approval",
+        "display_name_zh": "许可审批缺失",
         "id": "issue.missing_permit_or_approval",
         "owner": "eco-ontology",
         "status": "active"
       },
       {
+        "aliases": [
+          "无组织排放",
+          "污染物直排",
+          "未经处理排放",
+          "偷排偷放",
+          "私设暗管",
+          "废气无组织排放",
+          "废水直排"
+        ],
         "deprecated": false,
         "description": "A pollutant emission or discharge path lacks the expected control, collection, or treatment boundary.",
         "display_name": "Uncontrolled emission or discharge",
+        "display_name_zh": "无组织排放或直排",
         "id": "issue.uncontrolled_emission_or_discharge",
         "owner": "eco-ontology",
         "status": "active"
       },
       {
+        "aliases": [
+          "自行监测不到位",
+          "在线监测缺失",
+          "监测台账不全",
+          "监测数据缺失",
+          "自行监测记录缺失",
+          "监测报告缺失"
+        ],
         "deprecated": false,
         "description": "Monitoring, self-testing, online monitoring, or reporting evidence is missing or incomplete.",
         "display_name": "Incomplete monitoring record",
+        "display_name_zh": "监测记录不全",
         "id": "issue.incomplete_monitoring_record",
         "owner": "eco-ontology",
         "status": "active"
       },
       {
+        "aliases": [
+          "危废贮存不规范",
+          "危险废物贮存不规范",
+          "固废分类存放不规范",
+          "危废标识不全",
+          "危废台账不全",
+          "贮存场所不规范",
+          "三防措施不到位"
+        ],
         "deprecated": false,
         "description": "Solid or hazardous waste storage does not match expected segregation, labeling, ledger, or containment practice.",
         "display_name": "Improper waste storage",
+        "display_name_zh": "固体废物贮存不规范",
         "id": "issue.improper_waste_storage",
         "owner": "eco-ontology",
         "status": "active"
       },
       {
+        "aliases": [
+          "污染防治设施不正常运行",
+          "治污设施停运",
+          "治污设施闲置",
+          "私设旁路",
+          "环保设施异常运行",
+          "治污设施擅自停运"
+        ],
         "deprecated": false,
         "description": "A pollution-control facility is stopped, bypassed, abnormal, or lacks operating evidence.",
         "display_name": "Facility abnormal operation",
+        "display_name_zh": "治污设施不正常运行",
         "id": "issue.facility_abnormal_operation",
         "owner": "eco-ontology",
         "status": "active"
       },
       {
+        "aliases": [
+          "整改不到位",
+          "整改未完成",
+          "整改未销号",
+          "复查未通过",
+          "整改证据不全",
+          "问题未闭环"
+        ],
         "deprecated": false,
         "description": "A rectification task lacks required completion evidence, recheck points, or closure confirmation.",
         "display_name": "Incomplete rectification",
+        "display_name_zh": "整改未闭环",
         "id": "issue.incomplete_rectification",
         "owner": "EcoCheck",
         "status": "active"
       },
       {
+        "aliases": [
+          "企业画像信息缺失",
+          "企业适用性信息缺失",
+          "企业基础信息缺失",
+          "企业档案缺项"
+        ],
         "deprecated": false,
         "description": "A human-reviewed enterprise applicability or profile signal is missing from the current profile.",
         "display_name": "Entity profile gap",
+        "display_name_zh": "企业档案信息缺失",
         "id": "issue.entity_profile_gap",
         "owner": "EcoCheck",
         "status": "active"
       },
       {
+        "aliases": [
+          "待人工研判",
+          "需人工复核",
+          "未分类问题",
+          "待确认问题",
+          "疑似问题待核实"
+        ],
         "deprecated": false,
         "description": "A candidate issue cannot be safely normalized without human review.",
         "display_name": "Unknown or needs review",
+        "display_name_zh": "未知或待复核",
         "id": "issue.unknown_or_needs_review",
         "owner": "eco-ontology",
         "status": "active"
@@ -150,41 +279,56 @@
     ],
     "legal_basis_ref": [
       {
+        "aliases": ["法律条文引用", "法律级引用", "法律级依据"],
         "deprecated": false,
         "description": "A law-level reference identified by a stable external or KB-managed id.",
         "display_name": "Law reference",
+        "display_name_zh": "法律引用",
         "id": "legal_ref.law",
         "owner": "eco-semantic-knowledge-base",
         "status": "active"
       },
       {
+        "aliases": ["法规引用", "行政法规依据", "法规依据", "部门规章引用"],
         "deprecated": false,
         "description": "A regulation-level reference identified without storing full text.",
         "display_name": "Regulation reference",
+        "display_name_zh": "行政法规引用",
         "id": "legal_ref.regulation",
         "owner": "eco-semantic-knowledge-base",
         "status": "active"
       },
       {
+        "aliases": ["技术标准引用", "标准依据", "环保标准引用", "排放标准引用"],
         "deprecated": false,
         "description": "A technical standard reference identified without storing full text.",
         "display_name": "Standard reference",
+        "display_name_zh": "标准引用",
         "id": "legal_ref.standard",
         "owner": "eco-semantic-knowledge-base",
         "status": "active"
       },
       {
+        "aliases": ["条文引用", "法条引用", "具体条款引用", "章节条款引用"],
         "deprecated": false,
         "description": "A clause or article reference keyed by identifier, number, or lineage id only.",
         "display_name": "Clause reference",
+        "display_name_zh": "条款引用",
         "id": "legal_ref.clause",
         "owner": "eco-semantic-knowledge-base",
         "status": "active"
       },
       {
+        "aliases": [
+          "地方环保政策",
+          "地方管理要求",
+          "地方规范性文件",
+          "地方政策依据"
+        ],
         "deprecated": false,
         "description": "A local environmental policy or management requirement reference without full text.",
         "display_name": "Local policy reference",
+        "display_name_zh": "地方政策引用",
         "id": "legal_ref.local_policy",
         "owner": "eco-semantic-knowledge-base",
         "status": "active"
@@ -192,57 +336,121 @@
     ],
     "observed_signals": [
       {
+        "aliases": [
+          "现场照片",
+          "照片点位",
+          "拍照取证",
+          "影像资料",
+          "现场影像资料",
+          "现场取证照片"
+        ],
         "deprecated": false,
         "description": "A sanitized photo-point summary exists without storing the raw attachment.",
         "display_name": "Photo point present",
+        "display_name_zh": "现场照片存在",
         "id": "signal.photo_point_present",
         "owner": "EcoCheck",
         "status": "active"
       },
       {
+        "aliases": [
+          "台账",
+          "台账记录",
+          "运行记录",
+          "管理台账",
+          "环保台账",
+          "登记台账"
+        ],
         "deprecated": false,
         "description": "A ledger, record, or register summary is available for review.",
         "display_name": "Ledger or record present",
+        "display_name_zh": "台账或记录存在",
         "id": "signal.ledger_or_record_present",
         "owner": "EcoCheck",
         "status": "active"
       },
       {
+        "aliases": [
+          "监测数据",
+          "检测数据",
+          "监测值",
+          "检测值",
+          "监测结果",
+          "检测结果"
+        ],
         "deprecated": false,
         "description": "A monitoring or testing value summary is available without raw report text.",
         "display_name": "Monitoring value present",
+        "display_name_zh": "监测数值存在",
         "id": "signal.monitoring_value_present",
         "owner": "EcoCheck",
         "status": "active"
       },
       {
+        "aliases": [
+          "当事人陈述",
+          "运行人员陈述",
+          "询问笔录",
+          "情况说明",
+          "口头陈述",
+          "现场陈述"
+        ],
         "deprecated": false,
         "description": "A sanitized operator or reviewer statement summary is available.",
         "display_name": "Operator statement present",
+        "display_name_zh": "现场人员陈述存在",
         "id": "signal.operator_statement_present",
         "owner": "EcoCheck",
         "status": "active"
       },
       {
+        "aliases": [
+          "治污设施不正常运行",
+          "污染防治设施异常",
+          "环保设施停运",
+          "设施异常运行",
+          "不正常运行治污设施",
+          "旁路排放",
+          "设施损坏"
+        ],
         "deprecated": false,
         "description": "A facility status summary indicates stopped, bypassed, damaged, or abnormal operation.",
         "display_name": "Facility state abnormal",
+        "display_name_zh": "治污设施状态异常",
         "id": "signal.facility_state_abnormal",
         "owner": "eco-execution-graph",
         "status": "active"
       },
       {
+        "aliases": [
+          "适用条件不明",
+          "适用范围不明",
+          "工况边界不明",
+          "适用性待核实",
+          "边界条件未知",
+          "适用边界待核实"
+        ],
         "deprecated": false,
         "description": "A required applicability or operating boundary is unknown and needs review.",
         "display_name": "Boundary condition unknown",
+        "display_name_zh": "适用边界不明",
         "id": "signal.boundary_condition_unknown",
         "owner": "eco-ontology",
         "status": "active"
       },
       {
+        "aliases": [
+          "整改完成证明",
+          "整改落实",
+          "复查记录",
+          "整改销号",
+          "整改记录",
+          "整改完成情况"
+        ],
         "deprecated": false,
         "description": "A sanitized rectification completion or recheck summary is available.",
         "display_name": "Rectification evidence present",
+        "display_name_zh": "整改证据存在",
         "id": "signal.rectification_evidence_present",
         "owner": "EcoCheck",
         "status": "active"

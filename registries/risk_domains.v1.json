@@ -8,119 +8,276 @@
     {
       "id": "S01",
       "display_name": "Air emissions",
+      "display_name_zh": "废气排放",
       "description": "Air pollutant emission control and emission-point management.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "field_review"]
+      "aliases": [
+        "大气污染物排放",
+        "废气",
+        "大气污染防治",
+        "废气污染",
+        "排气筒排放"
+      ],
+      "tags": ["risk_domain", "field_review"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S02",
       "display_name": "Wastewater discharge",
+      "display_name_zh": "废水排放",
       "description": "Wastewater collection, treatment, discharge, and monitoring boundaries.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "field_review"]
+      "aliases": ["污水排放", "废水", "水污染物排放", "水污染防治", "废水污染"],
+      "tags": ["risk_domain", "field_review"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S03",
       "display_name": "Solid waste",
+      "display_name_zh": "一般工业固体废物",
       "description": "General industrial solid-waste storage, transfer, and disposal control.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "field_review"]
+      "aliases": [
+        "一般工业固废",
+        "一般固废",
+        "工业固体废物",
+        "固废",
+        "固体废物"
+      ],
+      "tags": ["risk_domain", "field_review"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S04",
       "display_name": "Hazardous waste",
+      "display_name_zh": "危险废物",
       "description": "Hazardous-waste identification, storage, ledger, transfer, and disposal control.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "field_review"]
+      "aliases": ["危废", "危险废弃物", "危废管理", "危险固废"],
+      "tags": ["risk_domain", "field_review"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S05",
       "display_name": "Noise and vibration",
+      "display_name_zh": "噪声与振动",
       "description": "Boundary noise, equipment noise, and vibration management signals.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "field_review"]
+      "aliases": [
+        "噪声",
+        "厂界噪声",
+        "工业噪声",
+        "环境噪声",
+        "噪声污染",
+        "振动"
+      ],
+      "tags": ["risk_domain", "field_review"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S06",
       "display_name": "Soil and groundwater",
+      "display_name_zh": "土壤与地下水",
       "description": "Soil, groundwater, seepage, and anti-leakage management signals.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "field_review"]
+      "aliases": [
+        "土壤污染",
+        "地下水污染",
+        "土壤地下水",
+        "防渗漏",
+        "防渗",
+        "渗漏防控"
+      ],
+      "tags": ["risk_domain", "field_review"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S07",
       "display_name": "Chemicals and materials",
+      "display_name_zh": "化学品管理",
       "description": "Chemical storage, handling, labeling, and containment controls.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "field_review"]
+      "aliases": [
+        "危险化学品管理",
+        "危化品管理",
+        "化学品储存",
+        "化学品仓储",
+        "危化品"
+      ],
+      "tags": ["risk_domain", "field_review"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S08",
       "display_name": "Permits and approvals",
+      "display_name_zh": "许可与审批",
       "description": "Permit, approval, applicability, and filing boundary signals.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "governance"]
+      "aliases": [
+        "排污许可",
+        "环评审批",
+        "环保审批",
+        "环保手续",
+        "排污许可证",
+        "环保验收",
+        "备案"
+      ],
+      "tags": ["risk_domain", "governance"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S09",
       "display_name": "Monitoring and reporting",
+      "display_name_zh": "监测与报告",
       "description": "Monitoring, self-testing, online monitoring, and report submission signals.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "governance"]
+      "aliases": [
+        "自行监测",
+        "在线监测",
+        "环境监测",
+        "监测报告",
+        "台账报送",
+        "自测"
+      ],
+      "tags": ["risk_domain", "governance"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S10",
       "display_name": "Emergency preparedness",
+      "display_name_zh": "应急准备",
       "description": "Emergency plan, drill, response material, and incident readiness signals.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "governance"]
+      "aliases": [
+        "环境应急预案",
+        "应急演练",
+        "突发环境事件",
+        "应急物资",
+        "环境应急管理"
+      ],
+      "tags": ["risk_domain", "governance"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S11",
       "display_name": "Facility operation",
+      "display_name_zh": "治污设施运行",
       "description": "Pollution-control facility operation, maintenance, and abnormal-state signals.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "field_review"]
+      "aliases": [
+        "环保设施运行",
+        "污染治理设施运维",
+        "治理设施运维",
+        "环保设施运维",
+        "设施异常"
+      ],
+      "tags": ["risk_domain", "field_review"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S12",
       "display_name": "Rectification and closure",
+      "display_name_zh": "整改与销号",
       "description": "Issue rectification, recheck, closure, and follow-up verification signals.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "workflow"]
+      "aliases": [
+        "问题整改",
+        "整改销号",
+        "整改闭环",
+        "复查",
+        "隐患整改",
+        "回头看"
+      ],
+      "tags": ["risk_domain", "workflow"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "S13",
       "display_name": "Other environmental compliance",
+      "display_name_zh": "其他环保合规",
       "description": "Environmental compliance signals that do not fit S01-S12 and need review.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["risk_domain", "review_required"]
+      "aliases": ["其他环境合规", "其他合规事项", "其他环保问题"],
+      "tags": ["risk_domain", "review_required"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     }
   ]
 }

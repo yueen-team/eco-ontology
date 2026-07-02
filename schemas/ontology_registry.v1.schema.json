@@ -44,6 +44,7 @@
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
         },
         "display_name": { "type": "string", "minLength": 1 },
+        "display_name_zh": { "type": "string", "minLength": 1 },
         "description": { "type": "string", "minLength": 1 },
         "owner": {
           "enum": [
@@ -68,6 +69,21 @@
           "additionalProperties": {
             "type": ["string", "number", "integer", "boolean", "null"]
           }
+        },
+        "review": {
+          "type": "object",
+          "required": ["reviewed_by", "reviewed_at", "status"],
+          "properties": {
+            "reviewed_by": { "type": "string", "minLength": 1 },
+            "reviewed_at": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+            },
+            "status": {
+              "enum": ["seed", "expert_reviewed", "authoritative"]
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false

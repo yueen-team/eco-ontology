@@ -105,6 +105,24 @@
       },
       "additionalProperties": false
     },
+    "registry_labels": {
+      "type": "object",
+      "required": [
+        "risk_domains",
+        "issue_types",
+        "observed_signals",
+        "entity_anchors",
+        "legal_basis_ref"
+      ],
+      "properties": {
+        "risk_domains": { "$ref": "#/definitions/label_entries" },
+        "issue_types": { "$ref": "#/definitions/label_entries" },
+        "observed_signals": { "$ref": "#/definitions/label_entries" },
+        "entity_anchors": { "$ref": "#/definitions/label_entries" },
+        "legal_basis_ref": { "$ref": "#/definitions/label_entries" }
+      },
+      "additionalProperties": false
+    },
     "blocking_ready_checks": {
       "type": "array",
       "minItems": 4,
@@ -227,6 +245,25 @@
     "sha256": {
       "type": "string",
       "pattern": "^[a-f0-9]{64}$"
+    },
+    "label_entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/label_entry" }
+    },
+    "label_entry": {
+      "type": "object",
+      "required": ["id", "display_name"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "display_name": { "type": "string", "minLength": 1 },
+        "display_name_zh": { "type": "string", "minLength": 1 },
+        "aliases": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false

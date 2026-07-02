@@ -76,12 +76,29 @@
     },
     "environmental_risk_category": {
       "type": "object",
-      "description": "`dimension` is the canonical S01-S13 risk-domain key. `id` is accepted as a legacy EcoCheck alias during report-only migration.",
+      "description": "`dimension` is the canonical S01-S13 risk-domain key and is bound to the risk_domains.v1 registry ids (kept in sync by the ECO-ONTO-SEMANTIC-EVENT-BINDING closed-world gate). `id` is accepted as a free-form legacy EcoCheck alias during report-only migration and is intentionally not enum-bound.",
       "anyOf": [{ "required": ["dimension"] }, { "required": ["id"] }],
       "additionalProperties": true,
       "propertyNames": { "$ref": "#/definitions/sanitized_property_name" },
       "properties": {
-        "dimension": { "type": "string", "minLength": 1 },
+        "dimension": {
+          "type": "string",
+          "enum": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05",
+            "S06",
+            "S07",
+            "S08",
+            "S09",
+            "S10",
+            "S11",
+            "S12",
+            "S13"
+          ]
+        },
         "id": { "type": "string", "minLength": 1 },
         "name": { "type": "string" }
       }

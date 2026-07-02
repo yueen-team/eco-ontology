@@ -61,15 +61,41 @@ function registryByName(registries) {
   );
 }
 
+function withBilingual(base, entry) {
+  const enriched = { ...base };
+  if (entry.display_name_zh) enriched.display_name_zh = entry.display_name_zh;
+  if (Array.isArray(entry.aliases) && entry.aliases.length > 0) {
+    enriched.aliases = entry.aliases;
+  }
+  return enriched;
+}
+
 function slimEntries(registry) {
-  return registry.entries.map((entry) => ({
-    id: entry.id,
-    display_name: entry.display_name,
-    description: entry.description,
-    owner: entry.owner,
-    status: entry.status,
-    deprecated: entry.deprecated,
-  }));
+  return registry.entries.map((entry) =>
+    withBilingual(
+      {
+        id: entry.id,
+        display_name: entry.display_name,
+        description: entry.description,
+        owner: entry.owner,
+        status: entry.status,
+        deprecated: entry.deprecated,
+      },
+      entry,
+    ),
+  );
+}
+
+function labelEntries(registry) {
+  return registry.entries.map((entry) =>
+    withBilingual(
+      {
+        id: entry.id,
+        display_name: entry.display_name,
+      },
+      entry,
+    ),
+  );
 }
 
 function registryIds(registry) {
@@ -113,6 +139,13 @@ async function buildOutputs() {
       observed_signal_ids: registryIds(registriesByName.observed_signals),
       entity_anchor_ids: registryIds(registriesByName.entity_anchors),
       legal_basis_ref_ids: registryIds(registriesByName.legal_basis_ref),
+    },
+    registry_labels: {
+      risk_domains: labelEntries(registriesByName.risk_domains),
+      issue_types: labelEntries(registriesByName.issue_types),
+      observed_signals: labelEntries(registriesByName.observed_signals),
+      entity_anchors: labelEntries(registriesByName.entity_anchors),
+      legal_basis_ref: labelEntries(registriesByName.legal_basis_ref),
     },
     blocking_ready_checks: [
       "schema_compile",

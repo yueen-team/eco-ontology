@@ -8,74 +8,187 @@
     {
       "id": "issue.missing_permit_or_approval",
       "display_name": "Missing permit or approval",
+      "display_name_zh": "许可审批缺失",
       "description": "A required environmental permit, approval, filing, or applicability decision is absent or incomplete.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["issue_type", "governance"]
+      "aliases": [
+        "环保手续不全",
+        "证照缺失",
+        "无证排污",
+        "未批先建",
+        "排污许可证缺失",
+        "环评审批缺失",
+        "环保备案缺失",
+        "手续不全"
+      ],
+      "tags": ["issue_type", "governance"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "issue.uncontrolled_emission_or_discharge",
       "display_name": "Uncontrolled emission or discharge",
+      "display_name_zh": "无组织排放或直排",
       "description": "A pollutant emission or discharge path lacks the expected control, collection, or treatment boundary.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["issue_type", "field_review"]
+      "aliases": [
+        "无组织排放",
+        "污染物直排",
+        "未经处理排放",
+        "偷排偷放",
+        "私设暗管",
+        "废气无组织排放",
+        "废水直排"
+      ],
+      "tags": ["issue_type", "field_review"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "issue.incomplete_monitoring_record",
       "display_name": "Incomplete monitoring record",
+      "display_name_zh": "监测记录不全",
       "description": "Monitoring, self-testing, online monitoring, or reporting evidence is missing or incomplete.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["issue_type", "evidence"]
+      "aliases": [
+        "自行监测不到位",
+        "在线监测缺失",
+        "监测台账不全",
+        "监测数据缺失",
+        "自行监测记录缺失",
+        "监测报告缺失"
+      ],
+      "tags": ["issue_type", "evidence"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "issue.improper_waste_storage",
       "display_name": "Improper waste storage",
+      "display_name_zh": "固体废物贮存不规范",
       "description": "Solid or hazardous waste storage does not match expected segregation, labeling, ledger, or containment practice.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["issue_type", "waste"]
+      "aliases": [
+        "危废贮存不规范",
+        "危险废物贮存不规范",
+        "固废分类存放不规范",
+        "危废标识不全",
+        "危废台账不全",
+        "贮存场所不规范",
+        "三防措施不到位"
+      ],
+      "tags": ["issue_type", "waste"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "issue.facility_abnormal_operation",
       "display_name": "Facility abnormal operation",
+      "display_name_zh": "治污设施不正常运行",
       "description": "A pollution-control facility is stopped, bypassed, abnormal, or lacks operating evidence.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["issue_type", "facility"]
+      "aliases": [
+        "污染防治设施不正常运行",
+        "治污设施停运",
+        "治污设施闲置",
+        "私设旁路",
+        "环保设施异常运行",
+        "治污设施擅自停运"
+      ],
+      "tags": ["issue_type", "facility"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "issue.incomplete_rectification",
       "display_name": "Incomplete rectification",
+      "display_name_zh": "整改未闭环",
       "description": "A rectification task lacks required completion evidence, recheck points, or closure confirmation.",
       "owner": "EcoCheck",
       "status": "active",
       "deprecated": false,
-      "tags": ["issue_type", "workflow"]
+      "aliases": [
+        "整改不到位",
+        "整改未完成",
+        "整改未销号",
+        "复查未通过",
+        "整改证据不全",
+        "问题未闭环"
+      ],
+      "tags": ["issue_type", "workflow"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "issue.entity_profile_gap",
       "display_name": "Entity profile gap",
+      "display_name_zh": "企业档案信息缺失",
       "description": "A human-reviewed enterprise applicability or profile signal is missing from the current profile.",
       "owner": "EcoCheck",
       "status": "active",
       "deprecated": false,
-      "tags": ["issue_type", "profile_gap"]
+      "aliases": [
+        "企业画像信息缺失",
+        "企业适用性信息缺失",
+        "企业基础信息缺失",
+        "企业档案缺项"
+      ],
+      "tags": ["issue_type", "profile_gap"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "issue.unknown_or_needs_review",
       "display_name": "Unknown or needs review",
+      "display_name_zh": "未知或待复核",
       "description": "A candidate issue cannot be safely normalized without human review.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["issue_type", "review_required"]
+      "aliases": [
+        "待人工研判",
+        "需人工复核",
+        "未分类问题",
+        "待确认问题",
+        "疑似问题待核实"
+      ],
+      "tags": ["issue_type", "review_required"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     }
   ]
 }

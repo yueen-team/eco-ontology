@@ -8,65 +8,164 @@
     {
       "id": "signal.photo_point_present",
       "display_name": "Photo point present",
+      "display_name_zh": "现场照片存在",
       "description": "A sanitized photo-point summary exists without storing the raw attachment.",
       "owner": "EcoCheck",
       "status": "active",
       "deprecated": false,
-      "tags": ["observed_signal", "evidence"]
+      "aliases": [
+        "现场照片",
+        "照片点位",
+        "拍照取证",
+        "影像资料",
+        "现场影像资料",
+        "现场取证照片"
+      ],
+      "tags": ["observed_signal", "evidence"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "signal.ledger_or_record_present",
       "display_name": "Ledger or record present",
+      "display_name_zh": "台账或记录存在",
       "description": "A ledger, record, or register summary is available for review.",
       "owner": "EcoCheck",
       "status": "active",
       "deprecated": false,
-      "tags": ["observed_signal", "evidence"]
+      "aliases": [
+        "台账",
+        "台账记录",
+        "运行记录",
+        "管理台账",
+        "环保台账",
+        "登记台账"
+      ],
+      "tags": ["observed_signal", "evidence"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "signal.monitoring_value_present",
       "display_name": "Monitoring value present",
+      "display_name_zh": "监测数值存在",
       "description": "A monitoring or testing value summary is available without raw report text.",
       "owner": "EcoCheck",
       "status": "active",
       "deprecated": false,
-      "tags": ["observed_signal", "monitoring"]
+      "aliases": [
+        "监测数据",
+        "检测数据",
+        "监测值",
+        "检测值",
+        "监测结果",
+        "检测结果"
+      ],
+      "tags": ["observed_signal", "monitoring"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "signal.operator_statement_present",
       "display_name": "Operator statement present",
+      "display_name_zh": "现场人员陈述存在",
       "description": "A sanitized operator or reviewer statement summary is available.",
       "owner": "EcoCheck",
       "status": "active",
       "deprecated": false,
-      "tags": ["observed_signal", "review"]
+      "aliases": [
+        "当事人陈述",
+        "运行人员陈述",
+        "询问笔录",
+        "情况说明",
+        "口头陈述",
+        "现场陈述"
+      ],
+      "tags": ["observed_signal", "review"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "signal.facility_state_abnormal",
       "display_name": "Facility state abnormal",
+      "display_name_zh": "治污设施状态异常",
       "description": "A facility status summary indicates stopped, bypassed, damaged, or abnormal operation.",
       "owner": "eco-execution-graph",
       "status": "active",
       "deprecated": false,
-      "tags": ["observed_signal", "facility"]
+      "aliases": [
+        "治污设施不正常运行",
+        "污染防治设施异常",
+        "环保设施停运",
+        "设施异常运行",
+        "不正常运行治污设施",
+        "旁路排放",
+        "设施损坏"
+      ],
+      "tags": ["observed_signal", "facility"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "signal.boundary_condition_unknown",
       "display_name": "Boundary condition unknown",
+      "display_name_zh": "适用边界不明",
       "description": "A required applicability or operating boundary is unknown and needs review.",
       "owner": "eco-ontology",
       "status": "active",
       "deprecated": false,
-      "tags": ["observed_signal", "review_required"]
+      "aliases": [
+        "适用条件不明",
+        "适用范围不明",
+        "工况边界不明",
+        "适用性待核实",
+        "边界条件未知",
+        "适用边界待核实"
+      ],
+      "tags": ["observed_signal", "review_required"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "signal.rectification_evidence_present",
       "display_name": "Rectification evidence present",
+      "display_name_zh": "整改证据存在",
       "description": "A sanitized rectification completion or recheck summary is available.",
       "owner": "EcoCheck",
       "status": "active",
       "deprecated": false,
-      "tags": ["observed_signal", "workflow"]
+      "aliases": [
+        "整改完成证明",
+        "整改落实",
+        "复查记录",
+        "整改销号",
+        "整改记录",
+        "整改完成情况"
+      ],
+      "tags": ["observed_signal", "workflow"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     }
   ]
 }

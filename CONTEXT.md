@@ -21,6 +21,12 @@ The shared ontology connects three systems:
   document anchor.
 - `deduct_rule_key`: reference key to EcoCheck-owned scoring rules.
 - `legal_basis_ref`: structured legal or standard reference without full text.
+- `display_name_zh` / `aliases`: authoritative Simplified-Chinese label and
+  Chinese regulatory/industry synonyms carried on every registry entry so
+  consumers render Chinese output and normalize "same concept, several names".
+- `review`: per-entry provenance (`reviewed_by`, `reviewed_at`, `status` of
+  `seed | expert_reviewed | authoritative`) that records the authority level of
+  each registry entry; the current bilingual pass is `seed`.
 - `tier`: graph publication/privacy tier.
 - `review_status`: lifecycle state for candidate and approved graph facts.
 - `projection_interface.v1`: generated JSON projection artifacts under

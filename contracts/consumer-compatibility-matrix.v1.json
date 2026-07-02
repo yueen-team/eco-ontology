@@ -19,7 +19,7 @@
       "projection_artifacts": [
         {
           "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
-          "sha256": "11b6d9e6becbdd45540bc998b6c74270ab9a678377b1ecd92b4c9aa81082f457",
+          "sha256": "91f479e412ae38f4b6e1b5ab7cfd2147833aaa9a204fa7e0d5b8fabcac1b8005",
           "kind": "json"
         }
       ],
@@ -66,12 +66,12 @@
       "projection_artifacts": [
         {
           "path": "dist/projections/graph/ontology-registry.generated.json",
-          "sha256": "18846a7375b54b034c8512a5e71de6222fd8db086b2b031594ba87b0ad173479",
+          "sha256": "b13a2557b1cbc38019495df3822b52c268049928d66c087905fa245927817c1f",
           "kind": "json"
         },
         {
           "path": "dist/projections/graph/schema.fragment.generated.json",
-          "sha256": "f2720412066da1d80ff3eeadcdb070863338f7053a01a23719b3fa714bb81ea6",
+          "sha256": "fbc8420ae1b92da70058c947639afb3f8f2ef6a8d1cb7cff4cbce38dd3eac262",
           "kind": "schema-fragment"
         }
       ],
@@ -117,12 +117,12 @@
       "projection_artifacts": [
         {
           "path": "dist/projections/kb/ontology-registry.generated.json",
-          "sha256": "77312a8f0602092cae83d175d2fe91e388ab86721455bb37a543868f56c9878a",
+          "sha256": "2cdfc04b7fc7f99191edd2d405b2c4ccd40afdd0fcc5ab5e7c94393c47643122",
           "kind": "json"
         },
         {
           "path": "dist/projections/kb/schema.fragment.generated.json",
-          "sha256": "99ac8d0ce129b0f06cd2c5189d30da500389a16ce5889746273df7e48550a5bc",
+          "sha256": "0e2b403704b87b51410964132291f7fa1018dc44c771ad3727f3963660169f7c",
           "kind": "schema-fragment"
         }
       ],

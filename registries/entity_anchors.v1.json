@@ -8,65 +8,156 @@
     {
       "id": "anchor.enterprise",
       "display_name": "Enterprise",
+      "display_name_zh": "企业主体",
       "description": "A regulated enterprise reference represented by a non-private identifier in consumer systems.",
       "owner": "EcoCheck",
       "status": "active",
       "deprecated": false,
-      "tags": ["entity_anchor"]
+      "aliases": [
+        "排污单位",
+        "排污企业",
+        "生产经营单位",
+        "监管企业",
+        "受监管企业",
+        "企业"
+      ],
+      "tags": ["entity_anchor"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "anchor.facility",
       "display_name": "Facility",
+      "display_name_zh": "设施",
       "description": "A pollution-control or production facility relevant to an environmental review.",
       "owner": "eco-execution-graph",
       "status": "active",
       "deprecated": false,
-      "tags": ["entity_anchor"]
+      "aliases": [
+        "生产设施",
+        "污染治理设施",
+        "污染防治设施",
+        "治污设施",
+        "环保设施",
+        "装置"
+      ],
+      "tags": ["entity_anchor"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "anchor.emission_point",
       "display_name": "Emission point",
+      "display_name_zh": "排放口",
       "description": "A wastewater, exhaust, noise, or other emission/discharge point class.",
       "owner": "eco-execution-graph",
       "status": "active",
       "deprecated": false,
-      "tags": ["entity_anchor"]
+      "aliases": [
+        "排污口",
+        "排放源",
+        "排气筒",
+        "废气排放口",
+        "废水排放口",
+        "噪声源"
+      ],
+      "tags": ["entity_anchor"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "anchor.waste_storage_area",
       "display_name": "Waste storage area",
+      "display_name_zh": "废物贮存场所",
       "description": "A solid-waste or hazardous-waste storage area class.",
       "owner": "eco-execution-graph",
       "status": "active",
       "deprecated": false,
-      "tags": ["entity_anchor"]
+      "aliases": [
+        "固废贮存场所",
+        "危废暂存间",
+        "危险废物贮存设施",
+        "固体废物堆场",
+        "危废暂存库",
+        "贮存场所"
+      ],
+      "tags": ["entity_anchor"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "anchor.material_or_substance",
       "display_name": "Material or substance",
+      "display_name_zh": "物料与物质",
       "description": "A pollutant, raw material, auxiliary material, waste, or chemical class.",
       "owner": "eco-semantic-knowledge-base",
       "status": "active",
       "deprecated": false,
-      "tags": ["entity_anchor"]
+      "aliases": [
+        "原辅材料",
+        "污染物",
+        "危险化学品",
+        "化学物质",
+        "原料",
+        "辅料",
+        "废物"
+      ],
+      "tags": ["entity_anchor"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "anchor.document",
       "display_name": "Document",
+      "display_name_zh": "文件",
       "description": "A permit, ledger, monitoring report, emergency plan, or other document class without raw text.",
       "owner": "EcoCheck",
       "status": "active",
       "deprecated": false,
-      "tags": ["entity_anchor"]
+      "aliases": ["文档", "资料", "台账", "档案", "环保资料"],
+      "tags": ["entity_anchor"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     },
     {
       "id": "anchor.legal_basis",
       "display_name": "Legal basis",
+      "display_name_zh": "法律依据",
       "description": "A law, standard, clause, or policy reference identifier without full text.",
       "owner": "eco-semantic-knowledge-base",
       "status": "active",
       "deprecated": false,
-      "tags": ["entity_anchor", "legal_basis"]
+      "aliases": [
+        "法规依据",
+        "合规依据",
+        "法律法规依据",
+        "标准规范",
+        "政策依据"
+      ],
+      "tags": ["entity_anchor", "legal_basis"],
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
     }
   ]
 }

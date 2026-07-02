@@ -151,6 +151,11 @@ const artifactDefinitions = [
     "Projection artifact shape and validation bucket ADR.",
   ],
   [
+    "docs/adr/0006-bilingual-registry-surface-and-intake-grounding.md",
+    "documentation",
+    "Bilingual registry surface, review provenance, and semantic_event dimension binding ADR.",
+  ],
+  [
     "docs/api/consumer-adoption-receipts.md",
     "documentation",
     "Consumer adoption receipt interface.",
@@ -300,6 +305,12 @@ function buildManifest() {
           status: "blocking",
           reason:
             "Registry files validate against ontology_registry.v1 and have unique ids.",
+        },
+        {
+          gate_id: "ECO-ONTO-SEMANTIC-EVENT-BINDING",
+          status: "blocking",
+          reason:
+            "semantic_event.v2 dimension enum stays bound to the risk_domains.v1 registry ids.",
         },
         {
           gate_id: "ECO-ONTO-RELEASE-MANIFEST-SHAPE",
