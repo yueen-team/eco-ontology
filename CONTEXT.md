@@ -27,6 +27,12 @@ The shared ontology connects three systems:
 - `review`: per-entry provenance (`reviewed_by`, `reviewed_at`, `status` of
   `seed | expert_reviewed | authoritative`) that records the authority level of
   each registry entry; the current bilingual pass is `seed`.
+- `legal_instrument`: a legal-instrument instance (law/regulation/standard/...)
+  with lifecycle (`effective_date`, `repeal_date`, `status`, `replaced_by`,
+  `supersedes`) and citation metadata only — never full law text.
+- `crosswalk`: an auditable `risk_domain × issue_type × legal_basis` mapping
+  with a controlled `confidence` (`mandatory | presumptive | indicative`),
+  grounding relationships fixed and versioned at the source.
 - `tier`: graph publication/privacy tier.
 - `review_status`: lifecycle state for candidate and approved graph facts.
 - `projection_interface.v1`: generated JSON projection artifacts under

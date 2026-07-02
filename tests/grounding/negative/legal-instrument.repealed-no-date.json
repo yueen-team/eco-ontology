@@ -1,0 +1,24 @@
+{
+  "schema_version": "eco-ontology.legal_instrument.v1",
+  "registry_id": "legal_instruments.v1",
+  "ontology_version": "0.1.0",
+  "owner": "eco-ontology",
+  "description": "Negative fixture: a repealed instrument with no repeal_date must be flagged.",
+  "entries": [
+    {
+      "id": "li.law.example_old",
+      "instrument_type": "law",
+      "title_zh": "示例已废止法律",
+      "source_authority": "示例发文机关",
+      "status": "repealed",
+      "effective_date": "2000-01-01",
+      "repeal_date": null,
+      "replaced_by": null,
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed"
+      }
+    }
+  ]
+}

@@ -43,6 +43,7 @@ Run from the repo root in PowerShell (package manager is pnpm).
 | Regenerate consumer projections after edit  | `pnpm projections:generate`         |
 | Check projections are up to date (no write) | `pnpm projections:check`            |
 | Run projection golden/negative fixtures     | `pnpm projections:fixtures`         |
+| Run grounding integrity fixtures            | `pnpm grounding:fixtures`           |
 | Update the release manifest (hash/version)  | `pnpm release:manifest:update`      |
 | Check the manifest is consistent            | `pnpm release:manifest:check`       |
 | Update the release bundle manifest          | `pnpm release:bundle:update`        |
@@ -58,7 +59,7 @@ Run from the repo root in PowerShell (package manager is pnpm).
 | Ship local main to remote                   | `pnpm main:ship`                    |
 
 `verify:all` runs `projections:check && projections:fixtures &&
-release:manifest:check && release:bundle:check && check &&
+grounding:fixtures && release:manifest:check && release:bundle:check && check &&
 adoption:receipts && validate:report-only && validate:blocking &&
 projection:provenance && format:check`. `main:ship` runs it again before
 pushing.

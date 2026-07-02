@@ -1,0 +1,27 @@
+{
+  "instruments": [
+    { "id": "li.law.env_noise_1996", "status": "repealed" },
+    { "id": "li.law.noise_2021", "status": "in_force" }
+  ],
+  "crosswalk": {
+    "schema_version": "eco-ontology.crosswalk.v1",
+    "registry_id": "crosswalk.v1",
+    "ontology_version": "0.1.0",
+    "owner": "eco-ontology",
+    "description": "Negative fixture: crosswalk grounds on a repealed instrument instead of its in-force replacement.",
+    "entries": [
+      {
+        "id": "cw.repealed_noise",
+        "risk_domain": "S05",
+        "issue_type": "issue.uncontrolled_emission_or_discharge",
+        "legal_basis": [{ "instrument_ref": "li.law.env_noise_1996" }],
+        "confidence": "mandatory",
+        "review": {
+          "reviewed_by": "eco-ontology",
+          "reviewed_at": "2026-07-02",
+          "status": "seed"
+        }
+      }
+    ]
+  }
+}

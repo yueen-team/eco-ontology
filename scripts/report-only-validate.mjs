@@ -3,6 +3,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { isAbsolute, join } from "node:path";
 import process from "node:process";
 import Ajv from "ajv";
+import {
+  checkLegalInstruments,
+  checkCrosswalk,
+} from "./lib/grounding-integrity.mjs";
 
 const root = process.cwd();
 const mode = process.argv.includes("--blocking") ? "blocking" : "report-only";
@@ -125,6 +129,14 @@ const schemaFiles = [
   {
     id: "SCHEMA-PROJECTION-PROVENANCE",
     path: "schemas/projection_provenance.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-LEGAL-INSTRUMENT",
+    path: "schemas/legal_instrument.v1.schema.json",
+  },
+  {
+    id: "SCHEMA-CROSSWALK",
+    path: "schemas/crosswalk.v1.schema.json",
   },
 ];
 
@@ -471,6 +483,74 @@ function validateSemanticEventBinding(findings) {
       "schemas/semantic_event.v2.schema.json:$.properties.environmental_risk_category.properties.dimension.enum",
       `semantic_event.v2 dimension enum drifted from risk_domains.v1 ids. schema=[${dimensionEnum.join(",")}] registry=[${registryIds.join(",")}]`,
     );
+  }
+}
+
+function validateGroundingRegistries(findings) {
+  const liCheck = {
+    id: "ECO-ONTO-LEGAL-INSTRUMENT-SHAPE",
+    owner: "eco-ontology",
+  };
+  const cwCheck = {
+    id: "ECO-ONTO-CROSSWALK-INTEGRITY",
+    owner: "eco-ontology",
+  };
+
+  const liSchema = tryReadJson(
+    findings,
+    liCheck,
+    "schemas/legal_instrument.v1.schema.json",
+  );
+  const instruments = tryReadJson(
+    findings,
+    liCheck,
+    "registries/legal_instruments.v1.json",
+  );
+  if (liSchema && instruments) {
+    validateJsonSchema(findings, liCheck, instruments, liSchema);
+    for (const f of checkLegalInstruments(instruments)) {
+      addFinding(findings, f.severity, liCheck, f.path, f.message);
+    }
+  }
+
+  const cwSchema = tryReadJson(
+    findings,
+    cwCheck,
+    "schemas/crosswalk.v1.schema.json",
+  );
+  const crosswalk = tryReadJson(
+    findings,
+    cwCheck,
+    "registries/crosswalk.v1.json",
+  );
+  const riskRegistry = tryReadJson(
+    findings,
+    cwCheck,
+    "registries/risk_domains.v1.json",
+  );
+  const issueRegistry = tryReadJson(
+    findings,
+    cwCheck,
+    "registries/issue_types.v1.json",
+  );
+  if (cwSchema && crosswalk && instruments && riskRegistry && issueRegistry) {
+    validateJsonSchema(findings, cwCheck, crosswalk, cwSchema);
+    const instrumentsById = new Map(
+      (instruments.entries || []).map((e) => [e.id, e]),
+    );
+    const riskDomainIds = new Set(
+      (riskRegistry.entries || []).map((e) => e.id),
+    );
+    const issueTypeIds = new Set(
+      (issueRegistry.entries || []).map((e) => e.id),
+    );
+    for (const f of checkCrosswalk(crosswalk, {
+      riskDomainIds,
+      issueTypeIds,
+      instrumentsById,
+    })) {
+      addFinding(findings, f.severity, cwCheck, f.path, f.message);
+    }
   }
 }
 
@@ -1031,6 +1111,22 @@ function createBlockingReadyChecks(findings) {
         "semantic_event.v2 environmental_risk_category.dimension enum is bound to and matches the risk_domains.v1 registry ids.",
     },
     {
+      check_id: "ECO-ONTO-LEGAL-INSTRUMENT-SHAPE",
+      status: hasBlockingFinding(findings, "ECO-ONTO-LEGAL-INSTRUMENT-SHAPE")
+        ? "not_ready"
+        : "ready",
+      evidence:
+        "legal_instruments.v1 validates against legal_instrument.v1 and lifecycle references (replaced_by/supersedes/repeal_date/status) are internally consistent.",
+    },
+    {
+      check_id: "ECO-ONTO-CROSSWALK-INTEGRITY",
+      status: hasBlockingFinding(findings, "ECO-ONTO-CROSSWALK-INTEGRITY")
+        ? "not_ready"
+        : "ready",
+      evidence:
+        "crosswalk.v1 risk_domain/issue_type/instrument_ref references all resolve and no mapping is grounded on a repealed or superseded instrument.",
+    },
+    {
       check_id: "ECO-ONTO-RELEASE-MANIFEST-SHAPE",
       status: hasBlockingFinding(findings, "ECO-ONTO-001")
         ? "not_ready"
@@ -1147,6 +1243,7 @@ const findings = [];
 validateSchemaFiles(findings);
 validateRegistryFiles(findings);
 validateSemanticEventBinding(findings);
+validateGroundingRegistries(findings);
 validateProjectionArtifacts(findings);
 for (const check of checks) {
   const artifact = tryReadJson(

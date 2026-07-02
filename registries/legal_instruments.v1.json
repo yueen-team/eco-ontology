@@ -1,0 +1,273 @@
+{
+  "schema_version": "eco-ontology.legal_instrument.v1",
+  "registry_id": "legal_instruments.v1",
+  "ontology_version": "0.1.0",
+  "owner": "eco-ontology",
+  "description": "Legal-instrument lifecycle seed registry: citation metadata, effective/repeal dates, and replacement relationships only, no full law or standard text. review.status is seed pending legal-counsel sign-off.",
+  "entries": [
+    {
+      "id": "li.law.epl_2014",
+      "instrument_type": "law",
+      "title_zh": "中华人民共和国环境保护法（2014修订）",
+      "source_authority": "全国人民代表大会常务委员会",
+      "doc_number": "主席令第9号",
+      "standard_code": null,
+      "status": "in_force",
+      "effective_date": "2015-01-01",
+      "repeal_date": null,
+      "replaced_by": null,
+      "supersedes": [],
+      "official_source": {
+        "url": "https://www.gov.cn/zhengce/2014-04/25/content_2666434.htm",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    },
+    {
+      "id": "li.law.air_2018",
+      "instrument_type": "law",
+      "title_zh": "中华人民共和国大气污染防治法（2018修正）",
+      "source_authority": "全国人民代表大会常务委员会",
+      "doc_number": "主席令第16号",
+      "standard_code": null,
+      "status": "in_force",
+      "effective_date": "2018-10-26",
+      "repeal_date": "2026-08-15",
+      "replaced_by": null,
+      "supersedes": [],
+      "official_source": {
+        "url": "https://flk.npc.gov.cn/detail2.html?ZmY4MDgwODE2ZjEzNWY0NjAxNmYxY2QzNzgzNjExNTU=%3D",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    },
+    {
+      "id": "li.law.water_2017",
+      "instrument_type": "law",
+      "title_zh": "中华人民共和国水污染防治法（2017年修正）",
+      "source_authority": "全国人民代表大会常务委员会",
+      "doc_number": "主席令第七十号",
+      "standard_code": null,
+      "status": "in_force",
+      "effective_date": "2018-01-01",
+      "repeal_date": null,
+      "replaced_by": null,
+      "supersedes": [],
+      "official_source": {
+        "url": "https://flk.npc.gov.cn/detail2.html?MmM5MDlmZGQ2NzhiZjE3OTAxNjc4YmY4NTA0NTA5ZmI=%3D",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    },
+    {
+      "id": "li.law.solidwaste_2020",
+      "instrument_type": "law",
+      "title_zh": "中华人民共和国固体废物污染环境防治法（2020年修订）",
+      "source_authority": "全国人民代表大会常务委员会（中华人民共和国主席令公布）",
+      "doc_number": "主席令第四十三号",
+      "standard_code": null,
+      "status": "in_force",
+      "effective_date": "2020-09-01",
+      "repeal_date": null,
+      "replaced_by": null,
+      "supersedes": [],
+      "official_source": {
+        "url": "https://flk.npc.gov.cn/detail2.html?ZmY4MDgwODE3MjljNjVkODAxNzI5ZDQ1NWZhZDA0YmU=",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    },
+    {
+      "id": "li.law.noise_2021",
+      "instrument_type": "law",
+      "title_zh": "中华人民共和国噪声污染防治法",
+      "source_authority": "全国人民代表大会常务委员会（中华人民共和国主席令第一〇四号公布）",
+      "doc_number": "主席令第一〇四号",
+      "standard_code": null,
+      "status": "in_force",
+      "effective_date": "2022-06-05",
+      "repeal_date": null,
+      "replaced_by": null,
+      "supersedes": ["li.law.env_noise_1996"],
+      "official_source": {
+        "url": "https://www.mee.gov.cn/ywgz/fgbz/fl/202112/t20211225_965275.shtml",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    },
+    {
+      "id": "li.law.env_noise_1996",
+      "instrument_type": "law",
+      "title_zh": "中华人民共和国环境噪声污染防治法",
+      "source_authority": "全国人民代表大会常务委员会",
+      "doc_number": "主席令第七十七号",
+      "standard_code": null,
+      "status": "repealed",
+      "effective_date": "1997-03-01",
+      "repeal_date": "2022-06-05",
+      "replaced_by": "li.law.noise_2021",
+      "supersedes": [],
+      "official_source": {
+        "url": "https://flk.npc.gov.cn/detail2.html?ZmY4MDgwODE2ZjEzNWY0NjAxNmYyMGViNGE0MTE3MTk=",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    },
+    {
+      "id": "li.reg.discharge_permit_2021",
+      "instrument_type": "administrative_regulation",
+      "title_zh": "排污许可管理条例",
+      "source_authority": "国务院",
+      "doc_number": "国务院令第736号",
+      "standard_code": null,
+      "status": "in_force",
+      "effective_date": "2021-03-01",
+      "repeal_date": null,
+      "replaced_by": null,
+      "supersedes": [],
+      "official_source": {
+        "url": "https://www.mee.gov.cn/ywgz/fgbz/xzfg/202101/t20210129_819519.shtml",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    },
+    {
+      "id": "li.reg.eia_project_2017",
+      "instrument_type": "administrative_regulation",
+      "title_zh": "建设项目环境保护管理条例",
+      "source_authority": "国务院",
+      "doc_number": "国务院令第682号",
+      "standard_code": null,
+      "status": "in_force",
+      "effective_date": "2017-10-01",
+      "repeal_date": null,
+      "replaced_by": null,
+      "supersedes": [],
+      "official_source": {
+        "url": "https://flk.npc.gov.cn/detail2.html?ZmY4MDgwODE2ZjNjYmIzYzAxNmY0MGYzN2JhMzBkYTc=",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    },
+    {
+      "id": "li.std.gb8978_1996",
+      "instrument_type": "national_standard",
+      "title_zh": "污水综合排放标准",
+      "source_authority": "国家环境保护局、国家技术监督局（发布）；现主管/归口部门为生态环境部",
+      "doc_number": null,
+      "standard_code": "GB 8978-1996",
+      "status": "in_force",
+      "effective_date": "1998-01-01",
+      "repeal_date": null,
+      "replaced_by": null,
+      "supersedes": [],
+      "official_source": {
+        "url": "https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=1BF9CDBD6FDE2AD5053C69A36318972C",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    },
+    {
+      "id": "li.std.gb18597_2023",
+      "instrument_type": "national_standard",
+      "title_zh": "危险废物贮存污染控制标准",
+      "source_authority": "生态环境部、国家市场监督管理总局",
+      "doc_number": null,
+      "standard_code": "GB 18597-2023",
+      "status": "in_force",
+      "effective_date": "2023-07-01",
+      "repeal_date": null,
+      "replaced_by": null,
+      "supersedes": ["li.std.gb18597_2001"],
+      "official_source": {
+        "url": "https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202302/t20230224_1017499.html",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    },
+    {
+      "id": "li.std.gb18597_2001",
+      "instrument_type": "national_standard",
+      "title_zh": "危险废物贮存污染控制标准",
+      "source_authority": "国家环境保护总局、国家质量监督检验检疫总局",
+      "doc_number": null,
+      "standard_code": "GB 18597-2001",
+      "status": "superseded",
+      "effective_date": "2002-07-01",
+      "repeal_date": "2023-07-01",
+      "replaced_by": "li.std.gb18597_2023",
+      "supersedes": [],
+      "official_source": {
+        "url": "https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=B089D7129B40CE7DC2C4E13506EA7920",
+        "retrieved_at": "2026-07-02",
+        "sha256": null
+      },
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "web_verified"
+      }
+    }
+  ]
+}

@@ -75,6 +75,16 @@ const artifactDefinitions = [
     "Projection sidecar provenance evidence shape.",
   ],
   [
+    "schemas/legal_instrument.v1.schema.json",
+    "schema",
+    "Legal-instrument lifecycle registry shape (citation metadata only).",
+  ],
+  [
+    "schemas/crosswalk.v1.schema.json",
+    "schema",
+    "Risk-domain x issue-type x legal-basis crosswalk registry shape.",
+  ],
+  [
     "registries/risk_domains.v1.json",
     "registry",
     "S01-S13 environmental risk-domain registry.",
@@ -94,6 +104,16 @@ const artifactDefinitions = [
     "registries/legal_basis_ref.v1.json",
     "registry",
     "Legal-basis reference class registry without full legal text.",
+  ],
+  [
+    "registries/legal_instruments.v1.json",
+    "registry",
+    "Legal-instrument lifecycle registry (citation metadata and replacement lineage).",
+  ],
+  [
+    "registries/crosswalk.v1.json",
+    "registry",
+    "Auditable risk-domain x issue-type x legal-basis crosswalk registry.",
   ],
   [
     "contracts/consumer-compatibility-matrix.v1.json",
@@ -154,6 +174,11 @@ const artifactDefinitions = [
     "docs/adr/0006-bilingual-registry-surface-and-intake-grounding.md",
     "documentation",
     "Bilingual registry surface, review provenance, and semantic_event dimension binding ADR.",
+  ],
+  [
+    "docs/adr/0007-grounding-spine-legal-instruments-and-crosswalk.md",
+    "documentation",
+    "Legal-instrument lifecycle registry, crosswalk registry, and referential-integrity gates ADR.",
   ],
   [
     "docs/api/consumer-adoption-receipts.md",
@@ -311,6 +336,18 @@ function buildManifest() {
           status: "blocking",
           reason:
             "semantic_event.v2 dimension enum stays bound to the risk_domains.v1 registry ids.",
+        },
+        {
+          gate_id: "ECO-ONTO-LEGAL-INSTRUMENT-SHAPE",
+          status: "blocking",
+          reason:
+            "legal_instruments.v1 validates and lifecycle references (replaced_by/supersedes/repeal_date/status) stay internally consistent.",
+        },
+        {
+          gate_id: "ECO-ONTO-CROSSWALK-INTEGRITY",
+          status: "blocking",
+          reason:
+            "crosswalk.v1 references all resolve and no mapping is grounded on a repealed or superseded instrument.",
         },
         {
           gate_id: "ECO-ONTO-RELEASE-MANIFEST-SHAPE",

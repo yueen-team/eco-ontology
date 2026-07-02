@@ -79,6 +79,18 @@
       "sha256": "d7ff5943902f5669171c62db6bcd18b049e429a6932e47b8d92c1184dda2d3fb"
     },
     {
+      "description": "Legal-instrument lifecycle registry shape (citation metadata only).",
+      "kind": "schema",
+      "path": "schemas/legal_instrument.v1.schema.json",
+      "sha256": "5b856a765678bf76463f1f0a3d3093736d205cc78c8072d54bf37818c8496886"
+    },
+    {
+      "description": "Risk-domain x issue-type x legal-basis crosswalk registry shape.",
+      "kind": "schema",
+      "path": "schemas/crosswalk.v1.schema.json",
+      "sha256": "d9fc6d6e471cdb47a06849fb7f0b0b8c83b2e388ecb408e9da245e8f721c1a22"
+    },
+    {
       "description": "S01-S13 environmental risk-domain registry.",
       "kind": "registry",
       "path": "registries/risk_domains.v1.json",
@@ -107,6 +119,18 @@
       "kind": "registry",
       "path": "registries/legal_basis_ref.v1.json",
       "sha256": "708122b14a033f1a78745bec146589952eb29e99aa7c4e0a37e859752acfcd51"
+    },
+    {
+      "description": "Legal-instrument lifecycle registry (citation metadata and replacement lineage).",
+      "kind": "registry",
+      "path": "registries/legal_instruments.v1.json",
+      "sha256": "b6d433fcb71de7ea730c14bfdad6efa89a8d54809cecd6b5b05dfad5132c2c94"
+    },
+    {
+      "description": "Auditable risk-domain x issue-type x legal-basis crosswalk registry.",
+      "kind": "registry",
+      "path": "registries/crosswalk.v1.json",
+      "sha256": "e44a96b86b895f36475d8abd050406bde28ab89fefcf8c9246bc9541a0e9327f"
     },
     {
       "description": "Three-consumer compatibility matrix for v0.1.0.",
@@ -179,6 +203,12 @@
       "kind": "documentation",
       "path": "docs/adr/0006-bilingual-registry-surface-and-intake-grounding.md",
       "sha256": "523ba136c17a0ed734315d107a1be3ff22c70a60bdde80e709037dab9cf3a5d0"
+    },
+    {
+      "description": "Legal-instrument lifecycle registry, crosswalk registry, and referential-integrity gates ADR.",
+      "kind": "documentation",
+      "path": "docs/adr/0007-grounding-spine-legal-instruments-and-crosswalk.md",
+      "sha256": "cc29a8ee3623a1d061fe3bff7ff4ebcaf4e3c0538372daa04e7b1eb14b7fe709"
     },
     {
       "description": "Consumer adoption receipt interface.",
@@ -313,6 +343,16 @@
       {
         "gate_id": "ECO-ONTO-SEMANTIC-EVENT-BINDING",
         "reason": "semantic_event.v2 dimension enum stays bound to the risk_domains.v1 registry ids.",
+        "status": "blocking"
+      },
+      {
+        "gate_id": "ECO-ONTO-LEGAL-INSTRUMENT-SHAPE",
+        "reason": "legal_instruments.v1 validates and lifecycle references (replaced_by/supersedes/repeal_date/status) stay internally consistent.",
+        "status": "blocking"
+      },
+      {
+        "gate_id": "ECO-ONTO-CROSSWALK-INTEGRITY",
+        "reason": "crosswalk.v1 references all resolve and no mapping is grounded on a repealed or superseded instrument.",
         "status": "blocking"
       },
       {

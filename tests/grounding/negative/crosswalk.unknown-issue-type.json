@@ -1,0 +1,24 @@
+{
+  "instruments": [{ "id": "li.law.epl_2014", "status": "in_force" }],
+  "crosswalk": {
+    "schema_version": "eco-ontology.crosswalk.v1",
+    "registry_id": "crosswalk.v1",
+    "ontology_version": "0.1.0",
+    "owner": "eco-ontology",
+    "description": "Negative fixture: crosswalk references an issue_type that is not a registry id.",
+    "entries": [
+      {
+        "id": "cw.bad_issue",
+        "risk_domain": "S01",
+        "issue_type": "issue.does_not_exist",
+        "legal_basis": [{ "instrument_ref": "li.law.epl_2014" }],
+        "confidence": "mandatory",
+        "review": {
+          "reviewed_by": "eco-ontology",
+          "reviewed_at": "2026-07-02",
+          "status": "seed"
+        }
+      }
+    ]
+  }
+}

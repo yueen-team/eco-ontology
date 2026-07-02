@@ -1,0 +1,309 @@
+{
+  "schema_version": "eco-ontology.crosswalk.v1",
+  "registry_id": "crosswalk.v1",
+  "ontology_version": "0.1.0",
+  "owner": "eco-ontology",
+  "description": "Auditable risk_domain x issue_type x legal_basis seed crosswalk. Grounding relationships are fixed, reviewed, and versioned here instead of scattered across consumers. review.status is seed.",
+  "entries": [
+    {
+      "id": "cw.s08_missing_permit_or_approval",
+      "risk_domain": "S08",
+      "issue_type": "issue.missing_permit_or_approval",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.reg.discharge_permit_2021"
+        },
+        {
+          "instrument_ref": "li.reg.eia_project_2017"
+        },
+        {
+          "instrument_ref": "li.law.epl_2014"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "排污许可与环评审批是法定前置：《排污许可管理条例》确立无证禁排，《建设项目环境保护管理条例》要求环评及验收，《环保法》第十九、四十五条为总则依据，缺证或未批即直接对应。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s01_missing_permit_or_approval",
+      "risk_domain": "S01",
+      "issue_type": "issue.missing_permit_or_approval",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.reg.discharge_permit_2021"
+        },
+        {
+          "instrument_ref": "li.law.air_2018"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "大气污染物排放单位须持排污许可证，《大气法》第十九条与《排污许可管理条例》强制要求，无证排放大气污染物直接对应。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s01_uncontrolled_emission_or_discharge",
+      "risk_domain": "S01",
+      "issue_type": "issue.uncontrolled_emission_or_discharge",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.air_2018"
+        },
+        {
+          "instrument_ref": "li.law.epl_2014"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "《大气法》禁止无组织排放及超标、超总量排放大气污染物（第十八、二十条等），无组织/直排废气强制对应，《环保法》为一般禁止性依据。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s01_facility_abnormal_operation",
+      "risk_domain": "S01",
+      "issue_type": "issue.facility_abnormal_operation",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.air_2018"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "《大气法》第二十条要求治气设施正常运行、不得擅自停运或不正常使用，设施异常运行直接对应违法。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s01_incomplete_monitoring_record",
+      "risk_domain": "S01",
+      "issue_type": "issue.incomplete_monitoring_record",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.air_2018"
+        },
+        {
+          "instrument_ref": "li.reg.discharge_permit_2021"
+        }
+      ],
+      "confidence": "presumptive",
+      "note_zh": "排污单位应自行监测大气污染物并保存原始记录，《大气法》第二十四条及排污许可自行监测要求推定对应记录不全。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s02_missing_permit_or_approval",
+      "risk_domain": "S02",
+      "issue_type": "issue.missing_permit_or_approval",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.reg.discharge_permit_2021"
+        },
+        {
+          "instrument_ref": "li.law.water_2017"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "《水污染防治法》第二十一条与《排污许可管理条例》要求直接或间接向水体排污须持排污许可证，无证排水强制对应。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s02_uncontrolled_emission_or_discharge",
+      "risk_domain": "S02",
+      "issue_type": "issue.uncontrolled_emission_or_discharge",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.water_2017"
+        },
+        {
+          "instrument_ref": "li.std.gb8978_1996"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "《水污染防治法》禁止超标、超总量及私设暗管直排（第十条、第三十九条等），无组织/直排废水强制对应；GB8978《污水综合排放标准》界定具体限值支撑判定。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s02_facility_abnormal_operation",
+      "risk_domain": "S02",
+      "issue_type": "issue.facility_abnormal_operation",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.water_2017"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "《水污染防治法》要求水污染防治设施正常运行、不得擅自拆除闲置或不正常运行（第二十二、二十三条精神），设施异常直接对应。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s02_incomplete_monitoring_record",
+      "risk_domain": "S02",
+      "issue_type": "issue.incomplete_monitoring_record",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.water_2017"
+        },
+        {
+          "instrument_ref": "li.reg.discharge_permit_2021"
+        }
+      ],
+      "confidence": "presumptive",
+      "note_zh": "重点排污单位应监测所排水污染物并保存记录，《水污染防治法》第二十三条及排污许可自行监测义务推定对应记录不全。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s03_improper_waste_storage",
+      "risk_domain": "S03",
+      "issue_type": "issue.improper_waste_storage",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.solidwaste_2020"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "《固废法》要求一般工业固废须建设贮存设施并采取防扬散、防流失、防渗漏措施（第三十六条等），贮存不规范强制对应。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s04_improper_waste_storage",
+      "risk_domain": "S04",
+      "issue_type": "issue.improper_waste_storage",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.solidwaste_2020"
+        },
+        {
+          "instrument_ref": "li.std.gb18597_2023"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "《固废法》第八十一条要求危废按标准分类贮存、设置识别标志、不得混存混排；现行GB18597-2023《危险废物贮存污染控制标准》界定技术要求（不引用已被替代的GB18597-2001）。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s04_missing_permit_or_approval",
+      "risk_domain": "S04",
+      "issue_type": "issue.missing_permit_or_approval",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.solidwaste_2020"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "《固废法》第八十条规定从事危废收集、贮存、利用、处置经营活动须取得许可证，无危废经营许可强制对应。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s05_uncontrolled_emission_or_discharge",
+      "risk_domain": "S05",
+      "issue_type": "issue.uncontrolled_emission_or_discharge",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.noise_2021"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "《噪声污染防治法》禁止超过噪声排放标准并未采取措施排放噪声（第二十二条等），超标排放噪声强制对应；依替代规则采用现行噪声法，不引用已废止的环境噪声污染防治法。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s05_facility_abnormal_operation",
+      "risk_domain": "S05",
+      "issue_type": "issue.facility_abnormal_operation",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.law.noise_2021"
+        }
+      ],
+      "confidence": "presumptive",
+      "note_zh": "《噪声污染防治法》要求噪声污染防治设施与主体工程同时运行并保持正常使用，减噪设施未正常运行推定对应。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    },
+    {
+      "id": "cw.s09_incomplete_monitoring_record",
+      "risk_domain": "S09",
+      "issue_type": "issue.incomplete_monitoring_record",
+      "legal_basis": [
+        {
+          "instrument_ref": "li.reg.discharge_permit_2021"
+        },
+        {
+          "instrument_ref": "li.law.epl_2014"
+        }
+      ],
+      "confidence": "mandatory",
+      "note_zh": "《排污许可管理条例》第二十条强制要求持证单位开展自行监测、建立台账并如实记录报告；《环保法》第四十二条为监测与信息公开一般依据，监测记录不全直接对应。",
+      "review": {
+        "reviewed_by": "eco-ontology",
+        "reviewed_at": "2026-07-02",
+        "status": "seed",
+        "method": "engineer_seed"
+      }
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "eco-ontology/crosswalk.v1",
+  "title": "EcoOntologyCrosswalkRegistryV1",
+  "description": "Auditable risk_domain x issue_type x legal_basis crosswalk. Grounding relationships are fixed, reviewed, and versioned at the source instead of scattered across consumers.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "registry_id",
+    "ontology_version",
+    "owner",
+    "description",
+    "entries"
+  ],
+  "properties": {
+    "schema_version": { "const": "eco-ontology.crosswalk.v1" },
+    "registry_id": { "const": "crosswalk.v1" },
+    "ontology_version": { "type": "string" },
+    "owner": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/crosswalk_entry" }
+    }
+  },
+  "definitions": {
+    "crosswalk_entry": {
+      "type": "object",
+      "required": [
+        "id",
+        "risk_domain",
+        "issue_type",
+        "legal_basis",
+        "confidence",
+        "review"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^cw\\.[a-z0-9_]+$" },
+        "risk_domain": { "type": "string", "pattern": "^S(0[1-9]|1[0-3])$" },
+        "issue_type": { "type": "string", "pattern": "^issue\\.[a-z0-9_]+$" },
+        "legal_basis": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/basis" }
+        },
+        "confidence": {
+          "enum": ["mandatory", "presumptive", "indicative"]
+        },
+        "note_zh": { "type": "string", "maxLength": 300 },
+        "review": { "$ref": "#/definitions/review" }
+      },
+      "additionalProperties": false
+    },
+    "basis": {
+      "type": "object",
+      "required": ["instrument_ref"],
+      "properties": {
+        "instrument_ref": {
+          "type": "string",
+          "pattern": "^li\\.[a-z0-9_]+\\.[a-z0-9_]+$"
+        },
+        "clause_hint_zh": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Short clause pointer, never full clause text."
+        }
+      },
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "object",
+      "required": ["reviewed_by", "reviewed_at", "status"],
+      "properties": {
+        "reviewed_by": { "type": "string", "minLength": 1 },
+        "reviewed_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "status": { "enum": ["seed", "expert_reviewed", "authoritative"] },
+        "method": {
+          "enum": [
+            "engineer_seed",
+            "web_verified",
+            "legal_counsel",
+            "government_lineage"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

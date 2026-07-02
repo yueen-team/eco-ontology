@@ -22,7 +22,7 @@
     },
     {
       "path": "contracts/release-manifest.v1.json",
-      "sha256": "a35a3274c3e1788552e822aed8e4fddef33f2b23b7e27217f62717cf74eb4d68"
+      "sha256": "7b1b18132f9ab34551beffb401a05c139abc9195c9cc53a7f15129a66b0ff88d"
     },
     {
       "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
@@ -57,6 +57,10 @@
       "sha256": "523ba136c17a0ed734315d107a1be3ff22c70a60bdde80e709037dab9cf3a5d0"
     },
     {
+      "path": "docs/adr/0007-grounding-spine-legal-instruments-and-crosswalk.md",
+      "sha256": "cc29a8ee3623a1d061fe3bff7ff4ebcaf4e3c0538372daa04e7b1eb14b7fe709"
+    },
+    {
       "path": "docs/api/consumer-adoption-receipts.md",
       "sha256": "d46380fff9c4a4a380d01dff1e10d3a6eed210502b3b78d0bd8dbb88e1d692b0"
     },
@@ -82,7 +86,11 @@
     },
     {
       "path": "package.json",
-      "sha256": "e72937f7b2c655a08d0808283dc65baa613a83baf5ee1db3e10ee972b3af7aa5"
+      "sha256": "1e77bce737df774e1517ba1744a3de3c4a3ed9011ee4479723e0c42adb8d70f7"
+    },
+    {
+      "path": "registries/crosswalk.v1.json",
+      "sha256": "e44a96b86b895f36475d8abd050406bde28ab89fefcf8c9246bc9541a0e9327f"
     },
     {
       "path": "registries/entity_anchors.v1.json",
@@ -95,6 +103,10 @@
     {
       "path": "registries/legal_basis_ref.v1.json",
       "sha256": "708122b14a033f1a78745bec146589952eb29e99aa7c4e0a37e859752acfcd51"
+    },
+    {
+      "path": "registries/legal_instruments.v1.json",
+      "sha256": "b6d433fcb71de7ea730c14bfdad6efa89a8d54809cecd6b5b05dfad5132c2c94"
     },
     {
       "path": "registries/observed_signals.v1.json",
@@ -113,8 +125,16 @@
       "sha256": "23c8253f29efaa79b9372ebdcb5981b92ada507fd9aa1d3045c9f20bb31c30cb"
     },
     {
+      "path": "schemas/crosswalk.v1.schema.json",
+      "sha256": "d9fc6d6e471cdb47a06849fb7f0b0b8c83b2e388ecb408e9da245e8f721c1a22"
+    },
+    {
       "path": "schemas/kb_product_manifest.v1.schema.json",
       "sha256": "d13cabd36eb1c7a1c47f96b52e68f6992fcf214a346e4a36872e83de7a5218b3"
+    },
+    {
+      "path": "schemas/legal_instrument.v1.schema.json",
+      "sha256": "5b856a765678bf76463f1f0a3d3093736d205cc78c8072d54bf37818c8496886"
     },
     {
       "path": "schemas/ontology_registry.v1.schema.json",
