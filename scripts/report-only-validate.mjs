@@ -9,6 +9,11 @@ import {
 } from "./lib/grounding-integrity.mjs";
 
 const root = process.cwd();
+// Closed-world-only mode (opt-in, e.g. CI where sibling consumer repos are not
+// checked out): skip sibling-dependent evidence checks and run only the
+// self-contained ontology gates. Default behavior (local/integration) is
+// unchanged and still evaluates consumer evidence.
+const closedWorldOnly = process.env.ECO_ONTOLOGY_CLOSED_WORLD_ONLY === "1";
 const mode = process.argv.includes("--blocking") ? "blocking" : "report-only";
 const isBlocking = mode === "blocking";
 const reportJson = join(
@@ -1246,6 +1251,15 @@ validateSemanticEventBinding(findings);
 validateGroundingRegistries(findings);
 validateProjectionArtifacts(findings);
 for (const check of checks) {
+  if (closedWorldOnly && check.id === "KB-001") {
+    addInfo(
+      findings,
+      check,
+      check.artifact,
+      "Closed-world-only mode: KB sibling manifest check skipped (external evidence).",
+    );
+    continue;
+  }
   const artifact = tryReadJson(
     findings,
     check,
@@ -1268,9 +1282,11 @@ for (const check of checks) {
     validateKbProductManifest(findings, check, artifact, schema);
 }
 validateKnownSchemaSamples(findings);
-validateLegacyP3KbManifestFreeze(findings);
-validateGraphReport(findings);
-validateEcoCheckValidFixtures(findings);
+if (!closedWorldOnly) {
+  validateLegacyP3KbManifestFreeze(findings);
+  validateGraphReport(findings);
+  validateEcoCheckValidFixtures(findings);
+}
 
 const summary = { red: 0, yellow: 0, info: 0 };
 for (const finding of findings) summary[finding.severity] += 1;

@@ -181,6 +181,16 @@ const artifactDefinitions = [
     "Legal-instrument lifecycle registry, crosswalk registry, and referential-integrity gates ADR.",
   ],
   [
+    "docs/adr/0008-governance-ledger-and-server-side-ci.md",
+    "documentation",
+    "Governance ledger, server-side CI, and release trust model ADR.",
+  ],
+  [
+    "docs/validation/release-signing-and-ledger.md",
+    "documentation",
+    "Release signing, evidence snapshot, and governance ledger procedure.",
+  ],
+  [
     "docs/api/consumer-adoption-receipts.md",
     "documentation",
     "Consumer adoption receipt interface.",

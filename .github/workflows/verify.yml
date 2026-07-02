@@ -1,0 +1,39 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Server-side enforcement of the closed-world governance gates. Local husky hooks
+# can be bypassed with --no-verify; this lane cannot. Sibling consumer repos are
+# not checked out here, so the closed-world-only subset runs (see ADR-0008); the
+# full consumer-evidence lane runs in the integration environment where siblings
+# are present.
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      ECO_ONTOLOGY_CLOSED_WORLD_ONLY: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify governance gates (closed-world)
+        run: pnpm verify:all
+
+      - name: Verify governance ledger chain
+        run: pnpm ledger:verify

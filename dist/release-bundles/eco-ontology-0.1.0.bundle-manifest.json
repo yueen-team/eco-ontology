@@ -22,7 +22,7 @@
     },
     {
       "path": "contracts/release-manifest.v1.json",
-      "sha256": "7b1b18132f9ab34551beffb401a05c139abc9195c9cc53a7f15129a66b0ff88d"
+      "sha256": "81551743fd50be474a749a528abe1850560926759ece95058934791f0c6d17b8"
     },
     {
       "path": "dist/projections/ecocheck/ontology-contracts.generated.json",
@@ -61,6 +61,10 @@
       "sha256": "cc29a8ee3623a1d061fe3bff7ff4ebcaf4e3c0538372daa04e7b1eb14b7fe709"
     },
     {
+      "path": "docs/adr/0008-governance-ledger-and-server-side-ci.md",
+      "sha256": "ab5bf64da936a929e7ab3a6884526156e50ed80c62fd781193d1fc9601a01a42"
+    },
+    {
       "path": "docs/api/consumer-adoption-receipts.md",
       "sha256": "d46380fff9c4a4a380d01dff1e10d3a6eed210502b3b78d0bd8dbb88e1d692b0"
     },
@@ -85,8 +89,12 @@
       "sha256": "a5d104da128b0b2d5402f1fba4a217b45a3e7515378c06e563fcc9be5abf2e6f"
     },
     {
+      "path": "docs/validation/release-signing-and-ledger.md",
+      "sha256": "721ff5e5d282efd1073269a77940214e6d61cb333b3ad97a00fe8cb6f5afb70c"
+    },
+    {
       "path": "package.json",
-      "sha256": "1e77bce737df774e1517ba1744a3de3c4a3ed9011ee4479723e0c42adb8d70f7"
+      "sha256": "dfc601ddaa40e984d64f324628dfc9d7a4ac2392d0285a8ad4ea8d5466cdca59"
     },
     {
       "path": "registries/crosswalk.v1.json",

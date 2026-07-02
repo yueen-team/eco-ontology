@@ -211,6 +211,18 @@
       "sha256": "cc29a8ee3623a1d061fe3bff7ff4ebcaf4e3c0538372daa04e7b1eb14b7fe709"
     },
     {
+      "description": "Governance ledger, server-side CI, and release trust model ADR.",
+      "kind": "documentation",
+      "path": "docs/adr/0008-governance-ledger-and-server-side-ci.md",
+      "sha256": "ab5bf64da936a929e7ab3a6884526156e50ed80c62fd781193d1fc9601a01a42"
+    },
+    {
+      "description": "Release signing, evidence snapshot, and governance ledger procedure.",
+      "kind": "documentation",
+      "path": "docs/validation/release-signing-and-ledger.md",
+      "sha256": "721ff5e5d282efd1073269a77940214e6d61cb333b3ad97a00fe8cb6f5afb70c"
+    },
+    {
       "description": "Consumer adoption receipt interface.",
       "kind": "documentation",
       "path": "docs/api/consumer-adoption-receipts.md",
